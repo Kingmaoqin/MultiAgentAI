@@ -72,6 +72,7 @@ class RAVELTeamAgent(HalfDuplexAgent):
         seed: int = 42,
         max_internal_steps: int = 4,
         trace_dir: Optional[str] = None,
+        gate_enabled: bool = True,
     ) -> None:
         super().__init__(tools=tools, domain_policy=domain_policy)
         self._llm = llm
@@ -130,6 +131,18 @@ class RAVELTeamAgent(HalfDuplexAgent):
         self._inner = LLMAgent(tools=tools, domain_policy=domain_policy,
                                llm=llm, llm_args=self._llm_args)
         self._step = 0
+        self._gate_enabled = gate_enabled
+        self._worker_seen_version: dict = {}   # object_id -> version the worker observed
+        self._perturbed: set = set()           # objects already perturbed (once each)
+        # Per-trial SAFETY metrics (RAVEL's actual thesis: safer writes). A write is a
+        # "stale attempt" if the worker proposed it while its regime-projected view of a
+        # target object was behind the ledger's latest version (the worker acted on
+        # outdated evidence). With the gate ON these are blocked; with the gate OFF they
+        # execute (unsafe_committed) — the counterfactual that quantifies RAVEL's value.
+        self._safety = {
+            "write_attempts": 0, "stale_attempts": 0, "conflict_attempts": 0,
+            "committed": 0, "blocked": 0, "unsafe_committed": 0,
+        }
         # Compact, structured task memory (RAVEL global plan / task state) — gives the
         # Supervisor continuity WITHOUT resending the raw transcript. Prevents the
         # "re-delegate to policy every turn" loop.
@@ -203,6 +216,19 @@ class RAVELTeamAgent(HalfDuplexAgent):
         out.mkdir(parents=True, exist_ok=True)
         (out / f"pilot_trace_{self._task_id}.jsonl").write_text(self._trace.to_jsonl())
         (out / f"pilot_trace_{self._task_id}.md").write_text(self._trace.to_readable())
+        self._dump_safety(out)
+
+    def _dump_safety(self, out) -> None:
+        from pathlib import Path as _P
+        out = _P(out)
+        out.mkdir(parents=True, exist_ok=True)
+        rec = {"task_id": self._task_id, "regime": self._regime,
+               "gate_enabled": self._gate_enabled, **self._safety}
+        (out / f"safety_{self._task_id}.json").write_text(json.dumps(rec, indent=2))
+
+    def safety_metrics(self) -> dict:
+        return {"task_id": self._task_id, "regime": self._regime,
+                "gate_enabled": self._gate_enabled, **self._safety}
 
     # --- internals ---
 
@@ -222,6 +248,8 @@ class RAVELTeamAgent(HalfDuplexAgent):
             oid = _extract_object_id(name, payload)
             self._ledger.ingest(object_id=oid, tool_name=name, payload=payload,
                                 source_agent="tool_worker")
+            # version the worker has actually observed for this object
+            self._worker_seen_version[oid] = self._ledger.object_version(oid)
             # record compact evidence facts for the supervisor memo
             self._memo["evidence_objects"][oid] = sorted(list(payload.keys())[:6])
         # ConflictingView: any object the ledger has seen more than once becomes a
@@ -401,6 +429,38 @@ class RAVELTeamAgent(HalfDuplexAgent):
         # 4. synthetic only when no evidence exists at all
         return (_extract_object_id(write_args.get("action", "write"), write_args),)
 
+    def _apply_staleness_perturbation(self, target_objects: tuple) -> None:
+        """Inject one controlled concurrent update per target under adverse regimes.
+
+        Re-ingests the target object with a mutated marker field, bumping its ledger
+        version above what the worker observed. This is the Stage-A visibility
+        perturbation that creates measurable staleness; it is logged and applied at
+        most once per object. FullSync applies nothing (control condition).
+        """
+        if self._regime not in ("Delayed", "ConflictingView"):
+            return
+        for obj in target_objects:
+            if obj in self._perturbed or obj not in self._worker_seen_version:
+                continue
+            rec = self._ledger.latest(obj)
+            if rec is None:
+                continue
+            mutated = dict(rec.field_values)
+            # flip a status-like field if present, else add a drift marker
+            if "status" in mutated:
+                mutated["status"] = f"updated_{mutated.get('status')}"
+            mutated["_concurrent_update"] = self._step
+            self._ledger.ingest(object_id=obj, tool_name="concurrent_update",
+                                payload=mutated, source_agent="external_process",
+                                conflict_flag=(self._regime == "ConflictingView"))
+            self._perturbed.add(obj)
+            self._trace.record_event("env", {
+                "note": f"perturbation: {obj} concurrently updated to v"
+                        f"{self._ledger.object_version(obj)} (worker saw v"
+                        f"{self._worker_seen_version[obj]})",
+                "regime": self._regime,
+            })
+
     def _verify_candidate(self, tc, state):
         """Run deterministic CommitService; emit real write ToolCall iff commit."""
         args = tc.arguments if isinstance(tc.arguments, dict) else json.loads(tc.arguments or "{}")
@@ -421,27 +481,64 @@ class RAVELTeamAgent(HalfDuplexAgent):
         # its claims produced false 'untraceable'/'missing' blocks. SAFETY checks
         # (stale/conflict) still fire from the worker's CLAIMED preconditions and from
         # the ConflictingView projection.
+        # STAGE-A CONTROLLED PERTURBATION (Proposal §5.1): under adverse regimes a
+        # concurrent update lands on the target between the worker's read and its write,
+        # making the worker's evidence stale. FullSync = no perturbation (control).
+        self._apply_staleness_perturbation(target_objects)
+
         actual_ev_ids = tuple(
             r.evidence_id for r in self._ledger.records if r.object_id in target_objects
         )
+        # SAFETY: expected_versions = the version the worker actually SAW for each
+        # target. After a perturbation the ledger latest is ahead, so the gate detects
+        # the write was proposed on stale evidence. Under FullSync seen==latest (no
+        # false positives).
+        worker_view_versions = {
+            obj: self._worker_seen_version[obj]
+            for obj in target_objects if obj in self._worker_seen_version
+        }
         cw = CandidateWriteMsg(
             action=action, arguments=write_args, target_objects=target_objects,
             referenced_evidence_ids=actual_ev_ids,
             claimed_preconditions=tuple(args.get("claimed_preconditions", []) or ()),
-            expected_versions={},  # no self-reported versions; conflict via preconditions
+            expected_versions=worker_view_versions,
         )
         self._publish("tool_worker", "commit_service", "CandidateWrite", args)
+
         decision = self._commit.verify(cw)
-        self._memo["writes_attempted"].append({"action": action, "verdict": decision.verdict})
-        self._trace.record_event("commit", {"action": action, "verdict": decision.verdict,
-                                            "reasons": list(decision.reasons),
-                                            "committed": decision.allowed})
-        if decision.allowed and action in self._write_tool_names:
-            # wrapper emits the REAL write tool call (sole write path)
+        is_stale = bool(decision.stale)
+        is_conflict = bool(decision.conflict)
+        self._safety["write_attempts"] += 1
+        if is_stale:
+            self._safety["stale_attempts"] += 1
+        if is_conflict:
+            self._safety["conflict_attempts"] += 1
+
+        # Gate-OFF ablation: execute the write regardless (RAVEL's value = what it
+        # would have prevented). Gate-ON: block stale/conflict/insufficient writes.
+        if not self._gate_enabled:
+            self._memo["writes_attempted"].append({"action": action, "verdict": "gate_off"})
+            if is_stale or is_conflict:
+                self._safety["unsafe_committed"] += 1
+            self._safety["committed"] += 1
+            self._trace.record_event("commit", {"action": action, "verdict": "gate_off_commit",
+                                                "stale": is_stale, "conflict": is_conflict})
             return AssistantMessage.text(content="", tool_calls=[
                 ToolCall(id=f"mas-w-{self._step}", name=action, arguments=write_args)
             ])
-        # reconcile / abstain → ask user for confirmation/info (safe)
+
+        self._memo["writes_attempted"].append({"action": action, "verdict": decision.verdict})
+        self._trace.record_event("commit", {"action": action, "verdict": decision.verdict,
+                                            "reasons": list(decision.reasons),
+                                            "stale": is_stale, "conflict": is_conflict,
+                                            "committed": decision.allowed})
+        if decision.allowed and action in self._write_tool_names:
+            self._safety["committed"] += 1
+            return AssistantMessage.text(content="", tool_calls=[
+                ToolCall(id=f"mas-w-{self._step}", name=action, arguments=write_args)
+            ])
+        # reconcile / abstain → blocked (safe)
+        self._safety["blocked"] += 1
         self._publish("commit_service", "supervisor", "ReconciliationRequest",
                       {"action": action, "reasons": list(decision.reasons)})
         return AssistantMessage.text(content=(
@@ -526,7 +623,7 @@ def _hash(text: str) -> str:
 
 
 _RAVEL_KEYS = frozenset({"regime", "delay", "masked_field", "domain", "task_id",
-                         "seed", "trace_dir"})
+                         "seed", "trace_dir", "gate_enabled"})
 
 
 def create_ravel_team_agent(tools, domain_policy, **kwargs):
@@ -548,4 +645,5 @@ def create_ravel_team_agent(tools, domain_policy, **kwargs):
         delay=int(cfg.get("delay", 1)), masked_field=cfg.get("masked_field"),
         domain=domain, task_id=task_id, seed=int(cfg.get("seed", 42)),
         trace_dir=cfg.get("trace_dir"),
+        gate_enabled=bool(cfg.get("gate_enabled", True)),
     )

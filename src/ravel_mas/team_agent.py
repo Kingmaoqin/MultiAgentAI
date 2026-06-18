@@ -76,16 +76,11 @@ class RAVELTeamAgent(HalfDuplexAgent):
         super().__init__(tools=tools, domain_policy=domain_policy)
         self._llm = llm
         self._llm_args = dict(llm_args or {})
-        # Belt-and-suspenders: a few internal calls intermittently lost the explicit
-        # api_base/api_key and litellm fell back to the real OpenAI endpoint
-        # (AuthenticationError → crashed/garbled decisions). Pin the local endpoint in
-        # the environment so any mis-routed call still hits the vLLM server.
-        import os as _os
-        if self._llm_args.get("api_base"):
-            _os.environ.setdefault("OPENAI_API_KEY", self._llm_args.get("api_key") or "EMPTY")
-            _os.environ["OPENAI_API_KEY"] = self._llm_args.get("api_key") or "EMPTY"
-            _os.environ["OPENAI_BASE_URL"] = self._llm_args["api_base"]
-            _os.environ["OPENAI_API_BASE"] = self._llm_args["api_base"]
+        # NOTE: a rare AuthenticationError can occur if an internal call loses
+        # api_base/api_key and litellm falls back to the real OpenAI endpoint. We do
+        # NOT pin global OPENAI_* env vars to fix it — that misroutes tau2-internal
+        # OpenAI calls (e.g. gpt-4.1 checkers) into the local vLLM server. Instead,
+        # every internal call passes api_base/api_key explicitly (see _llm_args usage).
         self._trace_dir = trace_dir
         # Cap raw tau2 conversation turns shown to the worker (context safety).
         self._worker_history_window = 16

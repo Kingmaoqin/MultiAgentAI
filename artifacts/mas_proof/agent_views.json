@@ -1,0 +1,52 @@
+{
+  "regime": "ConflictingView",
+  "object_id": "reservation:R1",
+  "latest_version": 5,
+  "views": {
+    "tool_worker": {
+      "agent_id": "tool_worker",
+      "object_id": "reservation:R1",
+      "version": 4,
+      "visible_fields": {
+        "reservation_id": "R1",
+        "status": "confirmed"
+      },
+      "kind": "fields"
+    },
+    "supervisor": {
+      "agent_id": "supervisor",
+      "object_id": "reservation:R1",
+      "version": 5,
+      "visible_fields": {
+        "cabin": "<changed>",
+        "refundable": "<changed>",
+        "reservation_id": "<changed>",
+        "status": "<changed>"
+      },
+      "kind": "header"
+    },
+    "policy_agent": {
+      "agent_id": "policy_agent",
+      "object_id": "reservation:R1",
+      "version": 5,
+      "visible_fields": {
+        "cabin": "business",
+        "refundable": false,
+        "status": "cancelled"
+      },
+      "kind": "fields"
+    },
+    "commit_service": {
+      "agent_id": "commit_service",
+      "object_id": "reservation:R1",
+      "version": 5,
+      "visible_fields": {
+        "cabin": "business",
+        "refundable": false,
+        "reservation_id": "R1",
+        "status": "cancelled"
+      },
+      "kind": "full"
+    }
+  }
+}

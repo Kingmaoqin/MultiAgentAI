@@ -1,0 +1,29 @@
+{
+  "supervisor": {
+    "agent_id": "supervisor",
+    "role": "supervisor",
+    "prompt_hash": "df1d8afa85037d4781c0f369ae91c76fc5638637432c257afb19e82011da314e",
+    "n_calls": 3,
+    "input_tokens": 330,
+    "output_tokens": 100,
+    "state_object_id": 140686664635392
+  },
+  "policy_agent": {
+    "agent_id": "policy_agent",
+    "role": "policy_agent",
+    "prompt_hash": "1100090fe74e48dec7420948bf443e104c51e7a21e3d81bd8d415d982026e6e7",
+    "n_calls": 1,
+    "input_tokens": 110,
+    "output_tokens": 55,
+    "state_object_id": 140686664632512
+  },
+  "tool_worker": {
+    "agent_id": "tool_worker",
+    "role": "tool_worker",
+    "prompt_hash": "b7501beabae9c214650344f648913a5a8932c91a47c6919d9e24273cd8ddecd0",
+    "n_calls": 1,
+    "input_tokens": 140,
+    "output_tokens": 48,
+    "state_object_id": 140686664632848
+  }
+}

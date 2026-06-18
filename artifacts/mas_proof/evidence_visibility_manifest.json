@@ -1,0 +1,41 @@
+{
+  "tool_worker": {
+    "agent_id": "tool_worker",
+    "object_id": "reservation:R1",
+    "version": 2,
+    "visible_fields": {
+      "reservation_id": "R1",
+      "status": "confirmed"
+    },
+    "kind": "fields"
+  },
+  "supervisor": {
+    "agent_id": "supervisor",
+    "object_id": "reservation:R1",
+    "version": 3,
+    "visible_fields": {
+      "reservation_id": "<changed>",
+      "status": "<changed>"
+    },
+    "kind": "header"
+  },
+  "policy_agent": {
+    "agent_id": "policy_agent",
+    "object_id": "reservation:R1",
+    "version": 3,
+    "visible_fields": {
+      "status": "confirmed"
+    },
+    "kind": "fields"
+  },
+  "commit_service": {
+    "agent_id": "commit_service",
+    "object_id": "reservation:R1",
+    "version": 3,
+    "visible_fields": {
+      "reservation_id": "R1",
+      "status": "confirmed"
+    },
+    "kind": "full"
+  }
+}

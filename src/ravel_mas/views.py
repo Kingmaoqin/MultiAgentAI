@@ -110,8 +110,13 @@ class ViewBuilder:
             # headers: only the field names that changed, values redacted to "<v>"
             return {k: "<changed>" for k in fields}
         if policy == "policy":
-            sel = {k: v for k, v in fields.items() if k in POLICY_FIELDS}
-            return sel or {k: v for k, v in list(fields.items())[:1]}
+            # Policy reasoning needs ALL scalar policy-relevant fields (e.g. refund
+            # eligibility depends on insurance/cabin/membership/dates), not a tiny
+            # hand-picked subset. Include every scalar field; drop only large nested
+            # arrays/objects (flight lists, item lists) which are action detail.
+            sel = {k: v for k, v in fields.items()
+                   if not isinstance(v, (list, dict))}
+            return sel or dict(fields)
         if policy == "action":
             sel = {k: v for k, v in fields.items() if k in ACTION_FIELDS or k.endswith("_id")}
             sel = sel or dict(fields)

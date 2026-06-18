@@ -1,0 +1,44 @@
+===========================================
+ RAVEL Corrected Experiment Run
+ Domains: airline
+ Regimes: FullSync Delayed FieldMask ConflictingView
+ Max steps: 25  Timeout: 900s
+ Results: /home/xqin5/multiaiagent/results/ravel_corrected
+===========================================
+
+--- Domain: airline ---
+  Running RAVEL-FullSync [airline]...
+===========================================
+ RAVEL Corrected Experiment Run
+ Domains: retail
+ Regimes: FullSync Delayed FieldMask ConflictingView
+ Max steps: 25  Timeout: 900s
+ Results: /home/xqin5/multiaiagent/results/ravel_corrected
+===========================================
+
+--- Domain: retail ---
+  Running RAVEL-FullSync [retail]...
+===========================================
+ RAVEL Corrected Experiment Run
+ Domains: telecom
+ Regimes: FullSync Delayed FieldMask ConflictingView
+ Max steps: 25  Timeout: 900s
+ Results: /home/xqin5/multiaiagent/results/ravel_corrected
+===========================================
+
+--- Domain: telecom ---
+  Running RAVEL-FullSync [telecom]...
+Result: pass=0/14 mean_reward=0.000 (1541s)
+  Running RAVEL-Delayed [telecom]...
+Result: pass=0/14 mean_reward=0.000 (4203s)
+  Running RAVEL-FieldMask [telecom]...
+Result: pass=0/14 mean_reward=0.000 (1998s)
+  Running RAVEL-ConflictingView [telecom]...
+Result: pass=0/14 mean_reward=0.000 (1497s)
+  Domain telecom done.
+
+===========================================
+ All corrected RAVEL runs complete.
+ Results in: /home/xqin5/multiaiagent/results/ravel_corrected
+ Run: python3 scripts/analyze_results.py to compare
+===========================================

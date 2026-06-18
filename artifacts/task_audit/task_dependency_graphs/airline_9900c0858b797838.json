@@ -1,0 +1,31 @@
+{
+  "depth": 2,
+  "domain": "airline",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "update_reservation_passengers",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "40"
+}

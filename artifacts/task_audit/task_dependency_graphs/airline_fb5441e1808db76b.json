@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "airline",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "book_reservation",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "25"
+}

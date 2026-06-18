@@ -1,0 +1,59 @@
+{
+  "depth": 5,
+  "domain": "telecom",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a3",
+      "target": "a4"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_airplane_mode",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "disconnect_vpn",
+      "tool_type": "write"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "toggle_data_saver_mode",
+      "tool_type": "write"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "refuel_data",
+      "tool_type": "write"
+    },
+    {
+      "id": "a4",
+      "index": 4,
+      "tool": "enable_roaming",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mobile_data_issue]airplane_mode_on|bad_vpn|data_saver_mode_on|data_usage_exceeded|user_abroad_roaming_disabled_on[PERSONA:Easy]"
+}

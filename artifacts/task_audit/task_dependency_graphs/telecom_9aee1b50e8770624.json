@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "telecom",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "set_network_mode_preference",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mms_issue]bad_network_preference[PERSONA:None]"
+}

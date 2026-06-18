@@ -1,0 +1,42 @@
+schema_version: 0.1
+status: preregistered_draft
+domains:
+  airline:
+    target_paired_tasks: 100
+    local_base_tasks: 50
+    caveat: "Requires repetitions or documented expansion; do not claim 100 independent tasks."
+  retail:
+    target_paired_tasks: 100
+    local_base_tasks: 114
+  telecom:
+    target_paired_tasks: 60
+    local_base_tasks: 114
+methods_core:
+  - MAS-FullSync
+  - Commit-Gate-Only
+  - RAVEL-Full
+methods_extended:
+  - Single-Agent-ReAct
+  - MAS-FullSync
+  - Shared-Scratchpad
+  - Observation-Masking
+  - Ledger-Only
+  - Commit-Gate-Only
+  - RAVEL-MSE
+  - RAVEL-Full
+regimes:
+  - FullSync
+  - Delayed
+  - FieldMask
+  - ConflictingView
+repetitions_min: 3
+decoding:
+  temperature: 0.0
+go_no_go_requires:
+  - benchmark_version_frozen
+  - task_split_frozen
+  - baseline_reproduced_per_domain
+  - perturbation_invariant_tests_pass
+  - token_accounting_audited
+  - reviewer_approved
+

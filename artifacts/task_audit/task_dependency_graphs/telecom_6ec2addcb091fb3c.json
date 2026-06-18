@@ -1,0 +1,70 @@
+{
+  "depth": 6,
+  "domain": "telecom",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a3",
+      "target": "a4"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a4",
+      "target": "a5"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_airplane_mode",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "set_network_mode_preference",
+      "tool_type": "write"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "toggle_wifi_calling",
+      "tool_type": "write"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "reset_apn_settings",
+      "tool_type": "write"
+    },
+    {
+      "id": "a4",
+      "index": 4,
+      "tool": "reboot_device",
+      "tool_type": "write"
+    },
+    {
+      "id": "a5",
+      "index": 5,
+      "tool": "toggle_data",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_mode_off[PERSONA:Easy]"
+}

@@ -1,0 +1,63 @@
+{
+  "depth": 4,
+  "domain": "airline",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a3"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a1",
+      "target": "a3"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a2",
+      "target": "a3"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "get_user_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "book_reservation",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "8"
+}

@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "retail",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "return_delivered_order_items",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "108"
+}

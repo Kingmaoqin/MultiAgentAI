@@ -1,0 +1,26 @@
+{
+  "depth": 2,
+  "domain": "telecom",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_wifi_calling",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "reseat_sim_card",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mms_issue]bad_wifi_calling|unseat_sim_card[PERSONA:Easy]"
+}

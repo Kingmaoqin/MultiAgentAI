@@ -1,0 +1,114 @@
+{
+  "domain": "retail",
+  "agent": "llm_agent",
+  "regime": "FullSync",
+  "n_tasks": 14,
+  "n_sims": 14,
+  "n_valid": 11,
+  "n_pass": 2,
+  "pass_rate": 0.14285714285714285,
+  "mean_reward": 0.18181818181818182,
+  "elapsed_s": 817.5,
+  "task_ids": [
+    "0",
+    "104",
+    "31",
+    "6",
+    "109",
+    "8",
+    "98",
+    "111",
+    "13",
+    "39",
+    "54",
+    "32",
+    "52",
+    "18"
+  ],
+  "per_task": [
+    {
+      "task_id": "0",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 53.5
+    },
+    {
+      "task_id": "6",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 71.0
+    },
+    {
+      "task_id": "13",
+      "reward": 1.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 46.4
+    },
+    {
+      "task_id": "8",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 65.4
+    },
+    {
+      "task_id": "31",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 51.9
+    },
+    {
+      "task_id": "18",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 53.3
+    },
+    {
+      "task_id": "32",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 51.3
+    },
+    {
+      "task_id": "52",
+      "reward": 1.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 63.5
+    },
+    {
+      "task_id": "54",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 56.5
+    },
+    {
+      "task_id": "39",
+      "reward": null,
+      "termination": "TerminationReason.INFRASTRUCTURE_ERROR",
+      "duration": 0
+    },
+    {
+      "task_id": "98",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 117.7
+    },
+    {
+      "task_id": "104",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 66.7
+    },
+    {
+      "task_id": "109",
+      "reward": null,
+      "termination": "TerminationReason.INFRASTRUCTURE_ERROR",
+      "duration": 0
+    },
+    {
+      "task_id": "111",
+      "reward": null,
+      "termination": "TerminationReason.INFRASTRUCTURE_ERROR",
+      "duration": 0
+    }
+  ]
+}

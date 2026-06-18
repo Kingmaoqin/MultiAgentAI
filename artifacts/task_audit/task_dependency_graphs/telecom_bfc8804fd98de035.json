@@ -1,0 +1,26 @@
+{
+  "depth": 2,
+  "domain": "telecom",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "disconnect_vpn",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "toggle_roaming",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mobile_data_issue]bad_vpn|user_abroad_roaming_enabled_off[PERSONA:None]"
+}

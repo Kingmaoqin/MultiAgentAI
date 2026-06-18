@@ -1,0 +1,37 @@
+{
+  "depth": 3,
+  "domain": "retail",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "modify_pending_order_address",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "modify_pending_order_items",
+      "tool_type": "write"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "exchange_delivered_order_items",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "102"
+}

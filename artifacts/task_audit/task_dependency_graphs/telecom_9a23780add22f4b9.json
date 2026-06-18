@@ -1,0 +1,26 @@
+{
+  "depth": 2,
+  "domain": "telecom",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "reset_apn_settings",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "reboot_device",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[service_issue]break_apn_settings[PERSONA:None]"
+}

@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "telecom",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "grant_app_permission",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mms_issue]break_app_storage_permission[PERSONA:Easy]"
+}

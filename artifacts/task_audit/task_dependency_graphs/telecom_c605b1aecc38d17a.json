@@ -1,0 +1,48 @@
+{
+  "depth": 4,
+  "domain": "telecom",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_airplane_mode",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "grant_app_permission",
+      "tool_type": "write"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "grant_app_permission",
+      "tool_type": "write"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "enable_roaming",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mms_issue]airplane_mode_on|break_app_both_permissions|user_abroad_roaming_disabled_on[PERSONA:Hard]"
+}

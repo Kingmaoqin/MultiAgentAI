@@ -1,0 +1,86 @@
+{
+  "domain": "airline",
+  "agent": "ravel_fieldmask",
+  "regime": "FieldMask",
+  "n_tasks": 10,
+  "n_sims": 10,
+  "n_valid": 10,
+  "n_pass": 0,
+  "pass_rate": 0.0,
+  "mean_reward": 0.0,
+  "elapsed_s": 164.7,
+  "task_ids": [
+    "32",
+    "33",
+    "22",
+    "7",
+    "44",
+    "8",
+    "30",
+    "12",
+    "37",
+    "17"
+  ],
+  "per_task": [
+    {
+      "task_id": "7",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 6.5
+    },
+    {
+      "task_id": "8",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 33.7
+    },
+    {
+      "task_id": "12",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 46.3
+    },
+    {
+      "task_id": "17",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 44.3
+    },
+    {
+      "task_id": "22",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 26.9
+    },
+    {
+      "task_id": "32",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 23.3
+    },
+    {
+      "task_id": "30",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 37.9
+    },
+    {
+      "task_id": "33",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 41.4
+    },
+    {
+      "task_id": "37",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 40.4
+    },
+    {
+      "task_id": "44",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 16.2
+    }
+  ]
+}

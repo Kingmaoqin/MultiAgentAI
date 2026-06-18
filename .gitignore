@@ -1,0 +1,16 @@
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+results/**/*.tmp
+results/**/logs/
+logs/
+worktrees/
+*.egg-info/
+.env
+*.parquet
+# keep exp_summary.json and main_trials.csv but exclude raw nohup logs
+results/multimodel/logs/
+results/ravel_corrected/logs/
+results/ravel_exp/
+results/ravel_exp_test/

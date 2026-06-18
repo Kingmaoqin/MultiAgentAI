@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "airline",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "update_reservation_flights",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "15"
+}

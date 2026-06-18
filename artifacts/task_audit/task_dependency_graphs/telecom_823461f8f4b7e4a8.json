@@ -1,0 +1,114 @@
+{
+  "depth": 10,
+  "domain": "telecom",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a3",
+      "target": "a4"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a4",
+      "target": "a5"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a5",
+      "target": "a6"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a6",
+      "target": "a7"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a7",
+      "target": "a8"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a8",
+      "target": "a9"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_airplane_mode",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "set_network_mode_preference",
+      "tool_type": "write"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "toggle_wifi_calling",
+      "tool_type": "write"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "reset_apn_settings",
+      "tool_type": "write"
+    },
+    {
+      "id": "a4",
+      "index": 4,
+      "tool": "reboot_device",
+      "tool_type": "write"
+    },
+    {
+      "id": "a5",
+      "index": 5,
+      "tool": "grant_app_permission",
+      "tool_type": "write"
+    },
+    {
+      "id": "a6",
+      "index": 6,
+      "tool": "toggle_data",
+      "tool_type": "write"
+    },
+    {
+      "id": "a7",
+      "index": 7,
+      "tool": "refuel_data",
+      "tool_type": "write"
+    },
+    {
+      "id": "a8",
+      "index": 8,
+      "tool": "reseat_sim_card",
+      "tool_type": "write"
+    },
+    {
+      "id": "a9",
+      "index": 9,
+      "tool": "toggle_roaming",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_storage_permission|data_mode_off|data_usage_exceeded|unseat_sim_card|user_abroad_roaming_enabled_off[PERSONA:Easy]"
+}

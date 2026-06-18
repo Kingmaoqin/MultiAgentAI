@@ -1,0 +1,38 @@
+{
+  "captured_at": "2026-06-15T15:25:00-05:00",
+  "benchmarks": [
+    {
+      "name": "tau2/tau3-bench",
+      "path": "/home/xqin5/multiaiagent/worktrees/tau2-clean",
+      "remote": "https://github.com/sierra-research/tau2-bench.git",
+      "branch": "detached",
+      "commit": "ddc66a777e520373975f15d3abec989cfe2ec371",
+      "package_version": "1.0.0",
+      "dirty_files": [],
+      "status": "clean"
+    },
+    {
+      "name": "tau2/tau3-bench-original-asset",
+      "path": "/home/xqin5/tau2-bench",
+      "remote": "https://github.com/sierra-research/tau2-bench.git",
+      "branch": "main",
+      "commit": "ddc66a777e520373975f15d3abec989cfe2ec371",
+      "package_version": "1.0.0",
+      "dirty_files": [
+        "src/tau2/data_model/message.py"
+      ],
+      "status": "dirty_reference_only"
+    },
+    {
+      "name": "tau2-agentbeats",
+      "path": "/home/xqin5/reactproject/tau2-agentbeats",
+      "remote": "https://github.com/RDI-Foundation/tau2-agentbeats.git",
+      "branch": "main",
+      "commit": "1714c52119594900ad6e4579b6cd5de186c45410",
+      "dirty_files": [
+        "logs/"
+      ],
+      "status": "dirty-untracked-logs"
+    }
+  ]
+}

@@ -1,0 +1,1324 @@
+2026-06-15 19:56:25.772 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found
+2026-06-15 19:56:25.772 | INFO     | tau2.utils.utils:<module>:28 - Using data directory from source: /home/xqin5/multiaiagent/worktrees/tau2-clean/data
+2026-06-15 19:56:27.288 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled
+2026-06-15 19:56:27.424 | DEBUG    | tau2.registry:<module>:281 - Registering default components...
+2026-06-15 19:56:27.426 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration
+2026-06-15 19:56:27.426 | DEBUG    | tau2.registry:<module>:350 - Default components registered successfully. Registry info: {
+  "domains": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ],
+  "agents": [
+    "llm_agent",
+    "llm_agent_gt",
+    "llm_agent_solo",
+    "discrete_time_audio_native_agent"
+  ],
+  "users": [
+    "user_simulator",
+    "dummy_user"
+  ],
+  "task_sets": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom_full",
+    "telecom_small",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ]
+}
+╭────────────────────────── Simulation Configuration ──────────────────────────╮
+│ Domain: telecom  Task Set: Default  Tasks:                                   │
+│ bad_network_preference|break_app_sms_permission|data_mode_off|unseat_sim_car │
+│ d|user_abroad_roaming_disabled_off[PERSONA:None],                            │
+│ airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_both_perm │
+│ issions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy],       │
+│ bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy],                │
+│ airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sms_permi │
+│ ssion|unseat_sim_card[PERSONA:Easy],                                         │
+│ airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exceeded[PE │
+│ RSONA:Easy],                                                                 │
+│ airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|user_abr │
+│ oad_roaming_enabled_off[PERSONA:Hard],                                       │
+│ bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_card|use │
+│ r_abroad_roaming_disabled_off[PERSONA:Easy],                                 │
+│ bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_exceede │
+│ d|user_abroad_roaming_enabled_off[PERSONA:None],                             │
+│ bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_c │
+│ ard|user_abroad_roaming_enabled_off[PERSONA:Hard],                           │
+│ airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setti │
+│ ng|break_app_sms_permission|unseat_sim_card[PERSONA:None],                   │
+│ airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_app_sms_ │
+│ permission|user_abroad_roaming_enabled_off[PERSONA:Hard],                    │
+│ bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_ │
+│ permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy],   │
+│ bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_usage_exc │
+│ eeded[PERSONA:Easy],                                                         │
+│ airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_mode_of │
+│ f|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]             │
+│ Trials: 1  Max Steps: 30  Max Errors: 10                                     │
+│                                                                              │
+│ Agent: llm_agent_gt → openai/q                                               │
+│ User:  user_simulator → openai/q                                             │
+│                                                                              │
+│ Save: /home/xqin5/multiaiagent/results/dev_baseline/telecom  Concurrency: 3  │
+│ Verbose: False                                                               │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Running 14 out of 14 tasks for llm_agent_gt (filtered).
+0/14 (trial 1/1). Running task 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy], trial 1
+1/14 (trial 1/1). Running task 
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy], trial 1
+2/14 (trial 1/1). Running task 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy], trial 1
+2026-06-15 19:56:41.644 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:56:41.667 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:56:41.690 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:56:56.299 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(30s), 
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(30s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(30s)
+2026-06-15 19:57:00.731 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:57:07.204 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:57:16.491 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:57:22.531 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:57:25.639 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(60s), 
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(60s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(60s)
+2026-06-15 19:57:34.119 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:57:36.286 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:57:41.972 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:57:56.160 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:57:57.663 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(90s), 
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(90s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(90s)
+2026-06-15 19:58:20.899 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:58:24.405 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(120s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(120s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(120s)
+2026-06-15 19:58:37.108 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:58:44.495 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:58:47.793 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:58:50.892 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(150s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(150s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(150s)
+2026-06-15 19:59:08.669 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:59:10.775 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(180s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(180s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(180s)
+2026-06-15 19:59:32.635 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:59:42.964 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 19:59:42.971 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(210s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(210s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(210s)
+2026-06-15 20:00:03.431 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:00:14.562 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:00:26.497 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(240s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(240s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(240s)
+2026-06-15 20:00:32.644 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:00:38.709 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:00:42.213 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:00:43.448 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(270s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(270s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(270s)
+2026-06-15 20:01:04.938 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:01:20.017 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:01:20.112 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(300s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(300s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(300s)
+2026-06-15 20:01:35.150 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:01:51.847 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(330s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(330s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(330s)
+2026-06-15 20:02:21.925 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(360s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(360s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(360s)
+2026-06-15 20:02:37.795 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:02:47.079 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(390s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(390s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(390s)
+2026-06-15 20:03:03.365 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:03:14.321 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:03:24.933 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(420s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(420s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(420s)
+2026-06-15 20:03:30.365 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:03:37.427 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:03:45.296 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/14 complete. Avg reward: N/A. 3 running: 
+[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy].0(450s),
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(450s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(450s)
+2026-06-15 20:04:08.171 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:04:10.677 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:04:16.718 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy]      │
+│ Trial: 0                                                                     │
+│ Duration: 468.90s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ✅ 1.0000 (ENV_ASSERTION: 1.0)                                       │
+│                                                                              │
+│ DB Check:✅ 1.0                                                              │
+│                                                                              │
+│ Env Assertions:                                                              │
+│ - 0: user assert_can_send_mms ✅ 1.0                                         │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: user toggle_wifi_calling [write] ✅ 1.0                                 │
+│ - 1: user toggle_data [write] ✅ 1.0                                         │
+│ - 2: user reseat_sim_card [write] ✅ 1.0                                     │
+│                                                                              │
+│ Partial Action Reward: 3/3 (100.0%)                                          │
+│   Write: 3/3 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+3/14 (trial 1/1). Running task 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy], trial 1
+2026-06-15 20:04:22.465 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 1/14 complete. Avg reward: 1.00 (N=1). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exce
+eded[PERSONA:Easy].0(480s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_us
+age_exceeded[PERSONA:Easy].0(480s), 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(11s)
+2026-06-15 20:04:29.496 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|dat │
+│ a_usage_exceeded[PERSONA:Easy]                                               │
+│ Trial: 0                                                                     │
+│ Duration: 481.59s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+4/14 (trial 1/1). Running task 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard], trial 1
+2026-06-15 20:04:34.978 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_ │
+│ exceeded[PERSONA:Easy]                                                       │
+│ Trial: 0                                                                     │
+│ Duration: 487.05s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.USER_STOP                              │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ✅ 1.0000 (ENV_ASSERTION: 1.0)                                       │
+│                                                                              │
+│ DB Check:❌ 0.0                                                              │
+│                                                                              │
+│ Env Assertions:                                                              │
+│ - 0: user assert_can_send_mms ✅ 1.0                                         │
+│ - 1: assistant assert_data_refueling_amount ✅ 1.0                           │
+│                                                                              │
+│ Action Checks:                                                               │
+│ - 0: user toggle_airplane_mode [write] ✅ 1.0                                │
+│ - 1: user set_network_mode_preference [write] ✅ 1.0                         │
+│ - 2: user toggle_data [write] ✅ 1.0                                         │
+│ - 3: agent refuel_data [write] ✅ 1.0                                        │
+│                                                                              │
+│ Partial Action Reward: 4/4 (100.0%)                                          │
+│   Write: 4/4 (100.0%)                                                        │
+│                                                                              │
+│ Additional Info:                                                             │
+│ env: None                                                                    │
+│ nl: None                                                                     │
+│ communicate: {'note': 'No communicate_info to evaluate'}                     │
+│ action: None                                                                 │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+5/14 (trial 1/1). Running task 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard], trial 1
+2026-06-15 20:04:48.619 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(41s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(28s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(23s)
+2026-06-15 20:05:04.105 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:05:12.583 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(71s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(58s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(53s)
+2026-06-15 20:05:34.524 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:05:48.657 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:05:51.606 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(101s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(88s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(83s)
+2026-06-15 20:06:25.057 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(131s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(118s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(113s)
+2026-06-15 20:06:34.665 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:06:45.894 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:06:50.623 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(161s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(148s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(143s)
+2026-06-15 20:06:59.516 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:07:15.390 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:07:19.460 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(191s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(178s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(173s)
+2026-06-15 20:07:46.689 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:07:52.997 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(221s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(208s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(203s)
+2026-06-15 20:08:05.568 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(251s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(238s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(233s)
+2026-06-15 20:08:29.643 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:08:57.710 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(281s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(268s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(263s)
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(311s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(298s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(293s)
+2026-06-15 20:09:29.020 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(341s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(328s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(323s)
+2026-06-15 20:09:59.467 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:10:10.996 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:10:17.615 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:10:26.532 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(371s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(358s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(353s)
+2026-06-15 20:10:44.574 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:10:51.168 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(401s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(388s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(383s)
+2026-06-15 20:11:14.128 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(431s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(418s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(413s)
+2026-06-15 20:11:43.179 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:11:45.547 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:11:57.778 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 3/14 complete. Avg reward: 0.67 (N=3). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sm
+s_permission|unseat_sim_card[PERSONA:Easy].0(461s), 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(448s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(443s)
+2026-06-15 20:12:23.893 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_ap │
+│ p_sms_permission|unseat_sim_card[PERSONA:Easy]                               │
+│ Trial: 0                                                                     │
+│ Duration: 487.03s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+6/14 (trial 1/1). Running task 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy], trial 1
+Status: 4/14 complete. Avg reward: 0.50 (N=4). 3 running: 
+[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|u
+ser_abroad_roaming_enabled_off[PERSONA:Hard].0(478s), 
+[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_a
+pp_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard].0(473s), 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(4s)
+2026-06-15 20:12:38.702 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceed │
+│ ed|user_abroad_roaming_enabled_off[PERSONA:Hard]                             │
+│ Trial: 0                                                                     │
+│ Duration: 489.10s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+7/14 (trial 1/1). Running task 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None], trial 1
+2026-06-15 20:12:41.891 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|bre │
+│ ak_app_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard]          │
+│ Trial: 0                                                                     │
+│ Duration: 486.76s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+8/14 (trial 1/1). Running task 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard], trial 1
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(34s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(19s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(16s)
+2026-06-15 20:13:15.019 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:13:26.065 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(64s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(49s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(46s)
+2026-06-15 20:13:49.966 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:13:56.024 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(94s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(79s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(76s)
+2026-06-15 20:14:14.956 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(124s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(109s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(106s)
+2026-06-15 20:14:31.653 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:14:47.070 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:14:47.351 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(154s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(139s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(136s)
+2026-06-15 20:15:07.099 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:15:23.559 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(184s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(169s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(166s)
+2026-06-15 20:15:47.487 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(214s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(199s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(196s)
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(244s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(229s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(226s)
+2026-06-15 20:16:34.410 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:16:55.664 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(274s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(259s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(256s)
+2026-06-15 20:17:06.781 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(304s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(289s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(286s)
+2026-06-15 20:17:38.578 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(334s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(319s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(316s)
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(364s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(349s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(346s)
+2026-06-15 20:18:38.951 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:18:45.527 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:18:55.610 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(394s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(379s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(376s)
+2026-06-15 20:19:18.059 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:19:20.227 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(424s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(409s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(406s)
+2026-06-15 20:19:41.625 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:19:51.246 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(454s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(439s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(436s)
+2026-06-15 20:20:04.756 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:20:23.472 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 6/14 complete. Avg reward: 0.33 (N=6). 3 running: 
+[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_c
+ard|user_abroad_roaming_disabled_off[PERSONA:Easy].0(484s), 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(469s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(466s)
+2026-06-15 20:20:32.110 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:20:46.609 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_s │
+│ im_card|user_abroad_roaming_disabled_off[PERSONA:Easy]                       │
+│ Trial: 0                                                                     │
+│ Duration: 502.60s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+9/14 (trial 1/1). Running task 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None], trial 1
+Status: 7/14 complete. Avg reward: 0.29 (N=7). 3 running: 
+[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_
+sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(499s), 
+[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unsea
+t_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard].0(496s), 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(11s)
+2026-06-15 20:21:09.167 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|u │
+│ nseat_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard]                 │
+│ Trial: 0                                                                     │
+│ Duration: 507.16s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+10/14 (trial 1/1). Running task 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None], trial 1
+2026-06-15 20:21:09.532 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|uns │
+│ eat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]                  │
+│ Trial: 0                                                                     │
+│ Duration: 510.72s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+11/14 (trial 1/1). Running task 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy], 
+trial 1
+2026-06-15 20:21:23.730 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(41s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(19s), 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(1
+8s)
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(71s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(49s), 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(4
+8s)
+2026-06-15 20:22:02.876 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:22:03.223 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(101s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(79s), 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(7
+8s)
+2026-06-15 20:22:38.057 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:22:39.583 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(131s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(109s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(1
+08s)
+2026-06-15 20:23:05.826 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:23:14.948 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(161s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(139s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(1
+38s)
+2026-06-15 20:23:34.940 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:23:37.705 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:23:50.372 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(191s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(169s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(1
+68s)
+2026-06-15 20:24:19.666 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(221s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(199s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(1
+98s)
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(251s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(229s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(2
+28s)
+2026-06-15 20:25:05.030 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(281s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(259s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(2
+58s)
+2026-06-15 20:25:30.787 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:25:38.686 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(311s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(289s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(2
+88s)
+2026-06-15 20:26:05.628 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:26:07.901 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(341s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(319s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(3
+18s)
+2026-06-15 20:26:32.998 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:26:39.158 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:26:55.434 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(371s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(349s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(3
+48s)
+2026-06-15 20:27:04.520 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:27:19.532 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:27:21.286 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(401s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(379s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(3
+78s)
+2026-06-15 20:27:42.968 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:27:52.728 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(431s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(409s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(4
+08s)
+2026-06-15 20:27:59.851 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:28:10.989 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:28:19.034 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(461s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(439s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(4
+38s)
+2026-06-15 20:28:28.784 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:28:40.505 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 9/14 complete. Avg reward: 0.22 (N=9). 3 running: 
+[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_
+exceeded|user_abroad_roaming_enabled_off[PERSONA:None].0(491s), 
+[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_
+mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None].0(469s),
+ 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(4
+68s)
+2026-06-15 20:28:58.094 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_us │
+│ age_exceeded|user_abroad_roaming_enabled_off[PERSONA:None]                   │
+│ Trial: 0                                                                     │
+│ Duration: 491.37s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+12/14 (trial 1/1). Running task 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None], trial 1
+2026-06-15 20:29:11.500 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|d │
+│ ata_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]  │
+│ Trial: 0                                                                     │
+│ Duration: 482.22s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+13/14 (trial 1/1). Running task 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+, trial 1
+Status: 11/14 complete. Avg reward: 0.18 (N=11). 3 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_bo
+th_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy].0(4
+98s), 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(30s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(16s)
+2026-06-15 20:29:41.578 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:29:43.433 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_ap │
+│ p_both_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:E │
+│ asy]                                                                         │
+│ Trial: 0                                                                     │
+│ Duration: 513.78s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2026-06-15 20:29:54.592 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(60s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(46s)
+2026-06-15 20:30:24.201 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(90s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(76s)
+2026-06-15 20:30:34.950 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:30:52.190 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(120s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(106s)
+2026-06-15 20:31:14.304 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:31:21.579 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(150s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(136s)
+2026-06-15 20:31:33.457 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:31:37.230 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(180s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(166s)
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(210s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(196s)
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(240s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(226s)
+2026-06-15 20:33:01.149 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:33:19.310 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(270s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(256s)
+2026-06-15 20:33:40.904 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(300s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(286s)
+2026-06-15 20:34:03.892 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:34:18.389 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(330s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(316s)
+2026-06-15 20:34:37.786 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:34:39.498 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(360s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(346s)
+2026-06-15 20:35:03.381 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:35:05.600 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(390s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(376s)
+2026-06-15 20:35:36.373 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:35:38.971 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:35:47.715 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:35:53.908 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(420s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(406s)
+2026-06-15 20:36:03.710 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:36:11.298 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(450s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(436s)
+2026-06-15 20:36:38.597 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:36:43.290 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:36:48.503 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-15 20:36:50.644 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 12/14 complete. Avg reward: 0.17 (N=12). 2 running: 
+[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mm
+s_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None].0(480s), 
+[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_a
+pp_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]
+.0(466s)
+2026-06-15 20:37:15.093 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|bre │
+│ ak_app_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSO │
+│ NA:Easy]                                                                     │
+│ Trial: 0                                                                     │
+│ Duration: 483.53s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2026-06-15 20:37:18.536 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=q, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID:                                                                     │
+│ [mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_ap │
+│ n_mms_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None]         │
+│ Trial: 0                                                                     │
+│ Duration: 500.32s                                                            │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.TIMEOUT                                │
+│ Agent Cost: $0.0000                                                          │
+│ User Cost: $0.0000                                                           │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: timeout         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Successfully completed all simulations!
+To review the simulations, run: tau2 view
+╭───────────────────────── Agent Performance Metrics ──────────────────────────╮
+│   ═══ Overview ═══                                                           │
+│   Total Simulations         14                                               │
+│   Total Tasks               14                                               │
+│                                                                              │
+│   ═══ Reward Metrics ═══                                                     │
+│   🏆 Average Reward         0.1429                                           │
+│      Pass^1                 0.143                                            │
+│   💰 Avg Cost/Conversation  $0.0000                                          │
+│                                                                              │
+│   ═══ Action Metrics ═══                                                     │
+│   📖 Read Actions           -                                                │
+│   ✏️  Write Actions          7/7 (100.0%)                                     │
+│                                                                              │
+│   ═══ DB Match ═══                                                           │
+│   🗄️  DB Match               ✓ 1 / ✗ 1 (50.0%)                                │
+│                                                                              │
+│   ═══ Authentication ═══                                                     │
+│      Not Checked            14                                               │
+│                                                                              │
+│   ═══ Termination ═══                                                        │
+│   🛑 Normal Stop            2 (👤 2 / 🤖 0)                                  │
+│                                                                              │
+│   ═══ LLM Judge Review ═══                                                   │
+│   🤖 Agent Errors           0 errors                                         │
+│      Sims by severity       -                                                │
+│   👤 User Errors            0 errors                                         │
+│      Sims by severity       -                                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯

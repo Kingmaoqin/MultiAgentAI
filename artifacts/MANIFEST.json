@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-06-15",
+  "benchmark": {
+    "tau2_commit": "ddc66a777e520373975f15d3abec989cfe2ec371",
+    "formal_tau2_root": "/home/xqin5/multiaiagent/worktrees/tau2-clean",
+    "formal_tau2_dirty": false,
+    "original_tau2_root": "/home/xqin5/tau2-bench",
+    "original_tau2_dirty": true,
+    "tau2_patch_status": "FORMAL_RUNS_USE_CLEAN_WORKTREE"
+  },
+  "proposal_hash": "2d01ea22d5d9e78ba1a57aba6a1a9057",
+  "task_audit": {
+    "all_tasks": "a831485bb1a0f1a89c5409a51dafedf8f8d5401a370738c7153a3c7144e60903",
+    "included_tasks": "50c72f8e6ae42e56c179d3911375ee95fe2c11739f410bfa893ef5fec8d26211",
+    "excluded_tasks": "ca911980be4eaa04b06920442fd0e69976a38a7edd9a0601bf0b153e4112fcc7",
+    "split_manifest": "dcd25e5103a8aca0bffb60a1b56cccb4c876db3e8ebd5ac46d9f0bbbefb9fb78",
+    "dependency_graph_count": 2449
+  },
+  "src_modules": {
+    "evidence": "8db967da2149035b48d9e60befef2aacdab890fa63b7d81238285c48b18d0b90",
+    "visibility": "bd30650b85b5faa90f2aba8233c08a652d94aa7b25b56f284d12256f4c22be2c",
+    "commit_gate": "ee0e5b3b5128f23a43547f3e9a0181a38275e67d4b720a27869c4e64cfbe2b77",
+    "mse_router": "0106cdc1c8ffd84ca0d615730a3b82c9c8ad032bd477f7dce65b35993d1783f2",
+    "reconciliation": "15add05eb3c71ca75fec5cf67bca8f10e07e55449bbdd2883c42b297dc75d783",
+    "trial_logger": "9d38a47c6862015616f6867d645547caedd342a5fc6c79abbcc9d83f38ca1e6e",
+    "metrics": "2070106367710fad361d9bbf69024ece72136a80ce77189807b49e894f292b43",
+    "benchmark_adapter": "b2982173ba85d25ae9e8b748e554d7b15cc14f1689cac0a313915d9ab83de364"
+  },
+  "test_counts": {
+    "total": 58,
+    "unit": 16,
+    "new": 42
+  },
+  "reviewer_patch_001": "APPROVED",
+  "reviewer_patch_002": "CHANGES_REQUIRED_FIXES_APPLIED_PENDING_REVIEW",
+  "key_results": {
+    "baseline_smoke_mock": "057567782234fb31aaa0afe3c0c57fd0",
+    "clean_tau2_airline_qwen_task32": "INTERRUPTED_ZERO_COMPLETED_SIMULATIONS",
+    "clean_tau2_airline_qwen_max2": "08fb9eee9d0343c173675019986d27323ae65f140fef93ab85a6c466f82fb0d6",
+    "clean_tau2_retail_qwen_max2": "e75e1f90ee6ef7a6d7801424288369691232eb43a66a759e419b00a59f63335a",
+    "clean_tau2_telecom_base_qwen_max2": "21e85e1d92cd8ec556f585ed32cc8e5c6f93ad1379876a5a92155578f0d038b0"
+  }
+}

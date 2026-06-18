@@ -1,0 +1,48 @@
+{
+  "depth": 4,
+  "domain": "retail",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "modify_pending_order_address",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "modify_pending_order_address",
+      "tool_type": "write"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "modify_pending_order_address",
+      "tool_type": "write"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "modify_user_address",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "87"
+}

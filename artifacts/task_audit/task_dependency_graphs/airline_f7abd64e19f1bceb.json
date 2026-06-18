@@ -1,0 +1,26 @@
+{
+  "depth": 2,
+  "domain": "airline",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "get_user_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    }
+  ],
+  "task_id": "38"
+}

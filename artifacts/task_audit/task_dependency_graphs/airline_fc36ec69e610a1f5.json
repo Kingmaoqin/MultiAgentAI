@@ -1,0 +1,453 @@
+{
+  "depth": 19,
+  "domain": "airline",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a3",
+      "target": "a4"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a4",
+      "target": "a5"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a5",
+      "target": "a6"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a6",
+      "target": "a7"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a7",
+      "target": "a8"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a8",
+      "target": "a9"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a9",
+      "target": "a10"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a10",
+      "target": "a11"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a11",
+      "target": "a12"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a12",
+      "target": "a13"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a13",
+      "target": "a14"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a14",
+      "target": "a15"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a15",
+      "target": "a16"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a16",
+      "target": "a17"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a17",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a1",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a2",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a3",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a4",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a5",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a6",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a7",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a8",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a9",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a10",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a11",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a12",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a13",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a14",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a15",
+      "target": "a16"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a1",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a2",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a3",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a4",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a5",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a6",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a7",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a8",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a9",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a10",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a11",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a12",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a13",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a14",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a15",
+      "target": "a17"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a1",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a2",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a3",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a4",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a5",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a6",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a7",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a8",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a9",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a10",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a11",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a12",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a13",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a14",
+      "target": "a18"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a15",
+      "target": "a18"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "get_user_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a4",
+      "index": 4,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a5",
+      "index": 5,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a6",
+      "index": 6,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a7",
+      "index": 7,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a8",
+      "index": 8,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a9",
+      "index": 9,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a10",
+      "index": 10,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a11",
+      "index": 11,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a12",
+      "index": 12,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a13",
+      "index": 13,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a14",
+      "index": 14,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a15",
+      "index": 15,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a16",
+      "index": 16,
+      "tool": "update_reservation_flights",
+      "tool_type": "write"
+    },
+    {
+      "id": "a17",
+      "index": 17,
+      "tool": "update_reservation_flights",
+      "tool_type": "write"
+    },
+    {
+      "id": "a18",
+      "index": 18,
+      "tool": "update_reservation_flights",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "44"
+}

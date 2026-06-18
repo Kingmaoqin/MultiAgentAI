@@ -1,0 +1,154 @@
+{
+  "depth": 10,
+  "domain": "retail",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a3",
+      "target": "a4"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a4",
+      "target": "a5"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a5",
+      "target": "a6"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a6",
+      "target": "a7"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a7",
+      "target": "a8"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a8",
+      "target": "a9"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a8"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a1",
+      "target": "a8"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a2",
+      "target": "a8"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a3",
+      "target": "a8"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a4",
+      "target": "a8"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a5",
+      "target": "a8"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a6",
+      "target": "a8"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a7",
+      "target": "a8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "find_user_id_by_name_zip",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "get_user_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "get_order_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "get_order_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a4",
+      "index": 4,
+      "tool": "get_product_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a5",
+      "index": 5,
+      "tool": "get_product_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a6",
+      "index": 6,
+      "tool": "get_product_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a7",
+      "index": 7,
+      "tool": "get_product_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a8",
+      "index": 8,
+      "tool": "modify_pending_order_items",
+      "tool_type": "write"
+    },
+    {
+      "id": "a9",
+      "index": 9,
+      "tool": "get_order_details",
+      "tool_type": "read_or_other"
+    }
+  ],
+  "task_id": "20"
+}

@@ -1,0 +1,114 @@
+{
+  "domain": "retail",
+  "agent": "ravel_fullsync",
+  "regime": "FullSync",
+  "n_tasks": 14,
+  "n_sims": 14,
+  "n_valid": 14,
+  "n_pass": 1,
+  "pass_rate": 0.07142857142857142,
+  "mean_reward": 0.07142857142857142,
+  "elapsed_s": 262.9,
+  "task_ids": [
+    "0",
+    "104",
+    "31",
+    "6",
+    "109",
+    "8",
+    "98",
+    "111",
+    "13",
+    "39",
+    "54",
+    "32",
+    "52",
+    "18"
+  ],
+  "per_task": [
+    {
+      "task_id": "0",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 21.0
+    },
+    {
+      "task_id": "6",
+      "reward": 1.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 26.8
+    },
+    {
+      "task_id": "13",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 19.7
+    },
+    {
+      "task_id": "8",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 31.4
+    },
+    {
+      "task_id": "18",
+      "reward": 0.0,
+      "termination": "TerminationReason.USER_STOP",
+      "duration": 18.5
+    },
+    {
+      "task_id": "31",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 19.3
+    },
+    {
+      "task_id": "32",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 24.6
+    },
+    {
+      "task_id": "39",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 51.0
+    },
+    {
+      "task_id": "52",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 45.4
+    },
+    {
+      "task_id": "54",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 11.2
+    },
+    {
+      "task_id": "104",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 26.4
+    },
+    {
+      "task_id": "98",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 37.4
+    },
+    {
+      "task_id": "111",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 22.2
+    },
+    {
+      "task_id": "109",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 33.2
+    }
+  ]
+}

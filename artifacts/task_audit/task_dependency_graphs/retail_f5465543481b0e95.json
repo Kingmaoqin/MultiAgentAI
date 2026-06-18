@@ -1,0 +1,59 @@
+{
+  "depth": 5,
+  "domain": "retail",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a3",
+      "target": "a4"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "find_user_id_by_name_zip",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "find_user_id_by_name_zip",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "find_user_id_by_name_zip",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "get_user_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a4",
+      "index": 4,
+      "tool": "get_order_details",
+      "tool_type": "read_or_other"
+    }
+  ],
+  "task_id": "67"
+}

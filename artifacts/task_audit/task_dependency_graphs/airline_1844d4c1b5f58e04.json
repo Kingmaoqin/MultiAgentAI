@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "airline",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "transfer_to_human_agents",
+      "tool_type": "read_or_other"
+    }
+  ],
+  "task_id": "13"
+}

@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-06-17T20:30:00-05:00",
+  "hardware": {
+    "gpus": "4x NVIDIA A100 80GB SXM",
+    "gpu_compute_capability": "8.0",
+    "gpu_memory_per_card_gb": 80,
+    "gpu_total_memory_gb": 320,
+    "host": "shared cluster (co-tenant zihao_runs)"
+  },
+  "software": {
+    "vllm": "0.20.2",
+    "conda_env": "p08_skilloverload",
+    "pytorch": "2.6.0+cu124",
+    "python": "3.10"
+  },
+  "models": {
+    "Qwen3.6-27B": {
+      "local_path": "/home/xqin5/agentsearch/models/Qwen3.6-27B",
+      "served_at": "http://127.0.0.1:8190/v1",
+      "tool_parser": "hermes",
+      "max_model_len": 65536,
+      "quantization": "BF16",
+      "extended_thinking": true,
+      "notes": "CoT leaks into user_simulator output; ~150 tok/s on single GPU"
+    },
+    "Gemma4-31B": {
+      "hf_id": "google/gemma-4-31b-it",
+      "served_at": "http://127.0.0.1:8005/v1",
+      "served_model_name": "gemma4/gemma-4-31b-it",
+      "tool_parser": "gemma4",
+      "gpu_assignment": "GPU2 (single card)",
+      "quantization": "BF16",
+      "max_model_len": 65536,
+      "approx_throughput_tok_per_s": 150
+    },
+    "gpt-oss-120b": {
+      "hf_id": "openai/gpt-oss",
+      "served_at": "http://127.0.0.1:8192/v1",
+      "served_model_name": "openai/gpt-oss",
+      "tool_parser": "openai_gptoss",
+      "reasoning_parser": "openai_gptoss",
+      "gpu_assignment": "GPU1+GPU3 (tensor parallel 2)",
+      "quantization": "gpt_oss_mxfp4 (Marlin FP4 emulation on A100)",
+      "max_model_len": 65536,
+      "approx_throughput_tok_per_s": 80,
+      "notes": "Reasoning model; outputs internal chain-of-thought in 'reasoning' field"
+    },
+    "Llama3.3-70B-FP8": {
+      "status": "ABANDONED",
+      "reason": "67.68 GiB weights leave only 12.32 GB for KV cache; FP8 Marlin emulation gives ~40 tok/s; cooperative timeout does not fire during streaming; tasks hang indefinitely"
+    }
+  },
+  "benchmark": {
+    "name": "tau2-bench",
+    "worktree": "/home/xqin5/multiaiagent/worktrees/tau2-clean",
+    "commit": "ddc66a7",
+    "tau2_version": "2.x (local worktree)",
+    "split_manifest": "artifacts/task_audit/split_manifest.json",
+    "split_seed": 20260615
+  },
+  "experiment_params": {
+    "max_steps": 25,
+    "timeout_s": 900,
+    "max_concurrency": 2,
+    "temperature": 0.0,
+    "auto_resume": true
+  },
+  "known_biases": [
+    "CommitGate empty-schema bug in first run (all results discarded); fixed 2026-06-15",
+    "Baseline used 480s timeout; RAVEL used 900s timeout (unfair comparison for Qwen3 round 1)",
+    "GPU contention: baseline ran at ~5 concurrent, first RAVEL run at ~38 concurrent",
+    "Qwen3 extended thinking leaks CoT into user_simulator messages (~63% of messages affected)",
+    "Retail baseline uses llm_agent_gt (GT hints); RAVEL uses llm_agent (no GT hints)",
+    "gpt-oss retail baseline initially contaminated (9/14 infra_error); rerun for clean data",
+    "Gemma4 tasks 39/109/111: litellm ~90s timeout fires \u2192 failover to real OpenAI API \u2192 authz error",
+    "Telecom domain: max_steps=25 is structurally insufficient; 100% MAX_STEPS termination"
+  ]
+}

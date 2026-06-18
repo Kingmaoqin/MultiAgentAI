@@ -1,0 +1,26 @@
+{
+  "depth": 2,
+  "domain": "retail",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "cancel_pending_order",
+      "tool_type": "write"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "cancel_pending_order",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "81"
+}

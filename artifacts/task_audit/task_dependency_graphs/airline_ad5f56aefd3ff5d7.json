@@ -1,0 +1,47 @@
+{
+  "depth": 3,
+  "domain": "airline",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a2"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "cancel_reservation",
+      "tool_type": "write"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "book_reservation",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "29"
+}

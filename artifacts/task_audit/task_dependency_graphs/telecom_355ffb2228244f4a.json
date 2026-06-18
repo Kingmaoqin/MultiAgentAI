@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "telecom",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_roaming",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mobile_data_issue]user_abroad_roaming_enabled_off[PERSONA:None]"
+}

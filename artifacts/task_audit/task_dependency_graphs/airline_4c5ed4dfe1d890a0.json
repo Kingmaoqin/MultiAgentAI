@@ -1,0 +1,79 @@
+{
+  "depth": 5,
+  "domain": "airline",
+  "edges": [
+    {
+      "reason": "reference_order",
+      "source": "a0",
+      "target": "a1"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a1",
+      "target": "a2"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a2",
+      "target": "a3"
+    },
+    {
+      "reason": "reference_order",
+      "source": "a3",
+      "target": "a4"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a0",
+      "target": "a4"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a1",
+      "target": "a4"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a2",
+      "target": "a4"
+    },
+    {
+      "reason": "prior_evidence_to_write",
+      "source": "a3",
+      "target": "a4"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "get_reservation_details",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a1",
+      "index": 1,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a2",
+      "index": 2,
+      "tool": "search_direct_flight",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a3",
+      "index": 3,
+      "tool": "calculate",
+      "tool_type": "read_or_other"
+    },
+    {
+      "id": "a4",
+      "index": 4,
+      "tool": "update_reservation_baggages",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "12"
+}

@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "telecom",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_airplane_mode",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[service_issue]airplane_mode_on[PERSONA:None]"
+}

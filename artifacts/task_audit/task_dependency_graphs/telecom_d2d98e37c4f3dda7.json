@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "telecom",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_data_saver_mode",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mobile_data_issue]data_saver_mode_on[PERSONA:Easy]"
+}

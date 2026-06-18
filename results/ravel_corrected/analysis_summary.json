@@ -1,0 +1,325 @@
+{
+  "domains": {
+    "airline": {
+      "task_ids": [
+        "32",
+        "33",
+        "22",
+        "7",
+        "44",
+        "8",
+        "30",
+        "12",
+        "37",
+        "17"
+      ],
+      "baseline_gt": {
+        "n_done": 10,
+        "n_expected": 10,
+        "n_valid": 10,
+        "n_pass": 3,
+        "n_timeout": 0,
+        "mean_reward": 0.3,
+        "pass_rate": 0.3,
+        "per_task": {
+          "32": 0.0,
+          "33": 0.0,
+          "22": 1.0,
+          "7": 0.0,
+          "44": 0.0,
+          "8": 0.0,
+          "30": 1.0,
+          "12": 1.0,
+          "37": 0.0,
+          "17": 0.0
+        }
+      },
+      "ravel": {
+        "FullSync": {
+          "n_done": 10,
+          "n_expected": 10,
+          "n_valid": 10,
+          "n_pass": 3,
+          "n_timeout": 0,
+          "mean_reward": 0.3,
+          "pass_rate": 0.3,
+          "bootstrap": {
+            "n_pairs": 10,
+            "delta_mean": 0.0,
+            "ci_lo": -0.3,
+            "ci_hi": 0.3,
+            "p_gt0": 0.3509
+          },
+          "per_task": {
+            "32": 0.0,
+            "33": 0.0,
+            "22": 1.0,
+            "7": 0.0,
+            "44": 0.0,
+            "8": 0.0,
+            "30": 1.0,
+            "12": 0.0,
+            "37": 1.0,
+            "17": 0.0
+          }
+        }
+      }
+    },
+    "retail": {
+      "task_ids": [
+        "0",
+        "104",
+        "31",
+        "6",
+        "109",
+        "8",
+        "98",
+        "111",
+        "13",
+        "39",
+        "54",
+        "32",
+        "52",
+        "18"
+      ],
+      "baseline_gt": {
+        "n_done": 14,
+        "n_expected": 14,
+        "n_valid": 14,
+        "n_pass": 3,
+        "n_timeout": 0,
+        "mean_reward": 0.21428571428571427,
+        "pass_rate": 0.21428571428571427,
+        "per_task": {
+          "0": 1.0,
+          "104": 0.0,
+          "31": 0.0,
+          "6": 1.0,
+          "109": 0.0,
+          "8": 0.0,
+          "98": 0.0,
+          "111": 0.0,
+          "13": 1.0,
+          "39": 0.0,
+          "54": 0.0,
+          "32": 0.0,
+          "52": 0.0,
+          "18": 0.0
+        }
+      },
+      "ravel": {
+        "FullSync": {
+          "n_done": 6,
+          "n_expected": 14,
+          "n_valid": 6,
+          "n_pass": 1,
+          "n_timeout": 0,
+          "mean_reward": 0.16666666666666666,
+          "pass_rate": 0.07142857142857142,
+          "bootstrap": {
+            "n_pairs": 6,
+            "delta_mean": -0.3333333333333333,
+            "ci_lo": -0.6666666666666666,
+            "ci_hi": 0.0,
+            "p_gt0": 0.0
+          },
+          "per_task": {
+            "0": 0.0,
+            "104": null,
+            "31": null,
+            "6": 1.0,
+            "109": null,
+            "8": 0.0,
+            "98": null,
+            "111": null,
+            "13": 0.0,
+            "39": null,
+            "54": null,
+            "32": 0.0,
+            "52": null,
+            "18": 0.0
+          }
+        }
+      }
+    },
+    "telecom": {
+      "task_ids": [
+        "[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]",
+        "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_both_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy]",
+        "[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy]",
+        "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sms_permission|unseat_sim_card[PERSONA:Easy]",
+        "[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exceeded[PERSONA:Easy]",
+        "[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:Hard]",
+        "[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]",
+        "[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:None]",
+        "[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard]",
+        "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None]",
+        "[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_app_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard]",
+        "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]",
+        "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_usage_exceeded[PERSONA:Easy]",
+        "[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]"
+      ],
+      "baseline_gt": {
+        "n_done": 14,
+        "n_expected": 14,
+        "n_valid": 14,
+        "n_pass": 2,
+        "n_timeout": 0,
+        "mean_reward": 0.14285714285714285,
+        "pass_rate": 0.14285714285714285,
+        "per_task": {
+          "[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0,
+          "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_both_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy]": 0.0,
+          "[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy]": 1.0,
+          "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sms_permission|unseat_sim_card[PERSONA:Easy]": 0.0,
+          "[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exceeded[PERSONA:Easy]": 1.0,
+          "[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+          "[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+          "[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:None]": 0.0,
+          "[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+          "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None]": 0.0,
+          "[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_app_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+          "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+          "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_usage_exceeded[PERSONA:Easy]": 0.0,
+          "[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0
+        }
+      },
+      "ravel": {
+        "FullSync": {
+          "n_done": 14,
+          "n_expected": 14,
+          "n_valid": 14,
+          "n_pass": 0,
+          "n_timeout": 0,
+          "mean_reward": 0.0,
+          "pass_rate": 0.0,
+          "bootstrap": {
+            "n_pairs": 14,
+            "delta_mean": -0.14285714285714285,
+            "ci_lo": -0.35714285714285715,
+            "ci_hi": 0.0,
+            "p_gt0": 0.0
+          },
+          "per_task": {
+            "[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_both_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sms_permission|unseat_sim_card[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exceeded[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:None]": 0.0,
+            "[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_app_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_usage_exceeded[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0
+          }
+        },
+        "Delayed": {
+          "n_done": 14,
+          "n_expected": 14,
+          "n_valid": 14,
+          "n_pass": 0,
+          "n_timeout": 0,
+          "mean_reward": 0.0,
+          "pass_rate": 0.0,
+          "bootstrap": {
+            "n_pairs": 14,
+            "delta_mean": -0.14285714285714285,
+            "ci_lo": -0.35714285714285715,
+            "ci_hi": 0.0,
+            "p_gt0": 0.0
+          },
+          "per_task": {
+            "[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_both_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sms_permission|unseat_sim_card[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exceeded[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:None]": 0.0,
+            "[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_app_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_usage_exceeded[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0
+          }
+        },
+        "FieldMask": {
+          "n_done": 14,
+          "n_expected": 14,
+          "n_valid": 14,
+          "n_pass": 0,
+          "n_timeout": 0,
+          "mean_reward": 0.0,
+          "pass_rate": 0.0,
+          "bootstrap": {
+            "n_pairs": 14,
+            "delta_mean": -0.14285714285714285,
+            "ci_lo": -0.35714285714285715,
+            "ci_hi": 0.0,
+            "p_gt0": 0.0
+          },
+          "per_task": {
+            "[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_both_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sms_permission|unseat_sim_card[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exceeded[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:None]": 0.0,
+            "[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_app_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_usage_exceeded[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0
+          }
+        },
+        "ConflictingView": {
+          "n_done": 14,
+          "n_expected": 14,
+          "n_valid": 14,
+          "n_pass": 0,
+          "n_timeout": 0,
+          "mean_reward": 0.0,
+          "pass_rate": 0.0,
+          "bootstrap": {
+            "n_pairs": 14,
+            "delta_mean": -0.14285714285714285,
+            "ci_lo": -0.35714285714285715,
+            "ci_hi": 0.0,
+            "p_gt0": 0.0
+          },
+          "per_task": {
+            "[mms_issue]bad_network_preference|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_both_permissions|unseat_sim_card|user_abroad_roaming_disabled_on[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_wifi_calling|data_mode_off|unseat_sim_card[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_app_sms_permission|unseat_sim_card[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|data_mode_off|data_usage_exceeded[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_wifi_calling|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]bad_network_preference|data_mode_off|data_usage_exceeded|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_wifi_calling|break_app_both_permissions|data_mode_off|data_usage_exceeded|user_abroad_roaming_enabled_off[PERSONA:None]": 0.0,
+            "[mms_issue]bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card[PERSONA:None]": 0.0,
+            "[mms_issue]airplane_mode_on|bad_network_preference|break_apn_mms_setting|break_app_sms_permission|user_abroad_roaming_enabled_off[PERSONA:Hard]": 0.0,
+            "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|break_app_sms_permission|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:Easy]": 0.0,
+            "[mms_issue]bad_network_preference|bad_wifi_calling|break_apn_mms_setting|data_usage_exceeded[PERSONA:Easy]": 0.0,
+            "[mms_issue]airplane_mode_on|break_apn_mms_setting|break_app_sms_permission|data_mode_off|unseat_sim_card|user_abroad_roaming_disabled_off[PERSONA:None]": 0.0
+          }
+        }
+      }
+    }
+  },
+  "regimes": [
+    "FullSync",
+    "Delayed",
+    "FieldMask",
+    "ConflictingView"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "telecom",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "reseat_sim_card",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[service_issue]unseat_sim_card[PERSONA:Easy]"
+}

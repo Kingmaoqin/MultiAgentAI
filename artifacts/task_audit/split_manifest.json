@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-06-15T21:38:05.442689+00:00",
+  "seed": 20260615,
+  "source_csv": "/home/xqin5/multiaiagent/artifacts/task_audit/included_tasks.csv",
+  "source_hash": "50c72f8e6ae42e56c179d3911375ee95fe2c11739f410bfa893ef5fec8d26211",
+  "domains": {
+    "airline": {
+      "dev": 10,
+      "pilot": 5,
+      "held_out": 0
+    },
+    "retail": {
+      "dev": 14,
+      "pilot": 14,
+      "held_out": 42
+    },
+    "telecom": {
+      "dev": 14,
+      "pilot": 14,
+      "held_out": 2151
+    }
+  }
+}

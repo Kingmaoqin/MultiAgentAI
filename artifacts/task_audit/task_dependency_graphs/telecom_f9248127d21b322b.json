@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "telecom",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_wifi_calling",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mms_issue]bad_wifi_calling[PERSONA:Easy]"
+}

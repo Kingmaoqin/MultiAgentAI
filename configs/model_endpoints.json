@@ -1,0 +1,33 @@
+{
+  "captured_at": "2026-06-15T15:25:00-05:00",
+  "endpoints": [
+    {
+      "base_url": "http://127.0.0.1:8005/v1",
+      "served_model_ids": ["g4"],
+      "root": "/home/xqin5/hf_p08_models/gemma-4-31B-it",
+      "status": "active",
+      "proposal_model_match": false
+    },
+    {
+      "base_url": "http://127.0.0.1:8190/v1",
+      "served_model_ids": ["q"],
+      "root": "/home/xqin5/agentsearch/models/Qwen3.6-27B",
+      "status": "active",
+      "proposal_model_match": false
+    },
+    {
+      "base_url": "http://127.0.0.1:8200/v1",
+      "served_model_ids": ["Qwen/Qwen3.6-27B", "q", "gpt-q"],
+      "root": "/home/xqin5/agentsearch/models/Qwen3.6-27B",
+      "status": "active",
+      "proposal_model_match": false
+    }
+  ],
+  "proposal_models_not_verified_active": [
+    "gpt-oss-120b",
+    "Qwen3-32B",
+    "GLM-4.5-Air",
+    "Llama-3.3-70B-Instruct"
+  ]
+}
+

@@ -1,0 +1,14 @@
+{
+  "depth": 1,
+  "domain": "telecom",
+  "edges": [],
+  "nodes": [
+    {
+      "id": "a0",
+      "index": 0,
+      "tool": "toggle_data",
+      "tool_type": "write"
+    }
+  ],
+  "task_id": "[mobile_data_issue]data_mode_off[PERSONA:None]"
+}

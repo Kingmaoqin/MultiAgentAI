@@ -1,0 +1,473 @@
+2026-06-18 00:09:49.717 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found
+2026-06-18 00:09:49.717 | INFO     | tau2.utils.utils:<module>:28 - Using data directory from source: /home/xqin5/multiaiagent/worktrees/tau2-clean/data
+2026-06-18 00:09:51.528 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled
+2026-06-18 00:09:51.666 | DEBUG    | tau2.registry:<module>:281 - Registering default components...
+2026-06-18 00:09:51.668 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration
+2026-06-18 00:09:51.668 | DEBUG    | tau2.registry:<module>:350 - Default components registered successfully. Registry info: {
+  "domains": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ],
+  "agents": [
+    "llm_agent",
+    "llm_agent_gt",
+    "llm_agent_solo",
+    "discrete_time_audio_native_agent"
+  ],
+  "users": [
+    "user_simulator",
+    "dummy_user"
+  ],
+  "task_sets": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom_full",
+    "telecom_small",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ]
+}
+
+=== PILOT condition: FullSync ===
+╭────────────────────────── Simulation Configuration ──────────────────────────╮
+│ Domain: airline  Task Set: Default  Tasks: 32, 7                             │
+│ Trials: 1  Max Steps: 15  Max Errors: 10                                     │
+│                                                                              │
+│ Agent: ravel_team_fullsync → openai/g4                                       │
+│ User:  user_simulator → openai/g4                                            │
+│                                                                              │
+│ Save: /home/xqin5/multiaiagent/results/mas_pilot/fullsync  Concurrency: 1    │
+│ Verbose: False                                                               │
+╰──────────────────────────────────────────────────────────────────────────────╯
+0/2 (trial 1/1). Running task 7, trial 1
+2026-06-18 00:09:51.958 | WARNING  | tau2.agent.base.participant:set_seed:112 - Setting seed for participant is not implemented for class RAVELTeamAgent
+
+2026-06-18 00:09:53.161 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:09:55.843 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:03.234 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:06.593 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:08.349 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:09.111 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:12.477 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:13.505 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:16.282 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:18.059 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/2 complete. Avg reward: N/A. 1 running: 7.0(30s)
+2026-06-18 00:10:22.348 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:27.977 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:32.005 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:34.138 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:38.299 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:43.151 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:45.267 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:10:48.920 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/2 complete. Avg reward: N/A. 1 running: 7.0(60s)
+2026-06-18 00:10:56.336 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:00.763 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:05.557 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:09.304 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:14.369 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:14.375 | WARNING  | tau2.utils.llm_utils:get_cost:488 - Message assistant:  has no cost
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 7                                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 82.41s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.MAX_STEPS                              │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: max_steps       │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+1/2 (trial 1/1). Running task 32, trial 1
+2026-06-18 00:11:14.594 | WARNING  | tau2.agent.base.participant:set_seed:112 - Setting seed for participant is not implemented for class RAVELTeamAgent
+
+2026-06-18 00:11:17.517 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:20.574 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 1/2 complete. Avg reward: 0.00 (N=1). 1 running: 32.0(7s)
+2026-06-18 00:11:26.254 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:29.277 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:31.420 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:33.211 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:36.556 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:38.218 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:41.773 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:46.445 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:49.977 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 1/2 complete. Avg reward: 0.00 (N=1). 1 running: 32.0(37s)
+2026-06-18 00:11:53.362 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:11:57.707 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:03.399 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:05.520 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:09.146 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:14.659 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:19.065 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 1/2 complete. Avg reward: 0.00 (N=1). 1 running: 32.0(67s)
+2026-06-18 00:12:29.988 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:33.306 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:37.304 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:44.280 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:44.952 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:44.958 | WARNING  | tau2.utils.llm_utils:get_cost:488 - Message assistant:  has no cost
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 32                                                                  │
+│ Trial: 0                                                                     │
+│ Duration: 90.36s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.MAX_STEPS                              │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: max_steps       │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Successfully completed all simulations!
+To review the simulations, run: tau2 view
+╭───────────────────────── Agent Performance Metrics ──────────────────────────╮
+│   ═══ Overview ═══                                                           │
+│   Total Simulations         2                                                │
+│   Total Tasks               2                                                │
+│                                                                              │
+│   ═══ Reward Metrics ═══                                                     │
+│   🏆 Average Reward         0.0000                                           │
+│      Pass^1                 0.000                                            │
+│   💰 Avg Cost/Conversation  $nan                                             │
+│                                                                              │
+│   ═══ Action Metrics ═══                                                     │
+│   📖 Read Actions           -                                                │
+│   ✏️  Write Actions          -                                                │
+│                                                                              │
+│   ═══ DB Match ═══                                                           │
+│   🗄️  DB Match               Not checked: 2                                   │
+│                                                                              │
+│   ═══ Authentication ═══                                                     │
+│      Not Checked            2                                                │
+│                                                                              │
+│   ═══ Termination ═══                                                        │
+│   🛑 Normal Stop            0 (👤 0 / 🤖 0)                                  │
+│   ⏱️  Max Steps              2                                                │
+│                                                                              │
+│   ═══ LLM Judge Review ═══                                                   │
+│   🤖 Agent Errors           0 errors                                         │
+│      Sims by severity       -                                                │
+│   👤 User Errors            0 errors                                         │
+│      Sims by severity       -                                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+{
+  "regime": "FullSync",
+  "agent": "ravel_team_fullsync",
+  "n_tasks": 2,
+  "elapsed_s": 173.3,
+  "per_task": [
+    {
+      "task_id": "7",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 82.4
+    },
+    {
+      "task_id": "32",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 90.4
+    }
+  ]
+}
+
+=== PILOT condition: ConflictingView ===
+╭────────────────────────── Simulation Configuration ──────────────────────────╮
+│ Domain: airline  Task Set: Default  Tasks: 32, 7                             │
+│ Trials: 1  Max Steps: 15  Max Errors: 10                                     │
+│                                                                              │
+│ Agent: ravel_team_conflictingview → openai/g4                                │
+│ User:  user_simulator → openai/g4                                            │
+│                                                                              │
+│ Save: /home/xqin5/multiaiagent/results/mas_pilot/conflictingview             │
+│ Concurrency: 1  Verbose: False                                               │
+╰──────────────────────────────────────────────────────────────────────────────╯
+0/2 (trial 1/1). Running task 7, trial 1
+2026-06-18 00:12:45.334 | WARNING  | tau2.agent.base.participant:set_seed:112 - Setting seed for participant is not implemented for class RAVELTeamAgent
+
+2026-06-18 00:12:46.336 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:49.050 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:56.511 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:12:59.880 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:01.631 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:02.407 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:05.776 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:06.802 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:09.582 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:11.356 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/2 complete. Avg reward: N/A. 1 running: 7.0(30s)
+2026-06-18 00:13:15.646 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:21.402 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:25.430 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:27.560 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:31.734 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:36.582 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:38.614 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:44.558 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/2 complete. Avg reward: N/A. 1 running: 7.0(60s)
+2026-06-18 00:13:52.016 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:13:56.018 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:00.814 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:04.529 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:09.542 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:09.547 | WARNING  | tau2.utils.llm_utils:get_cost:488 - Message assistant:  has no cost
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 7                                                                   │
+│ Trial: 0                                                                     │
+│ Duration: 84.21s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.MAX_STEPS                              │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: max_steps       │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+1/2 (trial 1/1). Running task 32, trial 1
+2026-06-18 00:14:09.737 | WARNING  | tau2.agent.base.participant:set_seed:112 - Setting seed for participant is not implemented for class RAVELTeamAgent
+
+2026-06-18 00:14:12.654 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 1/2 complete. Avg reward: 0.00 (N=1). 1 running: 32.0(6s)
+2026-06-18 00:14:15.708 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:21.379 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:24.400 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:26.546 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:28.334 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:31.676 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:33.343 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:36.886 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:41.549 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:45.075 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 1/2 complete. Avg reward: 0.00 (N=1). 1 running: 32.0(36s)
+2026-06-18 00:14:48.427 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:52.767 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:14:58.574 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:00.690 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:04.309 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:09.817 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:14.204 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 1/2 complete. Avg reward: 0.00 (N=1). 1 running: 32.0(66s)
+2026-06-18 00:15:25.138 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:28.460 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:32.474 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:39.461 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:40.132 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:15:40.139 | WARNING  | tau2.utils.llm_utils:get_cost:488 - Message assistant:  has no cost
+
+╭──────────────────────────── Simulation Overview ─────────────────────────────╮
+│ Task ID: 32                                                                  │
+│ Trial: 0                                                                     │
+│ Duration: 90.40s                                                             │
+│ Mode: half_duplex                                                            │
+│ Termination Reason: TerminationReason.MAX_STEPS                              │
+│ Reward: ❌ 0.0000 ()                                                         │
+│                                                                              │
+│ Additional Info:                                                             │
+│ note: Simulation terminated prematurely. Termination reason: max_steps       │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Successfully completed all simulations!
+To review the simulations, run: tau2 view
+╭───────────────────────── Agent Performance Metrics ──────────────────────────╮
+│   ═══ Overview ═══                                                           │
+│   Total Simulations         2                                                │
+│   Total Tasks               2                                                │
+│                                                                              │
+│   ═══ Reward Metrics ═══                                                     │
+│   🏆 Average Reward         0.0000                                           │
+│      Pass^1                 0.000                                            │
+│   💰 Avg Cost/Conversation  $nan                                             │
+│                                                                              │
+│   ═══ Action Metrics ═══                                                     │
+│   📖 Read Actions           -                                                │
+│   ✏️  Write Actions          -                                                │
+│                                                                              │
+│   ═══ DB Match ═══                                                           │
+│   🗄️  DB Match               Not checked: 2                                   │
+│                                                                              │
+│   ═══ Authentication ═══                                                     │
+│      Not Checked            2                                                │
+│                                                                              │
+│   ═══ Termination ═══                                                        │
+│   🛑 Normal Stop            0 (👤 0 / 🤖 0)                                  │
+│   ⏱️  Max Steps              2                                                │
+│                                                                              │
+│   ═══ LLM Judge Review ═══                                                   │
+│   🤖 Agent Errors           0 errors                                         │
+│      Sims by severity       -                                                │
+│   👤 User Errors            0 errors                                         │
+│      Sims by severity       -                                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+{
+  "regime": "ConflictingView",
+  "agent": "ravel_team_conflictingview",
+  "n_tasks": 2,
+  "elapsed_s": 175.2,
+  "per_task": [
+    {
+      "task_id": "7",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 84.2
+    },
+    {
+      "task_id": "32",
+      "reward": 0.0,
+      "termination": "TerminationReason.MAX_STEPS",
+      "duration": 90.4
+    }
+  ]
+}
+
+=== PILOT COMPLETE ===
+{
+  "FullSync": {
+    "regime": "FullSync",
+    "agent": "ravel_team_fullsync",
+    "n_tasks": 2,
+    "elapsed_s": 173.3,
+    "per_task": [
+      {
+        "task_id": "7",
+        "reward": 0.0,
+        "termination": "TerminationReason.MAX_STEPS",
+        "duration": 82.4
+      },
+      {
+        "task_id": "32",
+        "reward": 0.0,
+        "termination": "TerminationReason.MAX_STEPS",
+        "duration": 90.4
+      }
+    ]
+  },
+  "ConflictingView": {
+    "regime": "ConflictingView",
+    "agent": "ravel_team_conflictingview",
+    "n_tasks": 2,
+    "elapsed_s": 175.2,
+    "per_task": [
+      {
+        "task_id": "7",
+        "reward": 0.0,
+        "termination": "TerminationReason.MAX_STEPS",
+        "duration": 84.2
+      },
+      {
+        "task_id": "32",
+        "reward": 0.0,
+        "termination": "TerminationReason.MAX_STEPS",
+        "duration": 90.4
+      }
+    ]
+  }
+}

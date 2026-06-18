@@ -1,0 +1,139 @@
+2026-06-18 00:05:59.129 | WARNING  | tau2.utils.utils:<module>:15 - No .env file found
+2026-06-18 00:05:59.129 | INFO     | tau2.utils.utils:<module>:28 - Using data directory from source: /home/xqin5/multiaiagent/worktrees/tau2-clean/data
+2026-06-18 00:06:01.220 | INFO     | tau2.utils.llm_utils:<module>:102 - LiteLLM: Cache is disabled
+2026-06-18 00:06:01.353 | DEBUG    | tau2.registry:<module>:281 - Registering default components...
+2026-06-18 00:06:01.355 | DEBUG    | tau2.registry:<module>:292 - Voice dependencies not installed, skipping voice user registration
+2026-06-18 00:06:01.355 | DEBUG    | tau2.registry:<module>:350 - Default components registered successfully. Registry info: {
+  "domains": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ],
+  "agents": [
+    "llm_agent",
+    "llm_agent_gt",
+    "llm_agent_solo",
+    "discrete_time_audio_native_agent"
+  ],
+  "users": [
+    "user_simulator",
+    "dummy_user"
+  ],
+  "task_sets": [
+    "mock",
+    "airline",
+    "retail",
+    "telecom_full",
+    "telecom_small",
+    "telecom",
+    "telecom-workflow",
+    "banking_knowledge"
+  ]
+}
+╭────────────────────────── Simulation Configuration ──────────────────────────╮
+│ Domain: airline  Task Set: Default  Tasks: 7                                 │
+│ Trials: 1  Max Steps: 12  Max Errors: 10                                     │
+│                                                                              │
+│ Agent: ravel_team_fullsync → openai/g4                                       │
+│ User:  user_simulator → openai/g4                                            │
+│                                                                              │
+│ Save: /home/xqin5/multiaiagent/results/mas_pilot/smoke  Concurrency: 1       │
+│ Verbose: False                                                               │
+╰──────────────────────────────────────────────────────────────────────────────╯
+0/1 (trial 1/1). Running task 7, trial 1
+2026-06-18 00:06:01.659 | WARNING  | tau2.agent.base.participant:set_seed:112 - Setting seed for participant is not implemented for class RAVELTeamAgent
+
+2026-06-18 00:06:02.950 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:05.610 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:12.997 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:16.332 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:16.340 | WARNING  | tau2.orchestrator.orchestrator:run:287 - Simulation loop exited with an exception — running emergency cleanup
+
+2026-06-18 00:06:16.346 | WARNING  | tau2.runner.progress:run_with_retry:97 - Task 7 failed (attempt 1/4): 'dict' object has no attribute 'openai_schema'
+
+  Retry 1/3 for task 7: 'dict' object has no attribute 'openai_schema'
+2026-06-18 00:06:17.552 | WARNING  | tau2.agent.base.participant:set_seed:112 - Setting seed for participant is not implemented for class RAVELTeamAgent
+
+2026-06-18 00:06:18.502 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:21.154 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:28.520 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/1 complete. Avg reward: N/A. 1 running: 7.0(15s R1)
+2026-06-18 00:06:31.787 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:31.790 | WARNING  | tau2.orchestrator.orchestrator:run:287 - Simulation loop exited with an exception — running emergency cleanup
+
+2026-06-18 00:06:31.800 | WARNING  | tau2.runner.progress:run_with_retry:97 - Task 7 failed (attempt 2/4): 'dict' object has no attribute 'openai_schema'
+
+  Retry 2/3 for task 7: 'dict' object has no attribute 'openai_schema'
+2026-06-18 00:06:32.995 | WARNING  | tau2.agent.base.participant:set_seed:112 - Setting seed for participant is not implemented for class RAVELTeamAgent
+
+2026-06-18 00:06:33.936 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:36.591 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:43.966 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:47.241 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:47.243 | WARNING  | tau2.orchestrator.orchestrator:run:287 - Simulation loop exited with an exception — running emergency cleanup
+
+2026-06-18 00:06:47.253 | WARNING  | tau2.runner.progress:run_with_retry:97 - Task 7 failed (attempt 3/4): 'dict' object has no attribute 'openai_schema'
+
+  Retry 3/3 for task 7: 'dict' object has no attribute 'openai_schema'
+2026-06-18 00:06:48.414 | WARNING  | tau2.agent.base.participant:set_seed:112 - Setting seed for participant is not implemented for class RAVELTeamAgent
+
+2026-06-18 00:06:49.357 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:52.019 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:06:59.416 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+Status: 0/1 complete. Avg reward: N/A. 1 running: 7.0(14s R3)
+2026-06-18 00:07:02.702 | ERROR    | tau2.utils.llm_utils:get_response_cost:129 - This model isn't mapped yet. model=g4, custom_llm_provider=openai. Add it here - https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json.
+
+2026-06-18 00:07:02.709 | WARNING  | tau2.orchestrator.orchestrator:run:287 - Simulation loop exited with an exception — running emergency cleanup
+
+2026-06-18 00:07:02.728 | ERROR    | tau2.runner.progress:run_with_retry:101 - Task 7 failed after 4 attempts: 'dict' object has no attribute 'openai_schema'
+
+  Task 7 failed permanently after 4 attempts: 'dict' object has no attribute 
+'openai_schema'
+
+Successfully completed all simulations!
+To review the simulations, run: tau2 view
+╭───────────────────────── Agent Performance Metrics ──────────────────────────╮
+│   ═══ Overview ═══                                                           │
+│   Total Simulations         1                                                │
+│   ⚠️  Infra Errors           1 (excluded from metrics below)                  │
+│   Evaluated                 0                                                │
+│   Total Tasks               0                                                │
+│                                                                              │
+│   ═══ Reward Metrics ═══                                                     │
+│   🏆 Average Reward         0.0000                                           │
+│   💰 Avg Cost/Conversation  $0.0000                                          │
+│                                                                              │
+│   ═══ Action Metrics ═══                                                     │
+│   📖 Read Actions           -                                                │
+│   ✏️  Write Actions          -                                                │
+│                                                                              │
+│   ═══ DB Match ═══                                                           │
+│   🗄️  DB Match               Not checked: 0                                   │
+│                                                                              │
+│   ═══ Authentication ═══                                                     │
+│                                                                              │
+│   ═══ Termination ═══                                                        │
+│   🛑 Normal Stop            0 (👤 0 / 🤖 0)                                  │
+│                                                                              │
+│   ═══ LLM Judge Review ═══                                                   │
+│                             No review data available                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+SMOKE_RESULT 7 None TerminationReason.INFRASTRUCTURE_ERROR

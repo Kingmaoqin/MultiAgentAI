@@ -1,0 +1,42 @@
+{
+  "FullSync": {
+    "regime": "FullSync",
+    "agent": "ravel_team_fullsync",
+    "n_tasks": 2,
+    "elapsed_s": 173.3,
+    "per_task": [
+      {
+        "task_id": "7",
+        "reward": 0.0,
+        "termination": "TerminationReason.MAX_STEPS",
+        "duration": 82.4
+      },
+      {
+        "task_id": "32",
+        "reward": 0.0,
+        "termination": "TerminationReason.MAX_STEPS",
+        "duration": 90.4
+      }
+    ]
+  },
+  "ConflictingView": {
+    "regime": "ConflictingView",
+    "agent": "ravel_team_conflictingview",
+    "n_tasks": 2,
+    "elapsed_s": 175.2,
+    "per_task": [
+      {
+        "task_id": "7",
+        "reward": 0.0,
+        "termination": "TerminationReason.MAX_STEPS",
+        "duration": 84.2
+      },
+      {
+        "task_id": "32",
+        "reward": 0.0,
+        "termination": "TerminationReason.MAX_STEPS",
+        "duration": 90.4
+      }
+    ]
+  }
+}

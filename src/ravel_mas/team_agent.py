@@ -71,10 +71,12 @@ class RAVELTeamAgent(HalfDuplexAgent):
         task_id: str = "unknown",
         seed: int = 42,
         max_internal_steps: int = 4,
+        trace_dir: Optional[str] = None,
     ) -> None:
         super().__init__(tools=tools, domain_policy=domain_policy)
         self._llm = llm
         self._llm_args = dict(llm_args or {})
+        self._trace_dir = trace_dir
         self._domain = domain
         self._regime = regime
         self._task_id = task_id
@@ -91,6 +93,8 @@ class RAVELTeamAgent(HalfDuplexAgent):
         self._write_tool_names = set(DOMAIN_WRITE_TOOLS[domain])
         # Worker allowlist = everything that is NOT a real write tool.
         self._read_tools = [t for t in tools if _tool_name(t) not in self._write_tool_names]
+        # propose_candidate_write as a real tau2 Tool (so generate() can serialize it).
+        self._propose_tool = _build_propose_tool()
 
         # Services
         self._ledger = EvidenceLedger()
@@ -136,7 +140,7 @@ class RAVELTeamAgent(HalfDuplexAgent):
             return msg, state
 
         # 4. ToolWorker turn via tau2 generate (read tools + propose_candidate_write only)
-        worker_tools = self._read_tools + [PROPOSE_CANDIDATE_WRITE_TOOL]
+        worker_tools = self._read_tools + [self._propose_tool]
         worker_sys = (
             WORKER_PROMPT + f"\n\nDomain policy:\n{self.domain_policy}\n\n"
             f"Supervisor subgoal: {self._plan.get('subgoal','')}\n"
@@ -158,7 +162,20 @@ class RAVELTeamAgent(HalfDuplexAgent):
 
         out = self._handle_worker(worker_resp, state)
         state.messages.append(out)
+        self._maybe_dump_trace()
         return out, state
+
+    def _maybe_dump_trace(self) -> None:
+        """Persist the live runtime trace (overwrite each turn) when enabled via
+        llm_args['mas_trace_dir']. Gives real-model multi-agent evidence."""
+        d = self._trace_dir
+        if not d:
+            return
+        from pathlib import Path as _P
+        out = _P(d)
+        out.mkdir(parents=True, exist_ok=True)
+        (out / f"pilot_trace_{self._task_id}.jsonl").write_text(self._trace.to_jsonl())
+        (out / f"pilot_trace_{self._task_id}.md").write_text(self._trace.to_readable())
 
     # --- internals ---
 
@@ -178,6 +195,13 @@ class RAVELTeamAgent(HalfDuplexAgent):
             oid = _extract_object_id(name, payload)
             self._ledger.ingest(object_id=oid, tool_name=name, payload=payload,
                                 source_agent="tool_worker")
+        # ConflictingView: any object the ledger has seen more than once becomes a
+        # cross-agent conflict candidate (worker pinned one version behind latest).
+        if self._regime == "ConflictingView":
+            self._views.conflict_objects = {
+                r.object_id for r in self._ledger.records
+                if self._ledger.object_version(r.object_id) >= 2
+            }
 
     def _plan_loop(self, state) -> str:
         user_goal = self._latest_user_text(state)
@@ -306,6 +330,36 @@ class RAVELTeamAgent(HalfDuplexAgent):
         return self._trace
 
 
+def _build_propose_tool():
+    """Build a tau2 Tool for propose_candidate_write (a non-executing proposal)."""
+    from tau2.environment.tool import as_tool
+
+    def propose_candidate_write(
+        action: str,
+        arguments: dict,
+        target_objects: list = None,
+        referenced_evidence_ids: list = None,
+        claimed_preconditions: list = None,
+        expected_versions: dict = None,
+    ) -> str:
+        """Propose a state-changing action for the deterministic CommitService to
+        validate before execution. This does NOT execute the action; it only
+        records a candidate write that the CommitService will check.
+
+        Args:
+            action: name of the write action being proposed.
+            arguments: arguments for the write action.
+            target_objects: object ids the write would modify.
+            referenced_evidence_ids: evidence ids the proposal relies on.
+            claimed_preconditions: list of {object_id, field, operator, value} the
+                worker believes hold.
+            expected_versions: object_id -> version the worker observed.
+        """
+        return "candidate_write_recorded"
+
+    return as_tool(propose_candidate_write)
+
+
 def _tool_name(tool) -> str:
     if isinstance(tool, dict):
         return tool.get("function", {}).get("name", tool.get("name", ""))
@@ -318,7 +372,8 @@ def _hash(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-_RAVEL_KEYS = frozenset({"regime", "delay", "masked_field", "domain", "task_id", "seed"})
+_RAVEL_KEYS = frozenset({"regime", "delay", "masked_field", "domain", "task_id",
+                         "seed", "trace_dir"})
 
 
 def create_ravel_team_agent(tools, domain_policy, **kwargs):
@@ -339,4 +394,5 @@ def create_ravel_team_agent(tools, domain_policy, **kwargs):
         llm_args=raw, regime=cfg.get("regime", "FullSync"),
         delay=int(cfg.get("delay", 1)), masked_field=cfg.get("masked_field"),
         domain=domain, task_id=task_id, seed=int(cfg.get("seed", 42)),
+        trace_dir=cfg.get("trace_dir"),
     )

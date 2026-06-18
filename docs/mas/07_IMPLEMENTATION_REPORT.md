@@ -68,7 +68,43 @@ Mutation tests (§11): each architecture-breaking mutation flips at least one in
    `results/multiagent/` are single-agent / prompt-chain and are relabeled legacy
    (see `docs/mas/00`); they are NOT multi-agent results.
 
-## Next (blocked on reviews)
+## Independent reviews (complete)
 
-- Independent Code Reviewer + Scientific Auditor (clean context).
-- On APPROVED: 2-task pilot (1 model, FullSync + ConflictingView, ≤2 reps) per §16.
+- **Code Reviewer** (round 2): **APPROVED** — all 4 round-1 issues resolved with non-vacuous tests.
+- **Scientific Auditor** (round 2): **APPROVED** — architecture-proof scope; real-model pilot correctly gated.
+- Round-1 both returned CHANGES_REQUIRED; fixes: value-level conflict detection
+  (`claimed_preconditions`), ARB wired into `team.run_turn`, executed conflict +
+  live-delegation traces, `tests/test_tau2_team_integration.py` (caught a real wrapper
+  bug), real-guard mutation tests, fail-closed unknown-domain.
+
+## Gated §16 pilot (complete)
+
+Run after both reviews APPROVED. 1 model (Gemma4), 2 airline dev tasks (7, 32),
+2 conditions (FullSync, ConflictingView), real tau2 + official evaluator.
+
+| Condition | task 7 | task 32 |
+|---|---|---|
+| FullSync | 0.0 / MAX_STEPS | 0.0 / MAX_STEPS |
+| ConflictingView | 0.0 / MAX_STEPS | 0.0 / MAX_STEPS |
+
+**Honest reading:** the pilot validates the *mechanism* — the multi-agent system runs
+end-to-end on real tau2 with a real model, the official evaluator is unmodified, and
+write isolation holds. It is NOT a performance/visibility result: all 4 runs hit the
+15-step budget with reward 0.0; n=2, 1 model. No RQ1 claim is made.
+
+**Real-model multi-agent evidence:** `artifacts/mas_proof/pilot_traces/pilot_trace_7.md`
+shows Gemma4 driving 3 distinct agents (distinct prompt hashes), data-dependent dynamic
+delegation (reason codes policy_lookup→data_retrieval→policy_verification→
+execute_cancellation), typed messages, and real read-tool calls — the worker never emits
+a real write tool. This closes the round-1 auditor gap ("no real model has run").
+
+`architecture_acceptance.json`: **overall_status = PASS** (both reviews APPROVED,
+benchmark_integrity VERIFIED per `benchmark_parity.json` honest scope).
+
+## Future work (beyond this architecture task)
+
+A full experiment — more tasks, repetitions, models, step budgets, and a baseline
+comparison for a visibility-causality (RQ1) claim — is explicitly out of scope here
+(Contract §16 caps the pilot). The legacy single-agent results in `results/multimodel/`,
+`results/ravel_corrected/` and the prompt-chain `results/multiagent/` are relabeled and
+must not be cited as multi-agent results.

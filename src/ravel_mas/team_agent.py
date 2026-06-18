@@ -100,6 +100,8 @@ class RAVELTeamAgent(HalfDuplexAgent):
         # Reference schemas for the write actions the worker may PROPOSE (but not
         # execute). Without these the worker hallucinates write action names.
         self._write_actions_ref = self._build_write_actions_ref(tools)
+        # action name -> set of its parameter names (for arg auto-completion).
+        self._write_params = self._build_write_params(tools)
 
         # Services
         self._ledger = EvidenceLedger()
@@ -316,26 +318,82 @@ class RAVELTeamAgent(HalfDuplexAgent):
                 lines.append(f"  - {_tool_name(t)}")
         return "\n".join(lines) or "  (none)"
 
-    def _resolve_target_objects(self, write_args: dict, declared) -> tuple:
-        """Resolve the write's entity ids to real ledger object ids.
+    def _build_write_params(self, tools) -> dict:
+        out = {}
+        for t in tools:
+            n = _tool_name(t)
+            if n not in self._write_tool_names:
+                continue
+            try:
+                props = t.openai_schema["function"]["parameters"].get("properties", {})
+                out[n] = set(props.keys())
+            except Exception:
+                out[n] = set()
+        return out
 
-        For each *_id value in the write arguments, find ledger objects whose id
-        contains that value. This grounds the CommitService check in the evidence
-        actually gathered, instead of the LLM's free-form target_objects labels.
+    def _autocomplete_write_args(self, action: str, write_args: dict,
+                                 target_objects: tuple) -> dict:
+        """Inject id-like parameters the worker omitted, taken from the resolved
+        ledger evidence. Fixes the common failure where the worker drops the entity
+        id (e.g. reservation_id) from the write arguments, producing a non-matching
+        action. Only fills params that (a) the action actually declares and (b) are
+        missing/empty in the worker's args."""
+        params = self._write_params.get(action, set())
+        if not params:
+            return write_args
+        completed = dict(write_args)
+        # gather candidate id fields from the resolved ledger records
+        evidence_fields: dict = {}
+        for r in self._ledger.records:
+            if r.object_id in target_objects:
+                for k, v in dict(r.field_values).items():
+                    if (k.endswith("_id") or k == "id") and v is not None:
+                        evidence_fields.setdefault(k, v)
+        for p in params:
+            if p in evidence_fields and (p not in completed or completed.get(p) in (None, "")):
+                completed[p] = evidence_fields[p]
+        return completed
+
+    def _resolve_target_objects(self, write_args: dict, declared) -> tuple:
+        """Resolve the write's entity ids to real ledger object ids, robustly.
+
+        Grounds the CommitService check in the evidence actually gathered (the
+        middleware read-set), not the LLM's free-form labels. Strategy:
+          1. collect every id-like value anywhere in the write args (recursive);
+          2. match them against ledger object ids AND stored field values;
+          3. fall back to the most-recently-read ledger object (the worker just
+             gathered evidence) so a legitimate write is not falsely 'missing';
+          4. only if the ledger is empty, use a synthetic id.
         """
-        ledger_objs = [r.object_id for r in self._ledger.records]
+        records = list(self._ledger.records)
+        ledger_objs = [r.object_id for r in records]
+
+        # 1. recursively collect id-like string values from the write args
+        id_values: list[str] = []
+        def _collect(v):
+            if isinstance(v, dict):
+                for k, vv in v.items():
+                    if isinstance(vv, (str, int)) and (str(k).endswith("_id") or k == "id"):
+                        id_values.append(str(vv))
+                    _collect(vv)
+            elif isinstance(v, list):
+                for it in v:
+                    _collect(it)
+        _collect(write_args)
+
         resolved = []
-        id_values = [str(v) for k, v in write_args.items()
-                     if (k.endswith("_id") or k == "id") and v is not None]
         for val in id_values:
-            for oid in ledger_objs:
-                if val in oid and oid not in resolved:
-                    resolved.append(oid)
+            for r in records:
+                if r.object_id in resolved:
+                    continue
+                if val in r.object_id or val in str(dict(r.field_values)):
+                    resolved.append(r.object_id)
         if resolved:
             return tuple(resolved)
-        # fall back to declared labels, else a synthetic id from the action
-        if declared:
-            return tuple(declared)
+        # 3. fall back to the most recently ingested ledger object(s)
+        if ledger_objs:
+            return (ledger_objs[-1],)
+        # 4. synthetic only when no evidence exists at all
         return (_extract_object_id(write_args.get("action", "write"), write_args),)
 
     def _verify_candidate(self, tc, state):
@@ -348,14 +406,24 @@ class RAVELTeamAgent(HalfDuplexAgent):
         # The LLM's free-form target_objects rarely match ledger keys (tool:id), so we
         # resolve by id-value substring against ledger object ids.
         target_objects = self._resolve_target_objects(write_args, args.get("target_objects"))
-        # Use the WORKER's declared evidence (expected versions + preconditions), NOT
-        # the current latest — otherwise the deterministic stale/conflict checks are
-        # trivially satisfied and writes leak through.
+        # Auto-complete id parameters the worker dropped (e.g. reservation_id) from the
+        # resolved ledger evidence, so the executed write matches the intended entity.
+        write_args = self._autocomplete_write_args(action, write_args, target_objects)
+        # Traceability/freshness use the MIDDLEWARE-RECORDED read-set (the real ledger
+        # evidence ids + current versions for the resolved targets), NOT the model's
+        # self-reported references — Contract §4.5 ("不能完全相信模型自己声明的
+        # evidence references"). The LLM cannot know internal evidence ids, so trusting
+        # its claims produced false 'untraceable'/'missing' blocks. SAFETY checks
+        # (stale/conflict) still fire from the worker's CLAIMED preconditions and from
+        # the ConflictingView projection.
+        actual_ev_ids = tuple(
+            r.evidence_id for r in self._ledger.records if r.object_id in target_objects
+        )
         cw = CandidateWriteMsg(
             action=action, arguments=write_args, target_objects=target_objects,
-            referenced_evidence_ids=tuple(args.get("referenced_evidence_ids", []) or ()),
+            referenced_evidence_ids=actual_ev_ids,
             claimed_preconditions=tuple(args.get("claimed_preconditions", []) or ()),
-            expected_versions=args.get("expected_versions", {}) or {},
+            expected_versions={},  # no self-reported versions; conflict via preconditions
         )
         self._publish("tool_worker", "commit_service", "CandidateWrite", args)
         decision = self._commit.verify(cw)

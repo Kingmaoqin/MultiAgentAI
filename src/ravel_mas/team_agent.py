@@ -81,7 +81,14 @@ class RAVELTeamAgent(HalfDuplexAgent):
         self._max_internal = max_internal_steps
 
         self._all_tools = tools
-        self._write_tool_names = set(DOMAIN_WRITE_TOOLS.get(domain, frozenset()))
+        if domain not in DOMAIN_WRITE_TOOLS:
+            # Fail closed: without a known write-tool registry we cannot guarantee the
+            # worker is denied real write tools (Contract §2.6). Refuse rather than leak.
+            raise ValueError(
+                f"RAVELTeamAgent: no write-tool registry for domain '{domain}'. "
+                f"Add it to DOMAIN_WRITE_TOOLS before running, to enforce allowlists."
+            )
+        self._write_tool_names = set(DOMAIN_WRITE_TOOLS[domain])
         # Worker allowlist = everything that is NOT a real write tool.
         self._read_tools = [t for t in tools if _tool_name(t) not in self._write_tool_names]
 
@@ -238,10 +245,14 @@ class RAVELTeamAgent(HalfDuplexAgent):
             target_objects = tuple(
                 _extract_object_id(action, write_args) for _ in [0]
             )
+        # Use the WORKER's declared evidence (expected versions + preconditions), NOT
+        # the current latest — otherwise the deterministic stale/conflict checks are
+        # trivially satisfied and writes leak through.
         cw = CandidateWriteMsg(
             action=action, arguments=write_args, target_objects=target_objects,
-            referenced_evidence_ids=tuple(r.evidence_id for r in self._ledger.records),
-            expected_versions={o: self._ledger.object_version(o) for o in target_objects},
+            referenced_evidence_ids=tuple(args.get("referenced_evidence_ids", []) or ()),
+            claimed_preconditions=tuple(args.get("claimed_preconditions", []) or ()),
+            expected_versions=args.get("expected_versions", {}) or {},
         )
         self._publish("tool_worker", "commit_service", "CandidateWrite", args)
         decision = self._commit.verify(cw)

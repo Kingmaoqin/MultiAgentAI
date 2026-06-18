@@ -88,40 +88,72 @@ def test_mutation_fixed_order_delegation_loses_data_dependence():
 
 
 def test_mutation_disabling_version_check_admits_stale_write():
-    """Mutation: CommitService ignores expected-version mismatch."""
+    """Mutation: disable the REAL production version guard (not a stub)."""
     ledger = _ledger_with("confirmed", 2)   # latest v2
     env = EnvState()
-    svc = make_service(ledger, env)
-
-    # Monkeypatch verify to skip the stale check (the mutation).
-    orig_required = svc.action_required_fields
-    def mutated_verify(cw):
-        from ravel_mas.commit_service import CommitDecision, AllowedCommitToken
-        import uuid
-        tok = f"commit-{uuid.uuid4().hex[:12]}"
-        svc._issued_tokens.add(tok)
-        return CommitDecision(verdict="commit", reasons=("evidence_valid",),
-                              token=AllowedCommitToken(tok, cw.action, {}))
-    svc.verify = mutated_verify  # type: ignore
-
     cw = CandidateWriteMsg(action="cancel_reservation", arguments={"reservation_id": "R1"},
                            target_objects=("reservation:R1",),
-                           expected_versions={"reservation:R1": 1})  # stale
-    dec, result = svc.submit(cw)
-    # With the check disabled, a stale write is (wrongly) committed → proves the
-    # real check is what blocks it.
-    assert dec.verdict == "commit"
-    assert env.cancelled is True
+                           expected_versions={"reservation:R1": 1})  # stale claim
+
+    # Baseline: real guard ON → stale blocked.
+    svc_on = make_service(ledger, env)
+    dec_on, _ = svc_on.submit(cw)
+    assert dec_on.verdict != "commit"
+    assert env.cancelled is False
+
+    # Mutation: flip the real production flag inside CommitService.verify.
+    env2 = EnvState()
+    svc_off = make_service(ledger, env2)
+    svc_off.enforce_version_check = False         # disables the actual check path
+    dec_off, _ = svc_off.submit(cw)
+    # With the real guard disabled, the stale write is admitted → proves the guard
+    # (executed code in verify()) is what blocks it.
+    assert dec_off.verdict == "commit"
+    assert env2.cancelled is True
 
 
-def test_mutation_bypassing_commit_service_changes_env_without_token():
-    """Mutation: call the executor directly, bypassing token check."""
+def test_mutation_disabling_conflict_check_admits_value_conflict():
+    """Mutation: disable the REAL conflict guard; a value-conflicting write commits."""
+    ledger = _ledger_with("confirmed", 1)
     env = EnvState()
-    # Direct env mutation bypassing CommitService entirely:
-    env.cancel("cancel_reservation", {"reservation_id": "R1"})
-    # This is exactly what write-isolation forbids; proves env CAN change if bypassed,
-    # which is why the single-write-path invariant matters.
-    assert env.cancelled is True
+    # worker relied on status=cancelled but latest=confirmed → real value conflict
+    cw = CandidateWriteMsg(
+        action="cancel_reservation", arguments={"reservation_id": "R1"},
+        target_objects=("reservation:R1",),
+        expected_versions={"reservation:R1": 1},
+        claimed_preconditions=({"object_id": "reservation:R1", "field": "status",
+                                "operator": "equals", "value": "cancelled"},),
+    )
+    svc_on = make_service(ledger, env)
+    dec_on, _ = svc_on.submit(cw)
+    assert dec_on.verdict != "commit"           # conflict blocks it
+    assert "unresolved_conflict" in dec_on.reasons
+    assert env.cancelled is False
+
+    env2 = EnvState()
+    svc_off = make_service(ledger, env2)
+    svc_off.enforce_conflict_check = False
+    dec_off, _ = svc_off.submit(cw)
+    assert dec_off.verdict == "commit"          # guard disabled → admitted
+    assert env2.cancelled is True
+
+
+def test_mutation_bypassing_commit_token_is_refused_by_real_guard():
+    """Mutation: try to execute a real write WITHOUT a CommitService-issued token.
+
+    Exercises the real execute_write() guard (not a raw env call): a forged token
+    and a None token must both be refused, leaving the environment unchanged. If
+    the production token check were removed, this would change env state."""
+    ledger = _ledger_with("confirmed", 1)
+    env = EnvState()
+    svc = make_service(ledger, env)
+    cw = CandidateWriteMsg(action="cancel_reservation", arguments={"reservation_id": "R1"},
+                           target_objects=("reservation:R1",))
+    # Attempt to bypass the gate by calling the real write path directly:
+    for bad_token in (None, AllowedCommitToken("forged", "cancel_reservation", {})):
+        with pytest.raises(WriteIsolationError):
+            svc.execute_write(cw, bad_token)
+    assert env.cancelled is False     # real guard kept env unchanged
 
 
 def test_mutation_identical_views_break_visibility():

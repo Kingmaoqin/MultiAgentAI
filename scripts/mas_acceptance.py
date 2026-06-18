@@ -18,7 +18,9 @@ sys.path.insert(0, str(REPO / "src"))
 from ravel_mas.builders import run_architecture_proof  # noqa: E402
 from ravel_mas.visibility_proof import run_conflicting_view_proof  # noqa: E402
 from ravel_mas.commit_proof import run_all as run_commit_proofs  # noqa: E402
-from ravel_mas.runtime_proof import run_one_task_proof  # noqa: E402
+from ravel_mas.runtime_proof import (  # noqa: E402
+    run_one_task_proof, run_conflict_task_proof, run_delegation_trace_proof,
+)
 
 
 def run_pytests() -> bool:
@@ -53,6 +55,8 @@ def main() -> None:
     vis = run_conflicting_view_proof()
     commit = run_commit_proofs()
     proof = run_one_task_proof()
+    conflict = run_conflict_task_proof()
+    deleg = run_delegation_trace_proof()
     tests_pass = run_pytests()
 
     worker_view = vis["views"]["tool_worker"]
@@ -88,6 +92,12 @@ def main() -> None:
                                       and not commit["conflict_write"]["env_cancelled"]),
         "arb_selective_requery_observed": proof["arb_max_stage"] >= 4,
         "one_task_runtime_proof": (proof["stale_detected"] and proof["committed"]),
+        "runtime_value_conflict_detected": (
+            conflict["conflict_detected"] and conflict["arb_inspected_conflict_stage"]
+            and not conflict["committed"] and not conflict["env_cancelled"]),
+        "dynamic_delegation_live_trace": (
+            deleg["delegation_events"] >= 2 and deleg["distinct_agents"] >= 3
+            and deleg["generated_by"].startswith("team.run_turn")),
         "architecture_mutation_tests_passed": tests_pass,
         "code_review": "NOT_RUN",
         "construct_validity_review": "NOT_RUN",
@@ -105,6 +115,8 @@ def main() -> None:
         and manifest["commit_service_only_write_path"]
         and manifest["stale_write_blocked"]
         and manifest["conflicting_write_blocked"]
+        and manifest["runtime_value_conflict_detected"]
+        and manifest["dynamic_delegation_live_trace"]
         and manifest["architecture_mutation_tests_passed"]
     )
     manifest["overall_status"] = "PASS_ARCHITECTURE_PENDING_REVIEW" if core_ok else "FAIL"

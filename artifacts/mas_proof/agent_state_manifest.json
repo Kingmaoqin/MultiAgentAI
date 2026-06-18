@@ -6,7 +6,7 @@
     "n_calls": 3,
     "input_tokens": 330,
     "output_tokens": 100,
-    "state_object_id": 140686664635392
+    "state_object_id": 139671305425104
   },
   "policy_agent": {
     "agent_id": "policy_agent",
@@ -15,7 +15,7 @@
     "n_calls": 1,
     "input_tokens": 110,
     "output_tokens": 55,
-    "state_object_id": 140686664632512
+    "state_object_id": 139671305434800
   },
   "tool_worker": {
     "agent_id": "tool_worker",
@@ -24,6 +24,6 @@
     "n_calls": 1,
     "input_tokens": 140,
     "output_tokens": 48,
-    "state_object_id": 140686664632848
+    "state_object_id": 139671305427456
   }
 }

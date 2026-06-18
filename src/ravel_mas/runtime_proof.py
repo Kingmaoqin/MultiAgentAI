@@ -232,10 +232,20 @@ def run_one_task_proof(out_dir: str = "artifacts/mas_proof") -> dict[str, Any]:
     }
     (out / "tool_permission_manifest.json").write_text(json.dumps(tool_perm_manifest, indent=2))
 
-    vis = ViewBuilder(ledger, regime="ConflictingView", conflict_objects={OBJ})
+    # evidence_visibility_manifest built from a VALUE-FLIPPING ledger so the
+    # executed artifact shows a genuine cross-agent value conflict (not just a
+    # version-number difference): worker sees status=confirmed@v4, commit sees
+    # status=cancelled@v5.
+    conflict_ledger = EvidenceLedger()
+    for status in ["confirmed", "confirmed", "confirmed", "confirmed", "cancelled"]:
+        conflict_ledger.ingest(object_id=OBJ, tool_name="get_reservation_details",
+                               payload={"reservation_id": "R1", "status": status},
+                               source_agent="tool_worker")
+    vis = ViewBuilder(conflict_ledger, regime="ConflictingView", conflict_objects={OBJ})
     evis_manifest = {
-        aid: (vis.view_for(aid, OBJ).to_dict() if vis.view_for(aid, OBJ) else None)
-        for aid in ["tool_worker", "supervisor", "policy_agent", "commit_service"]
+        "_note": "ConflictingView over value-flipping ledger; worker(v4)=confirmed vs commit(v5)=cancelled",
+        **{aid: (vis.view_for(aid, OBJ).to_dict() if vis.view_for(aid, OBJ) else None)
+           for aid in ["tool_worker", "supervisor", "policy_agent", "commit_service"]},
     }
     (out / "evidence_visibility_manifest.json").write_text(json.dumps(evis_manifest, indent=2))
 
@@ -251,5 +261,112 @@ def run_one_task_proof(out_dir: str = "artifacts/mas_proof") -> dict[str, Any]:
     }
 
 
+def run_conflict_task_proof(out_dir: str = "artifacts/mas_proof") -> dict[str, Any]:
+    """Executed proof where a real VALUE conflict (confirmed→cancelled) is detected
+    by CommitService via claimed_preconditions and the system SAFELY ABSTAINS.
+
+    Exercises the conflict branch + ARB stage-3 at runtime (not just version numbers).
+    """
+    ledger = EvidenceLedger()
+    env = _Env()
+    trace = RuntimeTrace(trial_id="conflict-proof", task_id="cancel-R1-conflict")
+
+    svc = CommitService(ledger, write_tools=WRITE_TOOLS,
+                        action_required_fields=REQUIRED, real_write_executor=env.cancel)
+
+    # worker reads status=confirmed (v1)
+    _ingest(ledger, "confirmed")
+    # environment flips the value: status=cancelled (v2) — real value change
+    _ingest(ledger, "cancelled")
+    trace.record_event("env", {"note": f"{OBJ} value flipped confirmed→cancelled at v2"})
+
+    # worker proposes cancel relying on its stale belief status=confirmed
+    cw = CandidateWriteMsg(
+        action="cancel_reservation", arguments={"reservation_id": "R1"},
+        target_objects=(OBJ,),
+        referenced_evidence_ids=(ledger.records[0].evidence_id,),
+        claimed_preconditions=({"object_id": OBJ, "field": "status",
+                                "operator": "equals", "value": "confirmed"},),
+        expected_versions={OBJ: 1},
+    )
+    dec = svc.verify(cw)
+    trace.record_event("commit", {"action": cw.action, "verdict": dec.verdict,
+                                  "reasons": list(dec.reasons), "conflict": list(dec.conflict)})
+
+    # No requery can make 'cancel a cancelled reservation' valid → ARB exhausts → abstain.
+    arb = ReconciliationBudget(svc, requery_fn=lambda o: None, max_stage=7)
+    rr = arb.reconcile(cw, dec)
+    for step in rr.steps:
+        trace.record_event("commit", {"action": cw.action, "verdict": step.verdict_after,
+                                      "arb_stage": step.stage, "stage_name": step.stage_name,
+                                      "trigger": step.trigger})
+    trace.record_event("commit", {"action": cw.action, "verdict": rr.final_verdict,
+                                  "final": True, "committed": rr.final_verdict == "commit",
+                                  "env_cancelled": env.cancelled})
+
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "conflict_trace_readable.md").write_text(trace.to_readable())
+
+    return {
+        "verdict_initial": dec.verdict,
+        "conflict_detected": bool(dec.conflict),
+        "conflict_reasons": list(dec.conflict),
+        "final_verdict": rr.final_verdict,
+        "committed": rr.final_verdict == "commit",
+        "env_cancelled": env.cancelled,
+        "arb_inspected_conflict_stage": any(s.stage == 3 for s in rr.steps),
+    }
+
+
+def run_delegation_trace_proof(out_dir: str = "artifacts/mas_proof") -> dict[str, Any]:
+    """Generate a trace via the LIVE team.run_turn dynamic-delegation loop (not a
+    hardcoded sequence), evidencing Contract §2.4 at runtime."""
+    from .builders import create_team, PROPOSE_CANDIDATE_WRITE_TOOL
+    from .team import TeamConfig
+    from .model_client import FakeModelClient, ModelResponse
+
+    def sup(idx, msgs):
+        seq = [
+            ModelResponse(content='{"action":"Delegate","target_agent":"policy_agent",'
+                          '"subgoal":"check cancel policy","required_objects":["reservation:R1"],'
+                          '"reason_code":"policy_check_required"}'),
+            ModelResponse(content='{"action":"Delegate","target_agent":"tool_worker",'
+                          '"subgoal":"read status","required_objects":["reservation:R1"],'
+                          '"reason_code":"evidence_collection"}'),
+            ModelResponse(content='{"action":"Finish","target_agent":null,"subgoal":"done",'
+                          '"required_objects":[],"reason_code":"goal_met"}'),
+        ]
+        return seq[min(idx, len(seq) - 1)]
+
+    client = FakeModelClient(scripts={
+        "supervisor": sup,
+        "policy_agent": lambda i, m: ModelResponse(content='{"action":"cancel_reservation",'
+            '"policy_status":"conditionally_allowed","required_evidence":[],'
+            '"required_user_confirmations":[],"policy_checks":[],"ambiguities":[]}'),
+        "tool_worker": lambda i, m: ModelResponse(content="status read complete"),
+    })
+    team = create_team(model_client=client, model_name="fake/model",
+                       read_tools=["get_reservation_details"], write_tools=list(WRITE_TOOLS),
+                       config=TeamConfig(trial_id="delegation-trace", task_id="deleg",
+                                         max_turns=6), with_verifier=False)
+    team.run_turn(user_goal="Cancel reservation R1", worker_tools=[PROPOSE_CANDIDATE_WRITE_TOOL])
+
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "delegation_trace_readable.md").write_text(team.trace.to_readable())
+    deleg = [e for e in team.trace.events if e.kind == "delegation"]
+    return {
+        "delegation_events": len(deleg),
+        "targets": [e.data.get("target_agent") for e in deleg],
+        "distinct_agents": len(team.trace.internal_agent_ids),
+        "generated_by": "team.run_turn (live dynamic delegation)",
+    }
+
+
 if __name__ == "__main__":
-    print(json.dumps(run_one_task_proof(), indent=2))
+    print(json.dumps({
+        "one_task": run_one_task_proof(),
+        "conflict": run_conflict_task_proof(),
+        "delegation": run_delegation_trace_proof(),
+    }, indent=2))

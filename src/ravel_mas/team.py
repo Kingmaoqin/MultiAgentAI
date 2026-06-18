@@ -47,6 +47,8 @@ class RAVELTeam:
         ledger: Any = None,
         view_builder: Any = None,
         commit_service: Any = None,
+        reconciliation_budget: Any = None,
+        requery_fn: Any = None,
         bus: Optional[MessageBus] = None,
         trace: Optional[RuntimeTrace] = None,
     ) -> None:
@@ -58,6 +60,8 @@ class RAVELTeam:
         self.ledger = ledger
         self.view_builder = view_builder
         self.commit_service = commit_service
+        self.reconciliation_budget = reconciliation_budget
+        self.requery_fn = requery_fn
         self.bus = bus or MessageBus()
         self.trace = trace or RuntimeTrace(config.trial_id, config.task_id)
 
@@ -238,9 +242,10 @@ class RAVELTeam:
             arguments=candidate.get("arguments", {}) or {},
             target_objects=tuple(candidate.get("target_objects", []) or ()),
             referenced_evidence_ids=tuple(candidate.get("referenced_evidence_ids", []) or ()),
+            claimed_preconditions=tuple(candidate.get("claimed_preconditions", []) or ()),
             expected_versions=candidate.get("expected_versions", {}) or {},
         )
-        decision, result = self.commit_service.submit(cw)
+        decision = self.commit_service.verify(cw)
         self.trace.record_event("commit", {
             "action": cw.action,
             "verdict": decision.verdict,
@@ -249,11 +254,27 @@ class RAVELTeam:
             "conflict": list(decision.conflict),
             "committed": decision.allowed,
         })
-        if decision.verdict in ("reconcile", "replan"):
-            self._publish("commit_service", "supervisor",
-                          "ReconciliationRequest" if decision.verdict == "reconcile"
-                          else "ReplanRequest",
-                          {"action": cw.action, "reasons": list(decision.reasons)})
+        if decision.allowed:
+            self.commit_service.execute_write(cw, decision.token)
+            return
+
+        # reconcile/replan → drive the ARB ladder if wired (Contract §5.3)
+        self._publish("commit_service", "supervisor",
+                      "ReconciliationRequest" if decision.verdict == "reconcile"
+                      else "ReplanRequest",
+                      {"action": cw.action, "reasons": list(decision.reasons)})
+        if self.reconciliation_budget is not None:
+            rr = self.reconciliation_budget.reconcile(cw, decision)
+            for step in rr.steps:
+                self.trace.record_event("commit", {
+                    "action": cw.action, "verdict": step.verdict_after,
+                    "arb_stage": step.stage, "stage_name": step.stage_name,
+                    "trigger": step.trigger,
+                })
+            self.trace.record_event("commit", {
+                "action": cw.action, "verdict": rr.final_verdict,
+                "final": True, "committed": rr.final_verdict == "commit",
+            })
 
     @staticmethod
     def _extract_candidate_writes(resp: ModelResponse) -> list[dict]:

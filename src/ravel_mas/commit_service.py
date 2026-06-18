@@ -70,6 +70,8 @@ class CommitService:
         write_tools: set[str],
         action_required_fields: Optional[dict[str, list[str]]] = None,
         real_write_executor: Optional[Callable[[str, dict], Any]] = None,
+        enforce_version_check: bool = True,
+        enforce_conflict_check: bool = True,
     ) -> None:
         self.ledger = ledger
         self.write_tools = set(write_tools)
@@ -77,6 +79,9 @@ class CommitService:
         self.action_required_fields = action_required_fields or {}
         # callable that actually performs the env write; only CommitService holds it
         self._executor = real_write_executor
+        # Production guards — mutation tests toggle these to prove they matter.
+        self.enforce_version_check = enforce_version_check
+        self.enforce_conflict_check = enforce_conflict_check
         self._issued_tokens: set[str] = set()
         self.decisions: list[CommitDecision] = []
 
@@ -111,18 +116,37 @@ class CommitService:
 
             # expected version (worker's claim) must match current latest (no stale write)
             expected = cw.expected_versions.get(obj)
-            if expected is not None and expected != latest_v:
+            if self.enforce_version_check and expected is not None and expected != latest_v:
                 stale.append(f"{obj}:expected_v{expected}!=latest_v{latest_v}")
 
             # required-field presence + conflict check against latest record
             rec = self.ledger.latest(obj)
-            if rec is not None and getattr(rec, "conflict_flag", False):
+            if self.enforce_conflict_check and rec is not None and getattr(rec, "conflict_flag", False):
                 conflict.append(f"{obj}:conflict_flag")
             if required:
                 fields = dict(rec.field_values) if rec else {}
                 for fld in required:
                     if fld not in fields:
                         missing.append(f"{obj}.{fld}")
+
+        # VALUE-LEVEL conflict: each claimed precondition is checked against the
+        # LATEST ledger value. If the world changed under the worker (worker relied
+        # on status=confirmed but latest=cancelled) this is a real cross-agent
+        # conflict, not merely a version-number mismatch.
+        if self.enforce_conflict_check:
+            for pre in cw.claimed_preconditions:
+                oid = pre.get("object_id")
+                fld = pre.get("field")
+                op = pre.get("operator", "equals")
+                claimed = pre.get("value")
+                latest = self.ledger.latest_field(oid, fld) if oid and fld else None
+                if latest is None:
+                    missing.append(f"{oid}.{fld}:<no-evidence>")
+                    continue
+                _v, latest_val, _eid = latest
+                holds = (latest_val == claimed) if op == "equals" else (latest_val != claimed)
+                if not holds:
+                    conflict.append(f"{oid}.{fld}:claimed={claimed}!=latest={latest_val}")
 
         # traceability: declared evidence must exist in the ledger (don't trust blindly)
         for ev in cw.referenced_evidence_ids:

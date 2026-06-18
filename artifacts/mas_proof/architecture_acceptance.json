@@ -1,5 +1,5 @@
 {
-  "commit_sha": "608b691c06b2dc52c60c42e6d0c08bd7fba1923c",
+  "commit_sha": "4958f7c76081a573be49932244dec7507cfc7d78",
   "architecture_contract_version": "1.0",
   "distinct_internal_llm_agents": 3,
   "agent_ids": [
@@ -18,6 +18,8 @@
   "conflicting_write_blocked": true,
   "arb_selective_requery_observed": true,
   "one_task_runtime_proof": true,
+  "runtime_value_conflict_detected": true,
+  "dynamic_delegation_live_trace": true,
   "architecture_mutation_tests_passed": true,
   "code_review": "NOT_RUN",
   "construct_validity_review": "NOT_RUN",

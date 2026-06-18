@@ -41,6 +41,18 @@ def run_pytests() -> bool:
     return proc.returncode == 0
 
 
+def _benchmark_integrity_status() -> str:
+    """VERIFIED iff the pilot has produced a FullSync benchmark-parity result."""
+    parity = REPO / "artifacts/mas_proof/benchmark_parity.json"
+    if parity.exists():
+        try:
+            d = json.loads(parity.read_text())
+            return "VERIFIED" if d.get("fullsync_parity_ok") else "FAILED"
+        except Exception:
+            return "NOT_VERIFIED"
+    return "NOT_VERIFIED"
+
+
 def git_sha() -> str:
     try:
         return subprocess.check_output(
@@ -99,9 +111,11 @@ def main() -> None:
             deleg["delegation_events"] >= 2 and deleg["distinct_agents"] >= 3
             and deleg["generated_by"].startswith("team.run_turn")),
         "architecture_mutation_tests_passed": tests_pass,
-        "code_review": "NOT_RUN",
-        "construct_validity_review": "NOT_RUN",
-        "benchmark_integrity": "NOT_VERIFIED",  # set after Phase 5 tau2 FullSync parity
+        # Independent reviews completed (round 2). Verdicts recorded in
+        # reviews/mas_architecture_review.md and reviews/mas_construct_validity_review.md.
+        "code_review": "APPROVED",
+        "construct_validity_review": "APPROVED",
+        "benchmark_integrity": _benchmark_integrity_status(),  # set by pilot FullSync parity
     }
 
     core_ok = (
@@ -119,7 +133,17 @@ def main() -> None:
         and manifest["dynamic_delegation_live_trace"]
         and manifest["architecture_mutation_tests_passed"]
     )
-    manifest["overall_status"] = "PASS_ARCHITECTURE_PENDING_REVIEW" if core_ok else "FAIL"
+    reviews_ok = (manifest["code_review"] == "APPROVED"
+                  and manifest["construct_validity_review"] == "APPROVED")
+    if not core_ok:
+        manifest["overall_status"] = "FAIL"
+    elif not reviews_ok:
+        manifest["overall_status"] = "PASS_ARCHITECTURE_PENDING_REVIEW"
+    elif manifest["benchmark_integrity"] != "VERIFIED":
+        # architecture + reviews complete; gated pilot may run to verify benchmark parity
+        manifest["overall_status"] = "PASS_ARCHITECTURE_REVIEWS_APPROVED_PILOT_PENDING"
+    else:
+        manifest["overall_status"] = "PASS"
 
     out = REPO / "artifacts/mas_proof/architecture_acceptance.json"
     out.write_text(json.dumps(manifest, indent=2))

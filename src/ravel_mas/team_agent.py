@@ -77,6 +77,8 @@ class RAVELTeamAgent(HalfDuplexAgent):
         self._llm = llm
         self._llm_args = dict(llm_args or {})
         self._trace_dir = trace_dir
+        # Cap raw tau2 conversation turns shown to the worker (context safety).
+        self._worker_history_window = 16
         self._domain = domain
         self._regime = regime
         self._task_id = task_id
@@ -95,6 +97,9 @@ class RAVELTeamAgent(HalfDuplexAgent):
         self._read_tools = [t for t in tools if _tool_name(t) not in self._write_tool_names]
         # propose_candidate_write as a real tau2 Tool (so generate() can serialize it).
         self._propose_tool = _build_propose_tool()
+        # Reference schemas for the write actions the worker may PROPOSE (but not
+        # execute). Without these the worker hallucinates write action names.
+        self._write_actions_ref = self._build_write_actions_ref(tools)
 
         # Services
         self._ledger = EvidenceLedger()
@@ -118,6 +123,14 @@ class RAVELTeamAgent(HalfDuplexAgent):
         self._inner = LLMAgent(tools=tools, domain_policy=domain_policy,
                                llm=llm, llm_args=self._llm_args)
         self._step = 0
+        # Compact, structured task memory (RAVEL global plan / task state) — gives the
+        # Supervisor continuity WITHOUT resending the raw transcript. Prevents the
+        # "re-delegate to policy every turn" loop.
+        self._memo: dict = {
+            "policy_status": None, "required_evidence": [],
+            "evidence_objects": {}, "writes_attempted": [],
+            "recent_targets": [],
+        }
 
     # --- tau2 interface ---
 
@@ -144,10 +157,17 @@ class RAVELTeamAgent(HalfDuplexAgent):
         worker_sys = (
             WORKER_PROMPT + f"\n\nDomain policy:\n{self.domain_policy}\n\n"
             f"Supervisor subgoal: {self._plan.get('subgoal','')}\n"
-            f"Evidence view:\n{self._views.fields_for('tool_worker', self._plan.get('required_objects', []))}"
+            f"Evidence view:\n{self._views.fields_for('tool_worker', self._plan.get('required_objects', []))}\n\n"
+            "To change state, call propose_candidate_write with `action` set to EXACTLY "
+            "one of these write actions (do NOT invent names) and `arguments` matching its "
+            f"parameters:\n{self._write_actions_ref}"
         )
-        worker_msgs = [SystemMessage(role="system", content=worker_sys)] + \
-                      [m for m in state.messages if getattr(m, 'role', '') != 'system']
+        # Bound the worker's tau2 conversation to the most recent turns to avoid
+        # context-window overflow on long episodes. The worker also receives the
+        # ledger-projected evidence view inside worker_sys, so trimming raw history
+        # is consistent with RAVEL's minimal-context principle.
+        convo = [m for m in state.messages if getattr(m, 'role', '') != 'system']
+        worker_msgs = [SystemMessage(role="system", content=worker_sys)] + convo[-self._worker_history_window:]
         worker_resp = tau2_generate(
             model=self._llm, tools=worker_tools, messages=worker_msgs,
             call_name="mas_tool_worker", **self._llm_args,
@@ -195,6 +215,8 @@ class RAVELTeamAgent(HalfDuplexAgent):
             oid = _extract_object_id(name, payload)
             self._ledger.ingest(object_id=oid, tool_name=name, payload=payload,
                                 source_agent="tool_worker")
+            # record compact evidence facts for the supervisor memo
+            self._memo["evidence_objects"][oid] = sorted(list(payload.keys())[:6])
         # ConflictingView: any object the ledger has seen more than once becomes a
         # cross-agent conflict candidate (worker pinned one version behind latest).
         if self._regime == "ConflictingView":
@@ -203,11 +225,27 @@ class RAVELTeamAgent(HalfDuplexAgent):
                 if self._ledger.object_version(r.object_id) >= 2
             }
 
+    def _render_task_state(self) -> str:
+        m = self._memo
+        ev = "; ".join(f"{k}{v}" for k, v in list(m["evidence_objects"].items())[:8]) or "none"
+        writes = "; ".join(f"{w['action']}={w['verdict']}" for w in m["writes_attempted"]) or "none"
+        return (
+            f"turn={self._step}\n"
+            f"policy_obtained={'yes' if m['policy_status'] else 'no'} "
+            f"(status={m['policy_status']})\n"
+            f"evidence_gathered: {ev}\n"
+            f"writes_attempted: {writes}\n"
+            f"recent_delegations: {m['recent_targets'][-4:]}\n"
+            "Guidance: if policy is obtained and evidence is gathered, delegate to "
+            "tool_worker to act; do NOT re-request policy you already have; if a write "
+            "already committed, Finish."
+        )
+
     def _plan_loop(self, state) -> str:
         user_goal = self._latest_user_text(state)
         for _ in range(self._max_internal):
             plan = self._supervisor.decide(
-                user_goal=user_goal, task_state=f"step={self._step}",
+                user_goal=user_goal, task_state=self._render_task_state(),
                 ledger_headers=self._views.headers_for("supervisor"),
                 last_result=json.dumps(self._policy_schema)[:200],
             )
@@ -220,12 +258,15 @@ class RAVELTeamAgent(HalfDuplexAgent):
             if action == "RequestReconciliation":
                 continue
             target = plan.get("target_agent")
+            self._memo["recent_targets"].append(target)
             if target == "policy_agent":
                 pd = self._policy.decide(
                     action=plan.get("subgoal", ""), subgoal=plan.get("subgoal", ""),
                     policy_fields=self._views.fields_for("policy_agent",
                                                          plan.get("required_objects", [])),
                 )
+                self._memo["policy_status"] = pd.get("policy_status")
+                self._memo["required_evidence"] = pd.get("required_evidence", [])
                 self._policy_schema = pd
                 self._record(self._policy, "json")
                 self._publish("policy_agent", "supervisor", "PolicyDecision", pd)
@@ -259,16 +300,54 @@ class RAVELTeamAgent(HalfDuplexAgent):
             return AssistantMessage.text(content="", tool_calls=real_calls)
         return AssistantMessage.text(content=resp.content or "Proceeding.")
 
+    def _build_write_actions_ref(self, tools) -> str:
+        """Build a reference list of proposable write actions with their parameters,
+        so the worker uses correct action names/args in propose_candidate_write."""
+        lines = []
+        for t in tools:
+            if _tool_name(t) not in self._write_tool_names:
+                continue
+            try:
+                schema = t.openai_schema["function"]
+                params = list(schema.get("parameters", {}).get("properties", {}).keys())
+                desc = (schema.get("description", "") or "").strip().split("\n")[0][:120]
+                lines.append(f"  - {schema['name']}({', '.join(params)}): {desc}")
+            except Exception:
+                lines.append(f"  - {_tool_name(t)}")
+        return "\n".join(lines) or "  (none)"
+
+    def _resolve_target_objects(self, write_args: dict, declared) -> tuple:
+        """Resolve the write's entity ids to real ledger object ids.
+
+        For each *_id value in the write arguments, find ledger objects whose id
+        contains that value. This grounds the CommitService check in the evidence
+        actually gathered, instead of the LLM's free-form target_objects labels.
+        """
+        ledger_objs = [r.object_id for r in self._ledger.records]
+        resolved = []
+        id_values = [str(v) for k, v in write_args.items()
+                     if (k.endswith("_id") or k == "id") and v is not None]
+        for val in id_values:
+            for oid in ledger_objs:
+                if val in oid and oid not in resolved:
+                    resolved.append(oid)
+        if resolved:
+            return tuple(resolved)
+        # fall back to declared labels, else a synthetic id from the action
+        if declared:
+            return tuple(declared)
+        return (_extract_object_id(write_args.get("action", "write"), write_args),)
+
     def _verify_candidate(self, tc, state):
         """Run deterministic CommitService; emit real write ToolCall iff commit."""
         args = tc.arguments if isinstance(tc.arguments, dict) else json.loads(tc.arguments or "{}")
         action = args.get("action", "")
         write_args = args.get("arguments", {}) or {}
-        target_objects = tuple(args.get("target_objects", []) or ())
-        if not target_objects:
-            target_objects = tuple(
-                _extract_object_id(action, write_args) for _ in [0]
-            )
+        # Map the write's referenced entity ids to ACTUAL ledger object ids, so the
+        # deterministic checks run against the evidence the worker really gathered.
+        # The LLM's free-form target_objects rarely match ledger keys (tool:id), so we
+        # resolve by id-value substring against ledger object ids.
+        target_objects = self._resolve_target_objects(write_args, args.get("target_objects"))
         # Use the WORKER's declared evidence (expected versions + preconditions), NOT
         # the current latest — otherwise the deterministic stale/conflict checks are
         # trivially satisfied and writes leak through.
@@ -280,6 +359,7 @@ class RAVELTeamAgent(HalfDuplexAgent):
         )
         self._publish("tool_worker", "commit_service", "CandidateWrite", args)
         decision = self._commit.verify(cw)
+        self._memo["writes_attempted"].append({"action": action, "verdict": decision.verdict})
         self._trace.record_event("commit", {"action": action, "verdict": decision.verdict,
                                             "reasons": list(decision.reasons),
                                             "committed": decision.allowed})

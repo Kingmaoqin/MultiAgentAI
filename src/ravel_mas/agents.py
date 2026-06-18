@@ -49,6 +49,7 @@ class BaseAgent:
         model_name: str,
         allowed_tools: Optional[list[str]] = None,
         temperature: float = 0.0,
+        history_window: int = 1,
     ) -> None:
         self.agent_id = agent_id
         self.system_prompt = system_prompt
@@ -58,6 +59,11 @@ class BaseAgent:
         # Tool allowlist — names this agent is permitted to hold. Enforced by team.
         self.allowed_tools: list[str] = list(allowed_tools or [])
         self.temperature = temperature
+        # How many of this agent's own past messages to resend per call. RAVEL's
+        # minimal-context principle: Supervisor/Policy prompts are self-contained
+        # (they carry the compact state), so default to only the current prompt.
+        # The full history is still retained in self.state for independence/trace.
+        self.history_window = history_window
         # INDEPENDENT state object (Contract §2.2)
         self.state = AgentState()
         # Last raw model response (for trace records)
@@ -74,10 +80,16 @@ class BaseAgent:
     ) -> ModelResponse:
         """Issue this agent's own LLM call and update its own token accounting."""
         self.state.messages.append({"role": "user", "content": user_content})
+        # Bounded context: resend only the last `history_window` user messages of
+        # this agent (default 1 = current self-contained prompt). Prevents unbounded
+        # context growth that otherwise blows past the model's window.
+        keep = max(1, self.history_window)
+        user_msgs = [m for m in self.state.messages if m.get("role") == "user"]
+        sent = user_msgs[-keep:]
         resp = self._client.generate(
             agent_id=self.agent_id,
             system_prompt=self.system_prompt,
-            messages=list(self.state.messages),
+            messages=sent,
             tools=tools,
             temperature=self.temperature,
         )

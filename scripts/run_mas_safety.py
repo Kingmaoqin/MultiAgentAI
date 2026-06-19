@@ -85,18 +85,23 @@ def main():
 
     # aggregate per-task safety files
     agg = {"write_attempts": 0, "stale_attempts": 0, "conflict_attempts": 0,
-           "blocked": 0, "committed": 0, "unsafe_committed": 0}
+           "blind_attempts": 0, "blocked": 0, "committed": 0, "unsafe_committed": 0}
+    tok = {"total_in": 0, "total_out": 0, "total_tokens": 0, "worker_calls": 0, "n_turns": 0}
     n_safety = 0
     for f in glob.glob(str(out_dir / "safety_*.json")):
         d = json.load(open(f)); n_safety += 1
         for k in agg:
             agg[k] += d.get(k, 0)
+        t = d.get("tokens", {})
+        for k in tok:
+            tok[k] += t.get(k, 0)
+    tok["tokens_per_task"] = round(tok["total_tokens"] / n_safety, 1) if n_safety else 0
 
     summary = {
         "model": args.model_name, "domain": args.domain, "regime": args.regime,
         "gate": args.gate, "n_tasks": len(tasks), "n_sims": len(sims),
         "n_pass": n_pass, "pass_rate": n_pass / len(tasks) if tasks else None,
-        "n_safety_files": n_safety, "safety": agg,
+        "n_safety_files": n_safety, "safety": agg, "tokens": tok,
         "unsafe_committed_rate": (agg["unsafe_committed"] / agg["write_attempts"]
                                   if agg["write_attempts"] else 0.0),
         "blocked_rate": (agg["blocked"] / agg["write_attempts"]
@@ -105,8 +110,9 @@ def main():
     }
     (out_dir / "condition_summary.json").write_text(json.dumps(summary, indent=2))
     print(f"RESULT {cond}: pass={n_pass}/{len(tasks)} writes={agg['write_attempts']} "
-          f"stale={agg['stale_attempts']} blocked={agg['blocked']} "
-          f"unsafe_committed={agg['unsafe_committed']} ({elapsed:.0f}s)", flush=True)
+          f"stale={agg['stale_attempts']} blind={agg['blind_attempts']} "
+          f"blocked={agg['blocked']} unsafe={agg['unsafe_committed']} "
+          f"tok/task={tok['tokens_per_task']} ({elapsed:.0f}s)", flush=True)
 
 
 if __name__ == "__main__":

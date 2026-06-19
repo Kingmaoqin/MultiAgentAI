@@ -111,6 +111,10 @@ class RAVELTeamAgent(HalfDuplexAgent):
 
         # Services
         self._ledger = EvidenceLedger()
+        # Under FieldMask, mask a policy-required field ("status" by default) from the
+        # worker so writes proposed without it are detectable "blind writes".
+        if regime == "RoleAwareFieldMask" and not masked_field:
+            masked_field = "status"
         self._views = ViewBuilder(self._ledger, regime=regime, delay=delay,
                                   masked_field=masked_field,
                                   conflict_objects=set())
@@ -134,6 +138,8 @@ class RAVELTeamAgent(HalfDuplexAgent):
         self._gate_enabled = gate_enabled
         self._worker_seen_version: dict = {}   # object_id -> version the worker observed
         self._perturbed: set = set()           # objects already perturbed (once each)
+        # Token accounting (RAVEL Proposal's 2nd claim: safety at acceptable token cost).
+        self._tokens = {"worker_in": 0, "worker_out": 0, "worker_calls": 0}
         # Per-trial SAFETY metrics (RAVEL's actual thesis: safer writes). A write is a
         # "stale attempt" if the worker proposed it while its regime-projected view of a
         # target object was behind the ledger's latest version (the worker acted on
@@ -141,7 +147,7 @@ class RAVELTeamAgent(HalfDuplexAgent):
         # execute (unsafe_committed) — the counterfactual that quantifies RAVEL's value.
         self._safety = {
             "write_attempts": 0, "stale_attempts": 0, "conflict_attempts": 0,
-            "committed": 0, "blocked": 0, "unsafe_committed": 0,
+            "blind_attempts": 0, "committed": 0, "blocked": 0, "unsafe_committed": 0,
         }
         # Compact, structured task memory (RAVEL global plan / task state) — gives the
         # Supervisor continuity WITHOUT resending the raw transcript. Prevents the
@@ -192,11 +198,15 @@ class RAVELTeamAgent(HalfDuplexAgent):
             model=self._llm, tools=worker_tools, messages=worker_msgs,
             call_name="mas_tool_worker", **self._llm_args,
         )
+        w_in, w_out = _usage_tokens(worker_resp)
+        self._tokens["worker_in"] += w_in
+        self._tokens["worker_out"] += w_out
+        self._tokens["worker_calls"] += 1
         self._trace.record_llm_call(LLMCallRecord(
             logical_step=self._trace.step(), agent_id="tool_worker", agent_role="tool_worker",
             model_name=self._llm, system_prompt_hash=_hash(worker_sys),
             context_hash="", visible_evidence_ids=[r.evidence_id for r in self._ledger.records],
-            visible_object_versions={}, input_tokens=0, output_tokens=0,
+            visible_object_versions={}, input_tokens=w_in, output_tokens=w_out,
             output_kind="tool_call" if worker_resp.is_tool_call() else "text",
         ))
 
@@ -218,12 +228,31 @@ class RAVELTeamAgent(HalfDuplexAgent):
         (out / f"pilot_trace_{self._task_id}.md").write_text(self._trace.to_readable())
         self._dump_safety(out)
 
+    def _token_summary(self) -> dict:
+        sup_in = self._supervisor.state.input_tokens
+        sup_out = self._supervisor.state.output_tokens
+        pol_in = self._policy.state.input_tokens
+        pol_out = self._policy.state.output_tokens
+        wrk_in = self._tokens["worker_in"]
+        wrk_out = self._tokens["worker_out"]
+        return {
+            "supervisor_in": sup_in, "supervisor_out": sup_out,
+            "policy_in": pol_in, "policy_out": pol_out,
+            "worker_in": wrk_in, "worker_out": wrk_out,
+            "worker_calls": self._tokens["worker_calls"],
+            "total_in": sup_in + pol_in + wrk_in,
+            "total_out": sup_out + pol_out + wrk_out,
+            "total_tokens": sup_in + pol_in + wrk_in + sup_out + pol_out + wrk_out,
+            "n_turns": self._step,
+        }
+
     def _dump_safety(self, out) -> None:
         from pathlib import Path as _P
         out = _P(out)
         out.mkdir(parents=True, exist_ok=True)
         rec = {"task_id": self._task_id, "regime": self._regime,
-               "gate_enabled": self._gate_enabled, **self._safety}
+               "gate_enabled": self._gate_enabled, **self._safety,
+               "tokens": self._token_summary()}
         (out / f"safety_{self._task_id}.json").write_text(json.dumps(rec, indent=2))
 
     def safety_metrics(self) -> dict:
@@ -461,6 +490,25 @@ class RAVELTeamAgent(HalfDuplexAgent):
                 "regime": self._regime,
             })
 
+    def _detect_blind_write(self, target_objects: tuple) -> bool:
+        """RoleAwareFieldMask: True if a policy-required field exists in the ledger
+        for a target but was MASKED from the worker's view (the worker proposed the
+        write without observing a required precondition). FullSync etc. → never blind.
+        """
+        if self._regime != "RoleAwareFieldMask":
+            return False
+        masked = self._views.masked_field or "status"
+        for obj in target_objects:
+            rec = self._ledger.latest(obj)
+            if rec is None:
+                continue
+            view = self._views.view_for("tool_worker", obj)
+            in_ledger = masked in dict(rec.field_values)
+            in_view = bool(view and masked in view.visible_fields)
+            if in_ledger and not in_view:
+                return True
+        return False
+
     def _verify_candidate(self, tc, state):
         """Run deterministic CommitService; emit real write ToolCall iff commit."""
         args = tc.arguments if isinstance(tc.arguments, dict) else json.loads(tc.arguments or "{}")
@@ -508,21 +556,29 @@ class RAVELTeamAgent(HalfDuplexAgent):
         decision = self._commit.verify(cw)
         is_stale = bool(decision.stale)
         is_conflict = bool(decision.conflict)
+        # FieldMask safety dimension: a "blind write" is one proposed while a
+        # policy-required field was masked from the worker's view (the worker could
+        # not verify the precondition). Distinct from version staleness.
+        is_blind = self._detect_blind_write(target_objects)
+        is_unsafe = is_stale or is_conflict or is_blind
         self._safety["write_attempts"] += 1
         if is_stale:
             self._safety["stale_attempts"] += 1
         if is_conflict:
             self._safety["conflict_attempts"] += 1
+        if is_blind:
+            self._safety["blind_attempts"] += 1
 
         # Gate-OFF ablation: execute the write regardless (RAVEL's value = what it
-        # would have prevented). Gate-ON: block stale/conflict/insufficient writes.
+        # would have prevented). Gate-ON: block stale/conflict/blind/insufficient writes.
         if not self._gate_enabled:
             self._memo["writes_attempted"].append({"action": action, "verdict": "gate_off"})
-            if is_stale or is_conflict:
+            if is_unsafe:
                 self._safety["unsafe_committed"] += 1
             self._safety["committed"] += 1
             self._trace.record_event("commit", {"action": action, "verdict": "gate_off_commit",
-                                                "stale": is_stale, "conflict": is_conflict})
+                                                "stale": is_stale, "conflict": is_conflict,
+                                                "blind": is_blind})
             return AssistantMessage.text(content="", tool_calls=[
                 ToolCall(id=f"mas-w-{self._step}", name=action, arguments=write_args)
             ])
@@ -531,8 +587,9 @@ class RAVELTeamAgent(HalfDuplexAgent):
         self._trace.record_event("commit", {"action": action, "verdict": decision.verdict,
                                             "reasons": list(decision.reasons),
                                             "stale": is_stale, "conflict": is_conflict,
-                                            "committed": decision.allowed})
-        if decision.allowed and action in self._write_tool_names:
+                                            "blind": is_blind, "committed": decision.allowed})
+        # Gate ON blocks blind writes too (a required field was unobserved).
+        if decision.allowed and not is_blind and action in self._write_tool_names:
             self._safety["committed"] += 1
             return AssistantMessage.text(content="", tool_calls=[
                 ToolCall(id=f"mas-w-{self._step}", name=action, arguments=write_args)
@@ -620,6 +677,17 @@ def _tool_name(tool) -> str:
 def _hash(text: str) -> str:
     import hashlib
     return hashlib.sha256(text.encode()).hexdigest()
+
+
+def _usage_tokens(resp) -> tuple:
+    """Extract (prompt_tokens, completion_tokens) from a tau2 AssistantMessage."""
+    usage = getattr(resp, "usage", None)
+    if not usage:
+        return 0, 0
+    if isinstance(usage, dict):
+        return usage.get("prompt_tokens", 0) or 0, usage.get("completion_tokens", 0) or 0
+    return (getattr(usage, "prompt_tokens", 0) or 0,
+            getattr(usage, "completion_tokens", 0) or 0)
 
 
 _RAVEL_KEYS = frozenset({"regime", "delay", "masked_field", "domain", "task_id",

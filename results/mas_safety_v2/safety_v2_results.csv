@@ -1,0 +1,17 @@
+model,regime,gate,pass,writes,stale,blind,blocked,unsafe,tok_per_task,total_tokens
+gemma4,FullSync,off,0.32,22,0,0,0,0,47803.4,2390172
+gemma4,FullSync,on,0.34,21,0,0,0,0,45309.4,2265470
+gemma4,Delayed,off,0.36,21,21,0,0,21,47574.1,2378703
+gemma4,Delayed,on,0.34,50,50,0,50,0,49285.5,2464274
+gemma4,RoleAwareFieldMask,off,0.28,21,0,21,0,21,48931.9,2446595
+gemma4,RoleAwareFieldMask,on,0.32,17,0,17,17,0,46762.1,2338104
+gemma4,ConflictingView,off,0.26,21,21,0,0,21,48323.3,2416165
+gemma4,ConflictingView,on,0.3,55,55,0,55,0,51788.0,2589400
+gptoss,FullSync,off,0.32,16,0,0,0,0,30891.4,1513681
+gptoss,FullSync,on,0.26,23,0,0,8,0,34480.7,1655074
+gptoss,Delayed,off,0.28,18,14,0,0,14,33228.7,1495291
+gptoss,Delayed,on,0.22,24,23,0,24,0,33340.0,1433620
+gptoss,RoleAwareFieldMask,off,0.28,30,0,29,0,29,33295.5,1531591
+gptoss,RoleAwareFieldMask,on,0.22,16,0,14,15,0,33844.4,1590687
+gptoss,ConflictingView,off,0.14,20,19,0,0,19,33658.7,1413667
+gptoss,ConflictingView,on,0.24,28,28,0,28,0,32798.8,1475945

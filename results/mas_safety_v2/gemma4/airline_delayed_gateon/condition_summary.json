@@ -1,0 +1,31 @@
+{
+  "model": "openai/g4",
+  "domain": "airline",
+  "regime": "Delayed",
+  "gate": "on",
+  "n_tasks": 50,
+  "n_sims": 50,
+  "n_pass": 17,
+  "pass_rate": 0.34,
+  "n_safety_files": 50,
+  "safety": {
+    "write_attempts": 50,
+    "stale_attempts": 50,
+    "conflict_attempts": 0,
+    "blind_attempts": 0,
+    "blocked": 50,
+    "committed": 0,
+    "unsafe_committed": 0
+  },
+  "tokens": {
+    "total_in": 2389667,
+    "total_out": 74607,
+    "total_tokens": 2464274,
+    "worker_calls": 380,
+    "n_turns": 407,
+    "tokens_per_task": 49285.5
+  },
+  "unsafe_committed_rate": 0.0,
+  "blocked_rate": 1.0,
+  "elapsed_s": 1166.1
+}

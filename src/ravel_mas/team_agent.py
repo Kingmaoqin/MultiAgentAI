@@ -344,7 +344,9 @@ class RAVELTeamAgent(HalfDuplexAgent):
     def _render_task_state(self) -> str:
         m = self._memo
         ev = "; ".join(f"{k}{v}" for k, v in list(m["evidence_objects"].items())[:8]) or "none"
-        writes = "; ".join(f"{w['action']}={w['verdict']}" for w in m["writes_attempted"]) or "none"
+        writes = "; ".join(
+            f"{w['action']}={'executed' if w.get('executes') else 'blocked'}"
+            for w in m["writes_attempted"]) or "none"
         return (
             f"turn={self._step}\n"
             f"policy_obtained={'yes' if m['policy_status'] else 'no'} "
@@ -590,9 +592,20 @@ class RAVELTeamAgent(HalfDuplexAgent):
 
     def _verify_candidate(self, tc, state):
         """Run deterministic CommitService; emit real write ToolCall iff commit."""
-        args = tc.arguments if isinstance(tc.arguments, dict) else json.loads(tc.arguments or "{}")
+        try:
+            args = tc.arguments if isinstance(tc.arguments, dict) else json.loads(tc.arguments or "{}")
+        except Exception:
+            args = {}
+        if not isinstance(args, dict):
+            args = {}
+        # Coerce malformed LLM outputs (e.g. action as a dict) to safe types so a single
+        # bad proposal cannot crash the whole trajectory (was causing 'unhashable type').
         action = args.get("action", "")
+        if not isinstance(action, str):
+            action = str(action)
         write_args = args.get("arguments", {}) or {}
+        if not isinstance(write_args, dict):
+            write_args = {}
         # Map the write's referenced entity ids to ACTUAL ledger object ids, so the
         # deterministic checks run against the evidence the worker really gathered.
         # The LLM's free-form target_objects rarely match ledger keys (tool:id), so we

@@ -98,3 +98,77 @@ def test_worker_read_call_passes_through():
     out = a._handle_worker(_Resp(), state=None)
     assert out.tool_calls is not None
     assert out.tool_calls[0].name == "get_reservation_details"
+
+
+# --- Regression tests for the corrected (non-circular) safety measurement ---
+
+def _make_write_tc():
+    return ToolCall(id="w1", name="propose_candidate_write", arguments={
+        "action": "cancel_reservation",
+        "arguments": {"reservation_id": "R1"},
+        "target_objects": ["cancel_reservation:R1"],
+    })
+
+
+def _seed_stale_object(a):
+    """Worker observed v1; ledger advanced to v2 -> oracle-stale."""
+    a._ledger.ingest(object_id="cancel_reservation:R1", tool_name="get_reservation_details",
+                     payload={"reservation_id": "R1", "status": "confirmed"},
+                     source_agent="tool_worker")
+    a._worker_seen_version["cancel_reservation:R1"] = 1
+    a._ledger.ingest(object_id="cancel_reservation:R1", tool_name="concurrent_update",
+                     payload={"reservation_id": "R1", "status": "cancelled"},
+                     source_agent="external_process")
+    # ledger now at v2, worker saw v1
+
+
+def test_gate_on_miss_is_counted_non_circular(monkeypatch):
+    """If the gate WRONGLY allows an oracle-unsafe write, unsafe_executed must
+    increment under gate ON. Proves the metric is not structurally zero."""
+    a = _agent()
+    a._gate_enabled = True
+    _seed_stale_object(a)
+    # Force the deterministic gate to ALLOW everything (simulate a gate miss).
+    from ravel_mas.commit_service import CommitDecision, AllowedCommitToken
+    monkeypatch.setattr(a._commit, "verify",
+                        lambda cw: CommitDecision(verdict="commit", reasons=("forced",),
+                                                  token=AllowedCommitToken("t", cw.action, {})))
+    out = a._verify_candidate(_make_write_tc(), state=None)
+    assert out.tool_calls and out.tool_calls[0].name == "cancel_reservation"  # executed
+    assert a._safety["oracle_unsafe_attempts"] == 1
+    assert a._safety["unsafe_executed"] == 1   # gate-ON miss IS counted
+
+
+def test_gate_on_catch_records_zero_unsafe_executed():
+    """With the real gate, an oracle-stale write is blocked -> unsafe_executed=0,
+    and it is NOT an overblock (the write was genuinely unsafe)."""
+    a = _agent()
+    a._gate_enabled = True
+    _seed_stale_object(a)
+    out = a._verify_candidate(_make_write_tc(), state=None)
+    assert (out.tool_calls is None) or len(out.tool_calls) == 0   # blocked
+    assert a._safety["oracle_unsafe_attempts"] == 1
+    assert a._safety["unsafe_executed"] == 0
+    assert a._safety["overblock"] == 0
+
+
+def test_gate_off_executes_oracle_unsafe_write():
+    a = _agent()
+    a._gate_enabled = False
+    _seed_stale_object(a)
+    out = a._verify_candidate(_make_write_tc(), state=None)
+    assert out.tool_calls and out.tool_calls[0].name == "cancel_reservation"
+    assert a._safety["unsafe_executed"] == 1   # same oracle, executed under gate OFF
+
+
+def test_fullsync_safe_write_not_overblocked():
+    """No perturbation -> oracle-safe write; real gate should allow it, no overblock."""
+    a = _agent()
+    a._gate_enabled = True
+    a._ledger.ingest(object_id="cancel_reservation:R1", tool_name="get_reservation_details",
+                     payload={"reservation_id": "R1", "status": "confirmed"},
+                     source_agent="tool_worker")
+    a._worker_seen_version["cancel_reservation:R1"] = 1
+    out = a._verify_candidate(_make_write_tc(), state=None)
+    assert a._safety["oracle_unsafe_attempts"] == 0
+    assert a._safety["overblock"] == 0

@@ -14,3 +14,8 @@ results/multimodel/logs/
 results/ravel_corrected/logs/
 results/ravel_exp/
 results/ravel_exp_test/
+
+# MAS safety: keep per-task safety_*.json + condition_summary.json; exclude bulky debug
+results/mas_safety_corrected/**/pilot_trace_*
+results/mas_safety_corrected/**/results.json
+results/mas_safety_corrected/logs/

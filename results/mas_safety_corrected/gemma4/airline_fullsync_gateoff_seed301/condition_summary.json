@@ -1,0 +1,40 @@
+{
+  "model": "openai/g4",
+  "user_model": "openai/g4",
+  "domain": "airline",
+  "regime": "FullSync",
+  "gate": "off",
+  "seed": 301,
+  "n_tasks": 50,
+  "n_total_sims": 50,
+  "n_infra": 1,
+  "n_valid": 49,
+  "n_safety_files": 49,
+  "n_pass": 16,
+  "pass_rate": 0.32653061224489793,
+  "safety": {
+    "write_attempts": 23,
+    "oracle_unsafe_attempts": 0,
+    "oracle_stale_attempts": 0,
+    "oracle_blind_attempts": 0,
+    "gate_stale_detected": 0,
+    "gate_blind_detected": 0,
+    "gate_conflict_detected": 0,
+    "committed": 23,
+    "blocked": 0,
+    "unsafe_executed": 0,
+    "overblock": 0
+  },
+  "tokens": {
+    "total_in": 2085088,
+    "total_out": 67532,
+    "total_tokens": 2152620,
+    "worker_calls": 338,
+    "n_turns": 369,
+    "tokens_per_valid_task": 43931.0
+  },
+  "unsafe_executed_per_valid_task": 0.0,
+  "unsafe_executed_rate_of_writes": 0.0,
+  "overblock_per_valid_task": 0.0,
+  "elapsed_s": 1761.5
+}

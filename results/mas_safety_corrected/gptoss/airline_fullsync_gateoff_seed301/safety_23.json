@@ -1,0 +1,29 @@
+{
+  "task_id": "23",
+  "regime": "FullSync",
+  "gate_enabled": false,
+  "write_attempts": 1,
+  "oracle_unsafe_attempts": 0,
+  "oracle_stale_attempts": 0,
+  "oracle_blind_attempts": 0,
+  "gate_stale_detected": 0,
+  "gate_blind_detected": 0,
+  "gate_conflict_detected": 0,
+  "committed": 1,
+  "blocked": 0,
+  "unsafe_executed": 0,
+  "overblock": 0,
+  "tokens": {
+    "supervisor_in": 13104,
+    "supervisor_out": 4032,
+    "policy_in": 239,
+    "policy_out": 237,
+    "worker_in": 38462,
+    "worker_out": 5849,
+    "worker_calls": 9,
+    "total_in": 51805,
+    "total_out": 10118,
+    "total_tokens": 61923,
+    "n_turns": 10
+  }
+}

@@ -46,6 +46,10 @@ try:
         create_ravel_agent,
         DOMAIN_WRITE_TOOLS,
     )
+    from .multi_agent_orchestrator import (
+        MultiAgentOrchestrator,
+        create_multiagent_orchestrator,
+    )
     _RAVEL_AGENT_AVAILABLE = True
 except ImportError:
     _RAVEL_AGENT_AVAILABLE = False

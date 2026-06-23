@@ -245,9 +245,9 @@ python3 scripts/aggregate_safety.py
 
 - **A.** ✅ 已完成：airline + retail 跨域一致性分析（论点在更写密集的 retail 域同样成立）。
 - **B.** ✅ 已完成（§5B）：gpt-oss 跨模型验证——安全机制与模型无关。
-- **C.** ✅ 已完成（§5B）：FieldMask regime + 盲写（缺失必需字段）安全指标，两模型成立。
-- **D.** ✅ 已完成（§5B.4）：token 成本——gate ON 开销仅 +0.3%（Gemma4）/+2.6%（gpt-oss），印证 Proposal 第二主张。
-- **E.** ✅ 已完成：`results/mas_safety/unsafe_committed.png` + `results/mas_safety_v2/safety_v2.png`。
-- **F.** 量化 overblock（gpt-oss FullSync 8 次、retail 7 次保守拦截）：安全机制对正常写入的干扰率。
+- **C.** ⏳ 部分：FieldMask 真实遮蔽已实现并加测试，但遮蔽决策字段后 agent 几乎不再提议写（~0 写事件），对该安全指标无信息量，已从主矩阵剔除（见 §5B.1 / §6 限制 4），留作后续。
+- **D.** ✅ 已完成（§5B.4）：token 成本——gate ON 相比 OFF 跨 regime 池化为 **+9.5%（Gemma4）/ -2.5%（gpt-oss，噪声范围内）**。中等偏低，但未达可声称“可忽略”的严格等价检验。（旧值 +0.3%/+2.6% 口径错误、无 CI，已随 v2 审计撤回。）
+- **E.** ✅ 已完成：`results/mas_safety/unsafe_committed.png` + 修正版 `results/mas_safety_corrected/safety_corrected.png`（旧 `safety_v2.png` 属已撤回的 v2，不再引用）。
+- **F.** 量化 overblock（gpt-oss FullSync gate=on **7 次**、retail FullSync gate=on 7 次保守拦截）：安全机制对正常写入的干扰率。
 - **G.** retail 域补做双模型 + FieldMask（目前 retail 仅 Gemma4 单模型 3 regime）。
 - **H.** 把扰动幅度从 1 提到 d>1（更强陈旧），观察检测率是否仍 100%。

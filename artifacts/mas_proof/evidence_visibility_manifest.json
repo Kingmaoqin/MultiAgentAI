@@ -25,6 +25,7 @@
     "object_id": "reservation:R1",
     "version": 5,
     "visible_fields": {
+      "reservation_id": "R1",
       "status": "cancelled"
     },
     "kind": "fields"

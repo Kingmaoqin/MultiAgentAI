@@ -46,6 +46,7 @@ from tau2.runner.batch import run_domain
 # RAVEL imports
 # ---------------------------------------------------------------------------
 from ravel_core.ravel_agent import create_ravel_agent, DOMAIN_WRITE_TOOLS, RAVELAgent
+from ravel_core.multi_agent_orchestrator import create_multiagent_orchestrator
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -79,6 +80,7 @@ def register_ravel_agents():
     if "ravel_agent" in registry._agent_factories:
         return  # already registered
 
+    # Single-agent middleware variants (legacy)
     for regime in REGIMES:
         name = f"ravel_{regime.lower()}"
         def _make_factory(r=regime):
@@ -88,10 +90,24 @@ def register_ravel_agents():
             return factory
         registry.register_agent_factory(_make_factory(), name)
 
-    # Also register the generic ravel_agent (uses regime from kwargs)
+    # Multi-agent orchestrator variants (Supervisor+Policy+Worker+Verifier)
+    for regime in REGIMES:
+        name = f"ma_{regime.lower()}"
+        def _make_ma_factory(r=regime):
+            def factory(tools, domain_policy, **kwargs):
+                kwargs["regime"] = r
+                return create_multiagent_orchestrator(tools, domain_policy, **kwargs)
+            return factory
+        registry.register_agent_factory(_make_ma_factory(), name)
+
+    # Also register the generic factories
     registry.register_agent_factory(create_ravel_agent, "ravel_agent")
+    registry.register_agent_factory(create_multiagent_orchestrator, "ma_agent")
     print("Registered RAVEL agent factories: " +
-          ", ".join(["ravel_agent"] + [f"ravel_{r.lower()}" for r in REGIMES]))
+          ", ".join(
+              ["ravel_agent"] + [f"ravel_{r.lower()}" for r in REGIMES] +
+              ["ma_agent"] + [f"ma_{r.lower()}" for r in REGIMES]
+          ))
 
 
 def run_experiment(
@@ -222,8 +238,8 @@ def main():
     parser.add_argument("--regimes", nargs="+", default=["FullSync"],
                         choices=REGIMES)
     parser.add_argument("--agent-type", default="ravel",
-                        choices=["baseline", "ravel"],
-                        help="baseline=llm_agent (no RAVEL), ravel=RAVEL variants")
+                        choices=["baseline", "ravel", "multiagent"],
+                        help="baseline=llm_agent (no RAVEL), ravel=single-agent middleware, multiagent=4-role orchestrator")
     parser.add_argument("--max-concurrency", type=int, default=2)
     parser.add_argument("--max-steps", type=int, default=25)
     parser.add_argument("--timeout", type=int, default=480)
@@ -280,8 +296,36 @@ def main():
         )
         summaries.append(s)
 
+    elif args.agent_type == "multiagent":
+        # True 4-role multi-agent orchestrator (Supervisor+Policy+Worker+Verifier)
+        gate_enabled = not args.gate_disabled
+        for regime in args.regimes:
+            agent_name = f"ma_{regime.lower()}"
+            extra = {
+                "domain": args.domain,
+                "regime": regime,
+                "delay": args.delay,
+                "mask_fraction": args.mask_fraction,
+                "gate_enabled": gate_enabled,
+                "seed": args.seed,
+            }
+            out_dir = output_root / args.domain / f"ma_{regime.lower()}"
+            s = run_experiment(
+                domain=args.domain,
+                task_ids=task_ids,
+                agent_name=agent_name,
+                regime=regime,
+                output_dir=out_dir,
+                max_concurrency=args.max_concurrency,
+                max_steps=args.max_steps,
+                timeout=args.timeout,
+                seed=args.seed,
+                agent_extra_args=extra,
+            )
+            summaries.append(s)
+
     else:
-        # RAVEL variants per regime
+        # RAVEL single-agent middleware variants per regime
         gate_enabled = not args.gate_disabled
         for regime in args.regimes:
             agent_name = f"ravel_{regime.lower()}"

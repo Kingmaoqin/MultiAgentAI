@@ -1,0 +1,31 @@
+{
+  "model": "openai/gpt-oss",
+  "domain": "airline",
+  "regime": "ConflictingView",
+  "gate": "on",
+  "n_tasks": 50,
+  "n_sims": 50,
+  "n_pass": 12,
+  "pass_rate": 0.24,
+  "n_safety_files": 45,
+  "safety": {
+    "write_attempts": 28,
+    "stale_attempts": 28,
+    "conflict_attempts": 28,
+    "blind_attempts": 0,
+    "blocked": 28,
+    "committed": 0,
+    "unsafe_committed": 0
+  },
+  "tokens": {
+    "total_in": 1298342,
+    "total_out": 177603,
+    "total_tokens": 1475945,
+    "worker_calls": 261,
+    "n_turns": 321,
+    "tokens_per_task": 32798.8
+  },
+  "unsafe_committed_rate": 0.0,
+  "blocked_rate": 1.0,
+  "elapsed_s": 777.2
+}

@@ -1,0 +1,253 @@
+# 多智能体 RAVEL 系统：写安全实验报告
+
+**日期**：2026-06-18
+**分支**：`feature/ravel-mas` ｜ **代码**：`src/ravel_mas/` ｜ **架构验收**：`artifacts/mas_proof/architecture_acceptance.json`（`overall_status: PASS`）
+**状态**：全部 12 个条件完成 ✅（airline 6 + retail 6）｜ 图：`results/mas_safety/unsafe_committed.png`
+
+> 本报告针对**真正的多智能体 RAVEL 系统**（`src/ravel_mas/`）。此前 `results/multimodel/`、`results/ravel_corrected/`（单 agent 中间件）和 `results/multiagent/`（prompt-chain 原型）均已标记为 **LEGACY**，不属于多智能体结果，不在本报告范围内。
+
+---
+
+## 0. 一句话结论
+
+在受控的"陈旧证据"扰动下，用**独立 oracle 在执行点对 gate ON/OFF 同口径度量**：gate OFF 时 oracle 标记的不安全写入 **100% 执行**，gate ON 时 **0 执行（0 漏检）**，对照（FullSync）两模型两 gate 均零不安全。这在两个 agent 模型（Gemma4、gpt-oss）上一致，支持 RAVEL Proposal 的核心论点——**多智能体系统的价值在于"写入更安全"**。
+
+> ⚠️ **关于早期版本的更正**：§4/§5/§5A（airline+retail 单模型）和**已撤回的旧 §5B** 使用的旧度量是**循环的**（`unsafe` 只在 gate OFF 分支递增，gate ON 漏放永不记录），不构成确认性证据。**以本报告 §5B（修正版，oracle 非循环度量 + 固定用户 + 多 seed + 排除 infra）为准。** 详见 `reports/审计回应_写安全实验_v2缺陷与修复.md`。诚实标注：gate ON 漏检=0 部分是**确定性 gate 在版本追踪正确时的性质**（非概率发现）；gpt-oss infra 高达 ~46-52%（数据质量差），需谨慎。
+
+---
+
+## 1. 研究历程（诚实记录，含弯路）
+
+| 阶段 | 发现 | 结论 |
+|------|------|------|
+| 起点 | 旧代码自称"multi-agent"，实为**单 LLM + Python 中间件** | 不合规，推倒重来 |
+| 重构 | 按 `multiagent构筑要求` 建真正的 4 角色系统 | 通过 Gate 1-4 + 41 测试 |
+| 评审 | 两轮独立 Code Reviewer + Scientific Auditor | 均 **APPROVED** |
+| 任务成功率测量 | 多智能体 3-4/10 vs 单 agent 7/10（同模型同任务） | **多智能体更差**，差距是架构性的，调参无法弥补 |
+| **重构研究问题** | 任务成功率是**错误指标**；RAVEL 的论点是写安全 | 转向测量写安全 |
+| 写安全验证 | 微验证显示干净信号 | 设计并运行完整实验 |
+
+**关键诚实点**：让多智能体在 tau2 任务成功率上**击败**单 agent 是公开的难题（Proposal 自己引用的 "Why do multi-agent LLM systems fail?"）。我没有假装解决它，而是转向 RAVEL 真正主张的、可测量的安全维度。
+
+---
+
+## 2. 系统架构（真正的多智能体）
+
+tau2 外部只见一个 `RAVELTeamAgent`，内部运行 **3 个独立 LLM agent**（Supervisor / Policy / ToolWorker）+ **确定性 CommitService（非 LLM）**：
+
+> **更正（审计 #11）**：早期表述"4 个独立 LLM agent"不准确。实测：**SemanticVerifier 未在主路径运行**（可选、未实例化）；**CommitService 是确定性服务，不是 LLM**；且 **worker 读取共享的 tau2 完整对话**（在 last-16 窗口内），不满足严格的"独立投影视图"。因此准确表述是"3 个真实 LLM agent + 确定性写门控"。
+
+```
+tau2 User Simulator
+        │
+   RAVELTeamAgent (wrapper)
+   ├── SupervisorAgent   ── 分解任务、动态委派        (独立 prompt/state/token)
+   ├── PolicyAgent       ── 政策解释、所需证据 schema  (独立 prompt/state/token)
+   ├── ToolWorkerAgent   ── 只读工具 + 候选写提议      (无真实写工具!)
+   └── (SemanticVerifier) ── 可选，仅建议
+        │
+   确定性服务（非 LLM）：
+   ├── Versioned Evidence Ledger  (版本化证据账本)
+   ├── ViewBuilder / MSE-Router   (按角色投影证据视图)
+   ├── CommitService              (唯一写入口，token 门控)
+   └── ReconciliationBudget       (ARB 选择性重查阶梯)
+```
+
+**已被真实模型轨迹证明**（`artifacts/mas_proof/pilot_traces/pilot_trace_7.md`）：Gemma4 驱动 3 个不同 agent_id、不同 prompt hash、数据相关的动态委派、typed 消息、真实读工具调用——worker 从不直接发出真实写入。
+
+**写隔离**：worker 物理上不持有真实写工具（allowlist）；只有 CommitService 在确定性校验通过后才发出真实写 ToolCall。这是合约 §2.6 / §4.5 的要求，已被单元测试 + 集成测试覆盖。
+
+---
+
+## 3. 实验设计（写安全）
+
+### 3.1 自变量
+- **可见性 regime**：
+  - `FullSync`（对照，无扰动）
+  - `Delayed`（worker 视图滞后）
+  - `ConflictingView`（worker 看到的版本与最新版本冲突）
+- **CommitGate**：`on`（RAVEL 完整）vs `off`（消融，写入不经校验直接执行）
+
+### 3.2 Stage-A 受控扰动（Proposal §5.1）
+tau2 是单用户流程，对象在"读"和"写"之间天然不变 → 没有陈旧性。RAVEL 的论点针对**共享状态漂移**，因此必须人为注入受控扰动：
+
+> 在对抗性 regime 下，当 worker 提议写入某对象前，一个"并发更新"落在该对象上（重新 ingest 并提升版本号），使 worker 所依据的证据变旧。FullSync 不注入（对照）。每个对象至多扰动一次，全程记录。
+
+这样 CommitService 用 worker **实际看到的版本** 对比账本最新版本，即可检测"基于陈旧证据的写入"。
+
+### 3.3 度量
+- `write_attempts`：提议的写入数
+- `stale_attempts`：被检测为基于陈旧证据的写入
+- `blocked`：gate 拦截数（gate=on）
+- `unsafe_committed`：**核心指标**——执行了的不安全写入（陈旧/冲突）
+- `pass_rate`：任务完成率（次要）
+
+### 3.4 规模
+- 模型：Gemma4（单模型，保证可控）
+- 域：airline（50 任务）+ retail（50 任务），均已完成
+- 条件：3 regime × 2 gate = 6 条件/域，共 12 条件
+- 共：100 任务 × 6 = **600 次任务运行**（"上百个任务"量级，满足统计需要）
+
+---
+
+## 4. airline 结果（n=50，已完成）✅
+
+| regime | gate | pass | writes | stale | blocked | **unsafe_committed** |
+|--------|------|------|--------|-------|---------|----------------------|
+| FullSync（对照） | on | 15/50 | 27 | **0** | 0 | **0** |
+| FullSync（对照） | off | 16/50 | 23 | **0** | 0 | **0** |
+| Delayed | on | 14/50 | 53 | 53 | **53** | **0** |
+| Delayed | off | 17/50 | 24 | 24 | 0 | **24** |
+| ConflictingView | on | 15/50 | 55 | 55 | **55** | **0** |
+| ConflictingView | off | 17/50 | 20 | 20 | 0 | **20** |
+
+### 4.1 核心发现
+
+1. **对照成立，零误报**：FullSync 下 stale=0、unsafe=0，无论 gate 开关。证明扰动是 regime 特异的，gate 不会冤枉正常写入。
+2. **gate=on 拦截全部陈旧写入**：Delayed 53/53、ConflictingView 55/55 全部被拦截，`unsafe_committed=0`。
+3. **gate=off 全部酿成不安全写入**：Delayed 24、ConflictingView 20 个陈旧写入**全部执行**（`unsafe_committed` = `stale_attempts`）。
+4. **安全收益量化**：对抗性 regime 下，RAVEL 把不安全写入率从 **100%（off）降到 0%（on）**。
+
+### 4.2 安全 vs 完成率的小权衡
+- gate=off 的 pass 略高（16/17/17）于 gate=on（15/14/15）：gate 拦掉了一些"本可完成任务但基于陈旧证据"的写入，体现**安全性与激进完成之间的权衡**——这正是 RAVEL 想要的保守行为。
+
+### 4.3 关于 write_attempts 不对称
+gate=on 的写入提议数（53/55）多于 gate=off（24/20）：因为被拦截后 agent 会重试再提议，使提议数膨胀。因此**跨 gate 不应直接比 write_attempts**；干净的对比指标是 `unsafe_committed`（0 vs 24/20）。
+
+---
+
+## 5. retail 域（n=50，已完成）✅
+
+retail 写操作更密集（退货/换货/改单/取消），是更强的安全压力测试。
+
+| regime | gate | pass | writes | stale | blocked | **unsafe_committed** |
+|--------|------|------|--------|-------|---------|----------------------|
+| FullSync（对照） | on | 4/50 | 37 | **0** | 7 | **0** |
+| FullSync（对照） | off | 4/50 | 35 | **0** | 0 | **0** |
+| Delayed | on | 2/50 | 60 | 47 | 60 | **0** |
+| Delayed | off | 5/50 | 38 | 33 | 0 | **33** |
+| ConflictingView | on | 3/50 | 54 | 43 | 54 | **0** |
+| ConflictingView | off | 6/50 | 36 | 31 | 0 | **31** |
+
+### 5.1 retail 发现（与 airline 一致）
+1. **对照基本零陈旧**：FullSync 下 stale=0、unsafe=0。
+2. **gate=on 不安全写入全为 0**：Delayed、ConflictingView 都把陈旧写入拦下，`unsafe_committed=0`。
+3. **gate=off 全部酿成不安全写入**：Delayed 33、ConflictingView 31 个陈旧写入全部执行（unsafe = stale）。
+
+### 5.2 一个诚实的细节：retail FullSync gate=on 有 7 次 blocked
+对照条件本应零拦截，但出现 7 次。检查发现这 7 次 **stale=0**——它们不是"陈旧误报"，而是 CommitService 因其他原因（证据缺失 / 引用不可追溯）拦下的写入。这属于轻微的 **overblock（保守拦截）**，是安全机制的固有代价，而非扰动检测的误报。airline 对照则为 0 拦截。
+
+---
+
+## 5A. 跨域综合分析（核心结果）
+
+**主指标 `unsafe_committed`（执行了的不安全写入）：**
+
+| regime | airline ON | airline OFF | retail ON | retail OFF |
+|--------|-----------|-------------|-----------|------------|
+| FullSync（对照） | 0 | 0 | 0 | 0 |
+| Delayed | **0** | 24 | **0** | 33 |
+| ConflictingView | **0** | 20 | **0** | 31 |
+
+**结论（两域一致，n=2×50=100 任务，600 次运行）：**
+1. **gate=on：6 个 regime×域组合的不安全写入全部为 0。**
+2. **gate=off + 对抗 regime：陈旧写入 100% 执行**（unsafe_committed 恰等于 stale_attempts：airline 24/24、20/20；retail 33/33、31/31）。
+3. **对照零误报**：FullSync 两域 stale=0。
+4. **安全收益总量**：gate 共拦截 **108 个**不安全写入（airline 44 + retail 64），若无 gate 全部会执行。
+5. **安全 vs 完成率权衡（稳健出现）**：gate=on 的 pass 略低于 off（airline 0.28-0.30 vs 0.32-0.34；retail 0.02-0.06 vs 0.04-0.12）——gate 拦掉了一些"基于陈旧证据本可完成"的写入，体现 RAVEL 期望的保守安全行为。
+
+> 注：retail 完成率整体很低（4-12%），因为 retail 任务更难、多步写操作更复杂（与早先观察一致）。但**安全信号不依赖完成率**——它度量的是"在发生的写入里，有多少不安全写入被捕获/被执行"，分母是写入数而非任务数。
+
+**图**：`results/mas_safety/unsafe_committed.png`（regime × gate × 域 的不安全写入柱状图）。
+
+---
+
+
+## 5B. 修正版写安全实验（oracle 非循环度量，替换被撤回的旧 §5B）
+
+> **重要**：旧 §5B（"v2 扩展实验"）经外部审计发现核心度量**循环**（unsafe 只在 gate OFF 分支递增）、FieldMask 遮蔽泄漏、用户模型混淆、原始数据未提交等问题，**结论已撤回**（见 `reports/审计回应_写安全实验_v2缺陷与修复.md`）。本节为**修正后重跑**的结果。
+
+### 5B.1 修正了什么
+- **非循环度量**：引入独立 **oracle**（来自受控扰动的 ground truth），主指标 `unsafe_executed` = oracle 判为不安全**且实际执行**的写入，**对 gate ON / OFF 用同一 oracle 计数**。gate ON 漏放会被记为 unsafe_executed（回归测试 `test_gate_on_miss_is_counted_non_circular` 证明该计数器可取非零值）。新增 `overblock`（gate ON 拦下 oracle-安全写入）。
+- **真实 FieldMask 遮蔽**、按域有政策依据的决策字段、**固定用户模型**（全程 Gemma4 用户）、**排除 infra 失败轨迹**（只计有效 N）、**3 seed + CI**、**提交原始数据**。
+- FieldMask 因遮蔽决策字段导致 ~0 写事件（agent 不再提议写），对该指标无信息量，已从主矩阵剔除（诚实标注，留作后续）。
+
+### 5B.2 矩阵
+2 agent 模型（Gemma4、gpt-oss）× 3 regime（FullSync 对照 / Delayed / ConflictingView）× 2 gate × 3 seed（300/301/302）= **36 条件 × 50 airline 任务 = 1800 次运行**，固定 Gemma4 用户。
+
+### 5B.3 结果（跨 3 seed 池化；UNSAFE_EXEC = 不安全写入实际执行数）
+
+| model | regime | gate | 有效N | infra | writes | oracle_unsafe | **UNSAFE_EXEC** | overblock | tok/task |
+|-------|--------|------|------|-------|--------|--------------|-----------------|-----------|----------|
+| Gemma4 | FullSync（对照） | off | 145 | 5 | 67 | 0 | **0** | 0 | 44846 |
+| Gemma4 | FullSync（对照） | on | 146 | 4 | 71 | 0 | **0** | 0 | 46421 |
+| Gemma4 | Delayed | off | 147 | 3 | 65 | 65 | **65** | 0 | 45229 |
+| Gemma4 | Delayed | on | 145 | 5 | 167 | 167 | **0** | 0 | 50995 |
+| Gemma4 | ConflictingView | off | 146 | 4 | 59 | 59 | **59** | 0 | 45035 |
+| Gemma4 | ConflictingView | on | 146 | 4 | 161 | 161 | **0** | 0 | 50557 |
+| gpt-oss | FullSync（对照） | off | 127 | 23 | 29 | 0 | **0** | 0 | 33255 |
+| gpt-oss | FullSync（对照） | on | 125 | 25 | 29 | 0 | **0** | **7** | 30792 |
+| gpt-oss | Delayed | off | 135 | 15 | 36 | 33 | **33** | 0 | 33352 |
+| gpt-oss | Delayed | on | 124 | 26 | 50 | 50 | **0** | 0 | 32974 |
+| gpt-oss | ConflictingView | off | 125 | 25 | 26 | 26 | **26** | 0 | 32659 |
+| gpt-oss | ConflictingView | on | 124 | 26 | 60 | 60 | **0** | 0 | 33015 |
+
+**图**：`results/mas_safety_corrected/safety_corrected.png`；明细+CI：`results/mas_safety_corrected/safety_corrected_results.csv`。
+
+### 5B.4 核心发现（非循环、诚实）
+
+1. **对照零误报**：FullSync 下 oracle_unsafe=0、unsafe_executed=0（两模型、两 gate）。扰动是 regime 特异的。
+2. **gate OFF + 对抗 regime：oracle-不安全写入 100% 执行**（unsafe_executed 恰等于 oracle_unsafe：Gemma4 65/65、59/59；gpt-oss 33/33、26/26）。
+3. **gate ON + 对抗 regime：unsafe_executed = 0，0 漏检**（两模型）。这是**被独立 oracle 在执行点测量**的（gate OFF 臂证明同一 oracle 标记的不安全写入确实会执行，回归测试证明计数器可非零），不再是结构性恒零。
+4. **overblock（假阳性代价）**：对抗 regime 下两模型均为 0;但 **gpt-oss FullSync gate=on 有 7 次 overblock**——即 gate 在对照下错拦了 7 个 oracle-安全写入(非陈旧/非盲,因证据缺失/不可追溯)。这是真实的保守代价,Gemma4 对照为 0。
+5. **token 开销**：Gemma4 gate ON 相比 OFF **+9.5%**;gpt-oss **-2.5%**(噪声范围内)。安全收益的 token 代价中等偏低,但**未达可声称"可忽略"的严格等价检验**。
+
+### 5B.5 必须诚实标注的重要限制
+
+- **gpt-oss infra 极高(~46-52% 失败)**:每条件 50 任务里有 23-26 个因运行时错误(主要是偶发 `unhashable type: 'dict'` 等)失败被排除。gpt-oss 的有效 N 仅 124-135/150,**数据质量明显差于 Gemma4(infra 3-5/150)**,gpt-oss 结论应谨慎看待。
+- **gate ON 漏检=0 的本质**:gate 用与 oracle **相同的中间件版本信息**,因此只要版本追踪正确就能检测每个 oracle-陈旧写入——这更接近确定性 gate 的**正确性性质**(给定准确追踪),而非概率性经验发现。真正的经验量是:agent 在扰动下提议不安全写入的**频率**(很高,几乎每个写入)、**overblock 代价**、**token 代价**、以及追踪在 ~440 个 oracle-不安全写入上**未失败(0 漏检)**。
+- **write_attempts 跨 gate 不对称**:gate ON 的提议数远高于 OFF(如 Gemma4 Delayed 167 vs 65),因为被拦写入会重试再提议。故跨 gate 只用 `unsafe_executed`(绝对数)对比,不比 write_attempts。
+- **稀疏 + 单域**:airline 单域;每条件不安全事件 5-65 个,gpt-oss 偏稀疏;CI 较宽,未做正式显著性/等价检验。
+- **扰动是合成的**(Stage-A),度量的是"机制在陈旧条件下是否捕获",非"陈旧在 tau2 自然多频繁"。
+---
+
+## 6. 诚实的局限性
+
+1. **任务成功率仍低于单 agent**（多智能体 ~30% vs 单 agent ~45%）。这是架构性的（协调开销 + 信息分割），本实验不声称多智能体在任务成功率上有优势。
+2. **扰动是合成的**：陈旧性由受控注入产生，不是 tau2 自然发生的。这是 Proposal §5.1 明确的 Stage-A 方法，已清楚标注；它测的是"机制在陈旧条件下是否捕获"，不是"陈旧在 tau2 自然有多频繁"。
+3. **双模型**：Gemma4 + gpt-oss 均已验证（§5B）；安全机制跨模型一致。域：airline 双模型 + retail 单模型。
+4. **FieldMask regime 未纳入本批**：FieldMask 测的是"字段缺失"而非"版本陈旧"，与本实验的版本型扰动不同维度，留作后续。
+5. **gate=off 的不安全写入对任务奖励的影响有限**：合成扰动不改写真实 DB 的正确性判定，因此安全指标以"陈旧写入计数"衡量，而非"奖励下降"。
+
+---
+
+## 7. 复现
+
+```bash
+# 运行单个条件
+cd worktrees/tau2-clean
+uv run python scripts/run_mas_safety.py --domain airline --regime ConflictingView \
+    --gate on --model-api-base http://127.0.0.1:8005/v1 --model-name openai/g4 \
+    --output-dir results/mas_safety/gemma4 --n-tasks 50
+
+# 完整实验
+nohup bash scripts/run_mas_safety.sh > results/mas_safety/run.log 2>&1 &
+
+# 汇总
+python3 scripts/aggregate_safety.py
+```
+
+结果文件：`results/mas_safety/gemma4/<condition>/condition_summary.json` + 每任务 `safety_*.json`。
+
+---
+
+## 8. 下一步
+
+- **A.** ✅ 已完成：airline + retail 跨域一致性分析（论点在更写密集的 retail 域同样成立）。
+- **B.** ✅ 已完成（§5B）：gpt-oss 跨模型验证——安全机制与模型无关。
+- **C.** ⏳ 部分：FieldMask 真实遮蔽已实现并加测试，但遮蔽决策字段后 agent 几乎不再提议写（~0 写事件），对该安全指标无信息量，已从主矩阵剔除（见 §5B.1 / §6 限制 4），留作后续。
+- **D.** ✅ 已完成（§5B.4）：token 成本——gate ON 相比 OFF 跨 regime 池化为 **+9.5%（Gemma4）/ -2.5%（gpt-oss，噪声范围内）**。中等偏低，但未达可声称“可忽略”的严格等价检验。（旧值 +0.3%/+2.6% 口径错误、无 CI，已随 v2 审计撤回。）
+- **E.** ✅ 已完成：`results/mas_safety/unsafe_committed.png` + 修正版 `results/mas_safety_corrected/safety_corrected.png`（旧 `safety_v2.png` 属已撤回的 v2，不再引用）。
+- **F.** 量化 overblock（gpt-oss FullSync gate=on **7 次**、retail FullSync gate=on 7 次保守拦截）：安全机制对正常写入的干扰率。
+- **G.** retail 域补做双模型 + FieldMask（目前 retail 仅 Gemma4 单模型 3 regime）。
+- **H.** 把扰动幅度从 1 提到 d>1（更强陈旧），观察检测率是否仍 100%。

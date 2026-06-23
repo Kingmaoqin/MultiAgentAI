@@ -1,0 +1,13 @@
+domain,regime,gate,n_tasks,pass_rate,writes,stale,conflict,blocked,committed,unsafe_committed,unsafe_rate
+airline,FullSync,off,50,0.32,23,0,0,0,23,0,0
+airline,FullSync,on,50,0.3,27,0,0,0,27,0,0
+airline,Delayed,off,50,0.34,24,24,0,0,24,24,1.0
+airline,Delayed,on,50,0.28,53,53,0,53,0,0,0
+airline,ConflictingView,off,50,0.34,20,20,20,0,20,20,1.0
+airline,ConflictingView,on,50,0.3,55,55,55,55,0,0,0
+retail,FullSync,off,50,0.08,35,0,0,0,35,0,0
+retail,FullSync,on,50,0.08,37,0,0,7,30,0,0
+retail,Delayed,off,50,0.1,38,33,0,0,38,33,0.868
+retail,Delayed,on,50,0.04,60,47,0,60,0,0,0
+retail,ConflictingView,off,50,0.12,36,31,31,0,36,31,0.861
+retail,ConflictingView,on,50,0.06,54,43,43,54,0,0,0

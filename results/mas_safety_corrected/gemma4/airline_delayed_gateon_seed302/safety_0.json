@@ -1,0 +1,29 @@
+{
+  "task_id": "0",
+  "regime": "Delayed",
+  "gate_enabled": true,
+  "write_attempts": 4,
+  "oracle_unsafe_attempts": 4,
+  "oracle_stale_attempts": 4,
+  "oracle_blind_attempts": 0,
+  "gate_stale_detected": 4,
+  "gate_blind_detected": 0,
+  "gate_conflict_detected": 0,
+  "committed": 0,
+  "blocked": 4,
+  "unsafe_executed": 0,
+  "overblock": 0,
+  "tokens": {
+    "supervisor_in": 6972,
+    "supervisor_out": 825,
+    "policy_in": 154,
+    "policy_out": 46,
+    "worker_in": 34145,
+    "worker_out": 369,
+    "worker_calls": 9,
+    "total_in": 41271,
+    "total_out": 1240,
+    "total_tokens": 42511,
+    "n_turns": 9
+  }
+}

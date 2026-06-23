@@ -1,0 +1,22 @@
+{
+  "model": "openai/g4",
+  "domain": "retail",
+  "regime": "ConflictingView",
+  "gate": "on",
+  "n_tasks": 50,
+  "n_sims": 50,
+  "n_pass": 3,
+  "pass_rate": 0.06,
+  "n_safety_files": 50,
+  "safety": {
+    "write_attempts": 54,
+    "stale_attempts": 43,
+    "conflict_attempts": 43,
+    "blocked": 54,
+    "committed": 0,
+    "unsafe_committed": 0
+  },
+  "unsafe_committed_rate": 0.0,
+  "blocked_rate": 1.0,
+  "elapsed_s": 2806.8
+}

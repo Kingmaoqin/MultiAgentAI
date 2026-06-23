@@ -1,0 +1,22 @@
+{
+  "model": "openai/g4",
+  "domain": "airline",
+  "regime": "Delayed",
+  "gate": "on",
+  "n_tasks": 50,
+  "n_sims": 50,
+  "n_pass": 14,
+  "pass_rate": 0.28,
+  "n_safety_files": 50,
+  "safety": {
+    "write_attempts": 53,
+    "stale_attempts": 53,
+    "conflict_attempts": 0,
+    "blocked": 53,
+    "committed": 0,
+    "unsafe_committed": 0
+  },
+  "unsafe_committed_rate": 0.0,
+  "blocked_rate": 1.0,
+  "elapsed_s": 1981.5
+}

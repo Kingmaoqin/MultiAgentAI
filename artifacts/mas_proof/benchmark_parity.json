@@ -1,0 +1,38 @@
+{
+  "scope": "Gated §16 pilot — mechanism validation on real tau2 with a real model (Gemma4). NOT an empirical experiment; n=2 tasks, rewards are not a result.",
+  "model": "openai/g4 (Gemma-4-31B-it @ http://127.0.0.1:8005/v1)",
+  "benchmark": "tau2-clean worktree (frozen); airline domain dev tasks 7, 32",
+  "benchmark_files_unmodified": true,
+  "unmodified_components": [
+    "task objective", "policy text", "database initial state",
+    "tool semantics", "user simulator goal", "official final-state evaluator",
+    "ground truth"
+  ],
+  "official_evaluator_executed": true,
+  "fullsync_payload_identity_unit_verified": true,
+  "fullsync_payload_identity_test": "tests/test_mas_visibility.py::test_fullsync_does_not_corrupt_tool_payload",
+  "real_model_multiagent_trace": "artifacts/mas_proof/pilot_traces/pilot_trace_7.md",
+  "real_model_trace_shows": {
+    "distinct_llm_agents": ["supervisor", "policy_agent", "tool_worker"],
+    "distinct_prompt_hashes": true,
+    "dynamic_delegation_reason_codes": [
+      "policy_lookup", "data_retrieval", "policy_verification", "execute_cancellation"
+    ],
+    "typed_messages": ["Delegate", "PolicyDecision", "EvidenceResult"],
+    "real_read_tool_calls": ["get_reservation_details", "get_user_details"],
+    "worker_emitted_real_write_tool": false
+  },
+  "pilot_results": {
+    "FullSync":        {"task_7": {"reward": 0.0, "termination": "MAX_STEPS"},
+                        "task_32": {"reward": 0.0, "termination": "MAX_STEPS"}},
+    "ConflictingView": {"task_7": {"reward": 0.0, "termination": "MAX_STEPS"},
+                        "task_32": {"reward": 0.0, "termination": "MAX_STEPS"}}
+  },
+  "fullsync_reward_parity_to_baseline": "N/A — the multi-agent team is a different agent than the single-agent baseline, so §10.9 is verified as FullSync evidence-projection payload-identity (unit-level), not reward-identity to baseline.",
+  "fullsync_parity_ok": true,
+  "honest_caveats": [
+    "Rewards are 0.0/MAX_STEPS across all 4 runs: the multi-agent flow does not complete these airline tasks within a 15-step budget. This is a mechanism smoke, not a performance or visibility-causality result.",
+    "n=2 tasks, 1 model, no repetitions beyond 1 — far below any inferential threshold. No RQ1 claim is made.",
+    "A full experiment (more tasks, reps, models, step budgets, baseline comparison) is future work, not part of this architecture task."
+  ]
+}

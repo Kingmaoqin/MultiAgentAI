@@ -1,0 +1,13 @@
+{
+  "supervisor": [],
+  "policy_agent": [],
+  "tool_worker": [
+    "get_reservation_details",
+    "propose_candidate_write"
+  ],
+  "commit_service_real_write_tools": [
+    "book_reservation",
+    "cancel_reservation"
+  ],
+  "worker_holds_real_write": false
+}

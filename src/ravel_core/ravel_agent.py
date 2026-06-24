@@ -222,7 +222,10 @@ class RAVELAgent(HalfDuplexAgent):
         # RAVEL core modules
         self._ledger = EvidenceLedger()
         self._vpol = VisibilityPolicy(regime=regime, delay=delay, seed=seed, mask_fields=set())
-        self._gate = CommitGate(schemas={})  # auto-schema (permissive) by default
+        # Legacy single-agent path keeps permissive mode explicitly (visibility
+        # regimes studied without a second gate confound). Phase-2 write-safety
+        # runs pass real schemas + permissive=False (plan §4.2).
+        self._gate = CommitGate(schemas={}, permissive=True)
         self._arb = AdaptiveReconciliationBudget(
             gate=self._gate,
             ledger=self._ledger,

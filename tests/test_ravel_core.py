@@ -382,7 +382,7 @@ def test_commit_gate_permissive_allows_all_writes():
     from ravel_core.commit_gate import (
         CommitGate, CandidateWrite, VisibleEvidenceState,
     )
-    gate = CommitGate(schemas={})
+    gate = CommitGate(schemas={}, permissive=True)
     ledger = EvidenceLedger()
     candidate = CandidateWrite(
         action="any_write_tool",

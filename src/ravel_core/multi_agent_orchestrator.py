@@ -173,7 +173,7 @@ class MultiAgentOrchestrator(HalfDuplexAgent):
         self._vpol = VisibilityPolicy(
             regime=regime, delay=delay, seed=seed, mask_fields=set()
         )
-        self._gate = CommitGate(schemas={})
+        self._gate = CommitGate(schemas={}, permissive=True)  # legacy path; see ravel_agent
         self._arb = AdaptiveReconciliationBudget(
             gate=self._gate, ledger=self._ledger, max_stage=arb_max_stage
         )

@@ -29,6 +29,7 @@ class ActionSchema:
     action: str
     required_fields: tuple[RequiredEvidence, ...]
     policy_checks: tuple[str, ...] = ()
+    risk_level: str = "high"   # low | medium | high (plan §4.1)
 
 
 @dataclass(frozen=True)
@@ -40,6 +41,7 @@ class GateDecision:
     conflicting_fields: tuple[RequiredEvidence, ...] = ()
     untraceable_fields: tuple[RequiredEvidence, ...] = ()
     checked_fields: tuple[RequiredEvidence, ...] = ()
+    schema_missing: bool = False   # high-risk write lacked an ActionSchema (§4.2)
 
     @property
     def allowed(self) -> bool:
@@ -82,15 +84,35 @@ class VisibleEvidenceState:
 class CommitGate:
     """Validate candidate writes against action-specific evidence schemas.
 
-    When ``schemas`` is empty the gate runs in *permissive* mode: all writes
-    are approved without evidence checks.  This is the correct default so that
-    the RAVEL visibility regimes (Delayed, FieldMask, ConflictingView) can be
-    studied in isolation without the gate adding a second confound.
+    ``permissive`` (plan §4.2) is **explicit** and defaults to ``False``: a
+    silent permissive mode is not allowed for real experiments. Permissive may
+    be turned on only for dev/debug.
+
+    Behaviour when a candidate's action has no ActionSchema:
+      * ``permissive=True``  → commit (dev only), reason ``permissive_mode``;
+      * else, action is high-risk (``high_risk_actions`` is None ⇒ fail-closed:
+        every unschemaed write is treated as high-risk) → verdict ``abstain``,
+        ``schema_missing=True`` (counted in failure analysis, never dropped);
+      * else (action explicitly outside ``high_risk_actions``) → commit with
+        reason ``low_risk_no_schema``.
     """
 
-    def __init__(self, schemas: Mapping[str, ActionSchema]) -> None:
+    def __init__(
+        self,
+        schemas: Mapping[str, ActionSchema],
+        *,
+        permissive: bool = False,
+        high_risk_actions: set[str] | None = None,
+    ) -> None:
         self.schemas = dict(schemas)
-        self._permissive = not bool(schemas)  # empty dict → permissive
+        self._permissive = permissive
+        # None ⇒ fail-closed (treat any unschemaed write as high-risk).
+        self._high_risk_actions = high_risk_actions
+
+    def _is_high_risk(self, action: str) -> bool:
+        if self._high_risk_actions is None:
+            return True
+        return action in self._high_risk_actions
 
     def verify(
         self,
@@ -103,9 +125,15 @@ class CommitGate:
         if schema is None:
             if self._permissive:
                 return GateDecision(verdict="commit", reasons=("permissive_mode",))
+            if self._is_high_risk(candidate.action):
+                return GateDecision(
+                    verdict="abstain",
+                    reasons=("schema_missing", f"high_risk_no_schema:{candidate.action}"),
+                    schema_missing=True,
+                )
             return GateDecision(
-                verdict="abstain",
-                reasons=(f"unknown_action_schema:{candidate.action}",),
+                verdict="commit",
+                reasons=("low_risk_no_schema",),
             )
 
         missing: list[RequiredEvidence] = []

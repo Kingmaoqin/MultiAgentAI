@@ -25,8 +25,9 @@ All denominators checked; None returned when undefined.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterable
 
 
 def _rate(numerator: int, denominator: int) -> float | None:
@@ -288,3 +289,224 @@ class SafetyMetricsAccumulator:
             "overblock_rate": self.overblock_rate(),
             "n_executed_writes": self.n_executed,
         }
+
+
+# ===========================================================================
+# Phase-2: trajectory & token metrics over canonical event logs (plan §3.2)
+# ===========================================================================
+
+# event_type values that contribute a step to the canonical tool sequence
+_TRAJECTORY_EVENT_TYPES: frozenset[str] = frozenset({"tool_call", "commit"})
+# arg-value tokens that look like concrete entity ids → abstracted for matching
+_ID_PLACEHOLDER = "<ID>"
+
+
+def normalize_args(args: Any) -> str:
+    """Return a deterministic, id-abstracted signature for tool arguments.
+
+    Keys are preserved and sorted; values that look like concrete entity ids
+    (contain a digit and are alphanumeric/underscore/dash) are abstracted to a
+    placeholder so trajectory comparison is robust to differing reservation /
+    order ids while still distinguishing *which argument* differs (plan §3.2,
+    "standardized arguments").
+    """
+    def norm_val(v: Any) -> Any:
+        if isinstance(v, str):
+            s = v.strip()
+            core = s.replace("_", "").replace("-", "")
+            if core.isalnum() and any(ch.isdigit() for ch in core):
+                return _ID_PLACEHOLDER
+            return s.lower()
+        if isinstance(v, dict):
+            return {k: norm_val(v[k]) for k in sorted(v)}
+        if isinstance(v, (list, tuple)):
+            return [norm_val(x) for x in v]
+        return v
+
+    if not isinstance(args, dict):
+        if args is None:
+            return ""
+        return json.dumps(norm_val(args), sort_keys=True, default=str)
+    return json.dumps({k: norm_val(args[k]) for k in sorted(args)},
+                      sort_keys=True, default=str)
+
+
+def _step_tool_name(event: dict[str, Any]) -> str | None:
+    name = event.get("tool_name")
+    if name:
+        return name
+    cw = event.get("candidate_write")
+    if isinstance(cw, dict):
+        return cw.get("action")
+    return None
+
+
+def canonical_tool_sequence(events: Iterable[dict[str, Any]]) -> list[tuple[str, str]]:
+    """Ordered (tool_name, normalized_arg_signature) steps for a trajectory."""
+    seq: list[tuple[str, str]] = []
+    for ev in events:
+        if ev.get("event_type") not in _TRAJECTORY_EVENT_TYPES:
+            continue
+        name = _step_tool_name(ev)
+        if not name:
+            continue
+        args = ev.get("tool_args")
+        if args is None and isinstance(ev.get("candidate_write"), dict):
+            args = ev["candidate_write"].get("arguments")
+        seq.append((name, normalize_args(args)))
+    return seq
+
+
+def sequence_edit_distance(a: list[Any], b: list[Any]) -> int:
+    """Levenshtein edit distance between two sequences of hashable steps."""
+    n, m = len(a), len(b)
+    if n == 0:
+        return m
+    if m == 0:
+        return n
+    prev = list(range(m + 1))
+    for i in range(1, n + 1):
+        cur = [i] + [0] * m
+        for j in range(1, m + 1):
+            cost = 0 if a[i - 1] == b[j - 1] else 1
+            cur[j] = min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost)
+        prev = cur
+    return prev[m]
+
+
+def first_divergence_step(seq: list[Any], ref: list[Any]) -> int | None:
+    """First index where ``seq`` diverges from the FullSync reference ``ref``.
+
+    Returns None when ``seq`` is a prefix-equal match of the same length
+    (no divergence). If one is a strict prefix of the other, the divergence is
+    the length of the shorter sequence.
+    """
+    for i in range(min(len(seq), len(ref))):
+        if seq[i] != ref[i]:
+            return i
+    if len(seq) == len(ref):
+        return None
+    return min(len(seq), len(ref))
+
+
+def _lcs_len(a: list[Any], b: list[Any]) -> int:
+    n, m = len(a), len(b)
+    if n == 0 or m == 0:
+        return 0
+    prev = [0] * (m + 1)
+    for i in range(1, n + 1):
+        cur = [0] * (m + 1)
+        for j in range(1, m + 1):
+            cur[j] = prev[j - 1] + 1 if a[i - 1] == b[j - 1] else max(prev[j], cur[j - 1])
+        prev = cur
+    return prev[m]
+
+
+def tool_selection_accuracy(seq: list[tuple[str, str]],
+                            ref: list[tuple[str, str]]) -> float | None:
+    """Fraction of aligned positions where the tool *name* matches the reference."""
+    k = min(len(seq), len(ref))
+    if k == 0:
+        return None
+    return sum(1 for i in range(k) if seq[i][0] == ref[i][0]) / k
+
+
+def argument_accuracy(seq: list[tuple[str, str]],
+                      ref: list[tuple[str, str]]) -> float | None:
+    """Among positions where the tool name matches, fraction whose normalized
+    arguments also match."""
+    matched = [(seq[i], ref[i]) for i in range(min(len(seq), len(ref)))
+               if seq[i][0] == ref[i][0]]
+    if not matched:
+        return None
+    return sum(1 for s, r in matched if s[1] == r[1]) / len(matched)
+
+
+def dependency_order_satisfaction(seq: list[tuple[str, str]],
+                                  ref: list[tuple[str, str]]) -> float | None:
+    """How well ``seq`` preserves the reference tool ordering = LCS(tool names)
+    / len(reference tool names)."""
+    if not ref:
+        return None
+    a = [t for t, _ in seq]
+    b = [t for t, _ in ref]
+    return _lcs_len(a, b) / len(b)
+
+
+def loop_count(seq: list[tuple[str, str]]) -> int:
+    """Number of immediate identical-step repeats (a==a back-to-back)."""
+    return sum(1 for i in range(1, len(seq)) if seq[i] == seq[i - 1])
+
+
+def unnecessary_retry_count(seq: list[tuple[str, str]]) -> int:
+    """Repeats of an identical (tool, args) step beyond its first occurrence."""
+    seen: set[tuple[str, str]] = set()
+    retries = 0
+    for step in seq:
+        if step in seen:
+            retries += 1
+        else:
+            seen.add(step)
+    return retries
+
+
+def aggregate_token_usage(events: Iterable[dict[str, Any]]) -> dict[str, int]:
+    """Sum token counts over llm_call events of a canonical event log."""
+    total_in = total_out = total_unc = 0
+    for ev in events:
+        if ev.get("event_type") != "llm_call":
+            continue
+        total_in += int(ev.get("input_tokens", 0) or 0)
+        total_out += int(ev.get("output_tokens", 0) or 0)
+        total_unc += int(ev.get("uncached_input_tokens", 0) or 0)
+    return {
+        "total_input_tokens": total_in,
+        "total_output_tokens": total_out,
+        "uncached_input_tokens": total_unc,
+        "total_tokens": total_in + total_out,
+    }
+
+
+def count_tool_calls(events: Iterable[dict[str, Any]],
+                     write_tool_names: set[str] | None = None) -> dict[str, int]:
+    """Count read vs write tool calls from canonical events."""
+    write_tool_names = write_tool_names or set()
+    read = write = total_llm = 0
+    for ev in events:
+        et = ev.get("event_type")
+        if et == "llm_call":
+            total_llm += 1
+        elif et == "tool_call":
+            name = _step_tool_name(ev) or ""
+            if name in write_tool_names:
+                write += 1
+            else:
+                read += 1
+        elif et == "commit":
+            write += 1
+    return {"total_llm_calls": total_llm, "read_tool_calls": read,
+            "write_tool_calls": write}
+
+
+def trajectory_metrics(seq: list[tuple[str, str]],
+                       ref: list[tuple[str, str]] | None) -> dict[str, Any]:
+    """Bundle of trajectory metrics vs a FullSync reference (None ref → NA)."""
+    if ref is None:
+        return {
+            "trajectory_edit_distance_to_fullsync": None,
+            "first_divergence_step": None,
+            "tool_selection_accuracy": None,
+            "argument_accuracy": None,
+            "dependency_order_satisfaction": None,
+            "loop_count": loop_count(seq),
+            "unnecessary_retry_count": unnecessary_retry_count(seq),
+        }
+    return {
+        "trajectory_edit_distance_to_fullsync": sequence_edit_distance(seq, ref),
+        "first_divergence_step": first_divergence_step(seq, ref),
+        "tool_selection_accuracy": tool_selection_accuracy(seq, ref),
+        "argument_accuracy": argument_accuracy(seq, ref),
+        "dependency_order_satisfaction": dependency_order_satisfaction(seq, ref),
+        "loop_count": loop_count(seq),
+        "unnecessary_retry_count": unnecessary_retry_count(seq),
+    }

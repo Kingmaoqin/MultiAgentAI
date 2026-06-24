@@ -1,0 +1,23 @@
+# Phase-2 regime definitions (deterministic, seed-controlled — plan §1.2, §5).
+# All perturbations are produced by deterministic wrappers, NEVER by an LLM.
+
+conflict_decomposition:        # plan §5.1 — implemented in ravel_core/conflict_signal.py (CSI)
+  FullSync:                "no perturbation (control)"
+  ConflictLabelOnly:       "CSI LabelOnly: reliable current value + conflict label + version + pointer; NO value change"
+  WrongValueOnly:          "PROBE: change field value, no conflict label (perturbation probe, not a method)"
+  HistoricalVersionOnly:   "expose only old version v (CSI seen_version<current, no current shown to worker)"
+  DualVersionView:         "CSI DualVersion: both v and v+1 with explicit conflict tag"
+  ConflictingViewOriginal: "current code's original strategy (baseline contrast)"
+  csi_gate_preflight:      "CSI GatePreflight: force must_recheck_before_commit"
+
+fieldmask_decomposition:       # plan §5.2 — implemented in ravel_core/field_masking.py
+  FieldMaskRandom_5:       { type: random, rate: 0.05, seeded: true }
+  FieldMaskRandom_10:      { type: random, rate: 0.10, seeded: true }
+  FieldMaskRandom_20:      { type: random, rate: 0.20, seeded: true }
+  FieldMaskRandom_30:      { type: random, rate: 0.30, seeded: true }
+  MaskIrrelevantOnly:      { type: category, target: [droppable, compressible] }
+  MaskSupportingOnly:      { type: category, target: [should_keep] }
+  MaskActionCriticalOnly:  { type: category, target: [must_keep] }
+  DependencyPreservingMask:{ type: category, keep: [must_keep], mask: rest }   # ~ DPR
+
+field_categories_source: ravel_core/dependency_router.py   # grounded in ActionSchema registry

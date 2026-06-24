@@ -1,0 +1,78 @@
+# Phase-2 experiment matrix (plan §8).
+# STATUS: DEFINED, NOT YET RUN. Full/expanded matrices await user approval.
+# Smoke + unit tests are the only execution done so far.
+
+reproducibility:
+  fixed:                 # plan §1.8 — every run pins these
+    - task_seed
+    - mutation_seed
+    - user_simulator_seed
+    - prompt_version
+    - tool_parser
+    - model_checkpoint
+    - serving_config
+    - temperature: 0
+    - max_steps
+    - timeout
+  concurrency: 1         # single-GPU sequential + watchdog (GPU contention, see 00_asset_audit)
+
+models:
+  medium:
+    name: "openai/g4"          # gemma-4-31B-it
+    api_base: "http://127.0.0.1:8005/v1"
+    max_model_len: 16384
+  strong:
+    name: "openai/gpt-oss"     # gpt-oss-120b
+    api_base: "http://127.0.0.1:8192/v1"
+    max_model_len: 65536
+  user_simulator:              # FIXED across all agent conditions (audit fix #5)
+    name: "openai/g4"
+    api_base: "http://127.0.0.1:8005/v1"
+
+domains:
+  airline:  { stage1_tasks: 50, stage2_tasks: 100 }
+  retail:   { stage1_tasks: 50, stage2_tasks: 100 }
+  telecom:  { gated_on: "no_perturbation_baseline_success > 0", max_steps: [50, 60] }
+
+methods:                       # plan §8.3
+  - single_agent_react
+  - mas_fullsync_raw
+  - ravel_fullsync_no_gate
+  - ledger_only
+  - commit_gate_only
+  - ravel_original
+  - ravel_csi
+  - ravel_dpr
+  - ravel_csi_dpr_gate
+  - oracle_router_upper_bound
+
+regimes:                       # plan §8.4
+  - FullSync
+  - Delayed_d1
+  - Delayed_d2
+  - FieldMaskRandom_10
+  - FieldMaskRandom_30
+  - ConflictLabelOnly
+  - WrongValueOnly             # perturbation PROBE only, not a proposed method
+  - HistoricalVersionOnly
+  - DualVersionView
+  - OriginalConflictingView
+
+gate:
+  permissive: false            # plan §4.2 — silent permissive forbidden in real runs
+  high_risk_actions_from: action_schemas   # airline+retail registry
+
+repeats:
+  primary: 3                   # plan §8.5
+  fallback: { paired_seeds: true, repeats: 2 }   # note limitation in report if used
+
+statistics:                    # plan §9 (run after matrices approved)
+  paired_bootstrap_ci: 0.95
+  fss_noninferiority_epsilon_pp: 2
+  mixed_effects:
+    outcomes: [success_final_state, EvidenceValid, UnsafeAction]
+    fixed_effects: [method, regime, model, domain, interactions]
+    random_intercepts: [task_id, scenario_template]
+  count_models: [log_normal, gamma, negative_binomial]
+  multiple_comparison: { primary: holm, exploratory: bh_fdr }
+  zero_denominator: NA         # never coerce to 0
